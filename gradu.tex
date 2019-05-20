@@ -105,90 +105,47 @@ additional insight.
 % STEP 4: Write the thesis.
 % Your actual text starts here. You shouldn't mess with the code above the line except
 % to change the parameters. Removing the abstract and ToC commands will mess up stuff.
-\chapter{Introduction}
+\chapter{Johdanto}
 
-The thesis should have an introduction chapter. Other chapters can be named according to the topic. In the end, some summary chapter is needed; see Chapter~\ref{chapter:conclusions} for an example.
+The thesis should have an introduction chapter. Other chapters can be named according to the topic. In the end, some summary chapter is needed; see Chapter~\ref{chapter:Loppusanat} for an example.
 
-\chapter{Figures and Tables}
+\section{Tutkimuskysymykset}
 
-\section{Figures}
-Figure~\ref{fig:logo} gives an example how to add figures to the document. Remember always to cite the figure in the main text. There are many ways to cite, for example: University of Helsinki has a nice logo (see Fig.~\ref{fig:logo}).
-\begin{figure}[h!] 
-\centering 
-\includegraphics[width=0.3\textwidth]{HY-logo-ml.png}
-\caption{University of Helsinki flame-logo for Faculty of Science.\label{fig:logo}}
-\end{figure}
-
-\section{Tables}
-
-Table~\ref{table:results} gives an example how to report experimental results. Remember always to cite the table in the main text. There are many ways to cite, for example: The results are as expected (see Table~\ref{table:results}).
-
-\begin{table}
-\centering
-\caption{Experimental results.\label{table:results}}
-\begin{tabular}{l||l c r} 
-Koe & 1 & 2 & 3 \\ 
-\hline \hline 
-$A$ & 2.5 & 4.7 & -11 \\
-$B$ & 8.0 & -3.7 & 12.6 \\
-$A+B$ & 10.5 & 1.0 & 1.6 \\
-\hline
-%
-\end{tabular}
-\end{table}
-
-\chapter{Citations}
-
-\section{Citations to literature}
-
-References are listed in a separate .bib-file. In this case it is named \texttt{bibliography.bib} with the following content:
-\begin{verbatim}
-@article{einstein,
-    author =       "Albert Einstein",
-    title =        "{Zur Elektrodynamik bewegter K{\"o}rper}. ({German})
-        [{On} the electrodynamics of moving bodies]",
-    journal =      "Annalen der Physik",
-    volume =       "322",
-    number =       "10",
-    pages =        "891--921",
-    year =         "1905",
-    DOI =          "http://dx.doi.org/10.1002/andp.19053221004"
-}
- 
-@book{latexcompanion,
-    author    = "Michel Goossens and Frank Mittelbach and Alexander Samarin",
-    title     = "The \LaTeX\ Companion",
-    year      = "1993",
-    publisher = "Addison-Wesley",
-    address   = "Reading, Massachusetts"
-}
- 
-@misc{knuthwebsite,
-    author    = "Donald Knuth",
-    title     = "Knuth: Computers and Typesetting",
-    url       = "http://www-cs-faculty.stanford.edu/%7Eknuth/abcde.html"
-}
-\end{verbatim}
-
-In the last reference url field the code \verb+%7E+ will translate into \verb+~+ once clicked in the final pdf.
-
-References are created using command \texttt{\textbackslash cite\{einstein\}}, showing as \cite{einstein}. Other examples: \cite{latexcompanion,knuthwebsite}.
-
-Citations should be arranged in alphabetical order by author, using the default style \texttt{abbrv}.
+\begin{itemize}
+    \item Miten SQL:n oppimista on tutkittu?
+    \item Voiko kurssin tehtävien perusteella ennustaa oppimenestystä?
+    \item Voiko SQL-kurssin oppimenestystä ennustaa kurssin tehtävien perusteella?
+\end{itemize}
 
 
+\chapter{Taustaa}
 
-\section{Crossreferences}
+\section{SQL:n oppiminen}
 
-Appendix~\ref{appendix:code} on page~\pageref{appendix:code} contains a code example.
 
-\chapter{From tex to pdf}
+\section{Kurssimenestyksen ennustaminen}
 
-In Linux, run \texttt{pdflatex filename.tex} and \texttt{bibtex
-  filename} repeatedly until no more warnings are shown. You should
-use \texttt{pdflatex} when compiling your document.
- 
-\chapter{Conclusions\label{chapter:conclusions}}
+
+\section{SQL-kurssien menestyksen ennustaminen}
+
+
+\chapter{Koneoppimisen soveltaminen kurssi-dataan}
+
+\section{Data}
+
+
+\section{Valitut mentelmät}
+
+
+\chapter{SQL-kurssin oppimenestyksen ennustamisen toteutus}
+
+\section{Ohjelmakoodi}
+
+
+\section{Tulokset}
+
+
+\chapter{Loppusanat\label{chapter:Loppusanat}}
 
 It is good to conclude with some insightful discussion. 
 
