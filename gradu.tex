@@ -113,8 +113,18 @@ The thesis should have an introduction chapter. Other chapters can be named acco
 
 \begin{itemize}
     \item Miten SQL:n oppimista on tutkittu?
-    \item Voiko kurssin tehtävien perusteella ennustaa oppimenestystä?
-    \item Voiko SQL-kurssin oppimenestystä ennustaa kurssin tehtävien perusteella?
+    \begin{itemize}
+        \item kirjallisuus
+    \end{itemize}
+    \item Millä tavoin kurssin tehtävien perusteella ennustaa oppimenestystä?
+    \begin{itemize}
+        \item Kirjallisuus
+    \end{itemize}
+    \item Millä tavoin SQL-kurssin oppimenestystä ennustaa kurssin tehtävien perusteella?
+    \begin{itemize}
+        \item kirjallisuus
+        \item tämä data
+    \end{itemize}
 \end{itemize}
 
 
@@ -130,7 +140,7 @@ Ainakin kolme artikkelia aiheesta.
 \subsection{Tutkimusta SQL:n oppimisesta}
 
 
-\section{Akateemisen menestyksen ennustaminen ohjelmointikursseilla}
+\section{Kurssi-menestyksen ennustaminen ohjelmointikursseilla}
 
 Ainakin kolme artikkelia aiheesta.
 
@@ -146,11 +156,48 @@ Ainakin kolme artikkelia aiheesta.
 
 Akateemisella menestyksellä tarkoitan yleisesti oppimenestystä, ja taitoja mitkä auttavat oppimisessa.
 
-Kiinnostavia aiheita akatemmisen menestyksen ennustamisessa ovat esimerkiksi lisäapua vaativien oppilaiden tunnistaminen ja vaikeiden käistteiden löytäminen.
+Kiinnostavia aiheita akatemmisen menestyksen ennustamisessa ovat esimerkiksi lisäapua vaativien oppilaiden tunnistaminen ja vaikeiden käsitteiden löytäminen automaattisesti.
 
 Oppimenestyksen ennustamista voidaan tehdä usealla tasolla. Esimerkiksi yksittäistä kurssia, tehtävää tai oppilasta tarkastellen\cite{hellas2018predicting}. Tässä keskitytään yksittäisen kurssin ennustamiseen, joka on pidetty useampana vuonna. Ennustaminen tässä kontekstissa tehdään tehtyjen tehtävien perusteella.
 
-Oppimenestyksen ennustamisen menetelmät ovat jaettavissa luokitteluun, data-louhintaan, tilastollisiin mentelmiin ja klusterointiin\cite{hellas2018predicting}. Käytetyimpiä koneoppimismalleja akateemisen menestyksen ennustamiseen ovat lineaariset regressiomallit ja luokittelumenetelmät. intoisempia menetelmiä 
+Oppimenestyksen ennustamisen menetelmät ovat jaettavissa luokitteluun, data-louhintaan, tilastollisiin mentelmiin ja klusterointiin\cite{hellas2018predicting}. Käytetyimpiä koneoppimismalleja akateemisen menestyksen ennustamiseen ovat lineaariset regressiomallit ja luokittelumenetelmät. Esimerkkinä monimutkaisemmasta mallista on transferenssi-oppiminen (transfer learning)\cite{lagus2018transfer} ja nönnönnöö.
+
+\subsection{Muistiinpanoja: The Normalized Programming State Model}
+
+\subsubsection{tutkimuskysymys}
+
+\begin{itemize}
+    \item Miten eri tavoin eri ympäristöt, kielet ja ohjelmointiympäristöt vaikuttavat Error Quotient\cite{jadud2006methods}- ja Watwin\cite{watson2014no} piste-asteikon ennustaviin kykyihin?
+    \item Kuinka hyvin kokonaisvaltaisempi malli ennustaa suoritusta?
+\end{itemize}
+
+
+\subsubsection{tutkimustulokset}
+
+Normalized Programming State Model eli NPSM, suoriutui tutkimuksen\cite{carter2015normalized} ympäristössä Error Qutient- ja Watwinin piste-asteikkoa paremmin.
+
+
+\subsubsection{muistiinpanoja}
+
+\begin{itemize}
+    \item Ennusteet auttavat opettajia tunnistamaan riskirajoilla olevia opiskelijoita, ja parantamaan opetusmenetelmiä\cite{carter2015normalized}, Abstract:1:3
+    \item Error Quotient asteikko\cite{jadud2006methods} ja Watwinin pisteasteikko\cite{watson2014no} ovat saavuttaneet menestystä tarkastellen ainoastaan opiskelijoiden kääntämis-yrityksiä(compilation), Abstract:1:6
+    \item dataa ilmeisesti kerätty oppimisprosessin aikana striimaten\cite{carter2015normalized}, Introduction:1:1, 2. Background and related work:2:1
+        \begin{itemize}
+            \item NPSM keräsi 11 muuttujaa, joista yksi on käytetty aktiivinen aika, 3.2:2:8
+            \item näistä kymmenen normalisoitiin tehtävään käytettyyn aikaan, 3.2:1:7
+        \end{itemize}
+    \item menetelmät ovat koulutuksellinen (educational) datan louhinta ja oppimis analytiikka
+    \begin{itemize}
+        \item Lue ainakin sisälysluettelot viitteistä 3 ja 24
+    \end{itemize}
+    \item Ohjelmointi-opetukseen kätevää lisätä data-louhintaa, koska tavoitteena on parantaa opiskelijoiden toistoa, Introduction:2:4
+    \item ennusteita tehtiin
+    \begin{itemize}
+        \item yksittäisten tehtävänantojen arvosanoihin, 4.3.1
+        \item tehtävien arvosanojen keskiarvoon, 4.3.2
+    \end{itemize}
+\end{itemize}
 
 
 \section{SQL-kurssien menestyksen ennustaminen}
