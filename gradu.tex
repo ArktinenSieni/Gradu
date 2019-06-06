@@ -176,6 +176,37 @@ Oppimenestyksen ennustamisen menetelmät ovat jaettavissa luokitteluun, data-lou
 
 Normalized Programming State Model eli NPSM, suoriutui tutkimuksen\cite{carter2015normalized} ympäristössä Error Qutient- ja Watwinin piste-asteikkoa paremmin.
 
+\begin{itemize}
+    \item RQ1
+        \begin{itemize}
+            \item rajua vaihtelua mittauksissa Error Quotient ja Watwin-asteikossa, 6.1:1:1
+            \begin{itemize}
+                \item Tämän kokeen asetelmassa suurempi arvosanapainotus tehtäville, 6.1:2:5
+                \item edellämainitut tukeutuvat vahvemmin ohjelmointiympäristön virheviesteihin ja tukeen, ja Javan parempiin virheviesteihin. Verrattuna tämän tutkimuksen kieleen C++:n, 6.1:3:3
+                \item Molemmat rankaisevat toistuvista virheviesteistä, 6.1:3:9
+                \begin{itemize}
+                    \item C++:n virheviestit voivat sisältää samoja virkkeitä eri virheissä -> false positive
+                \end{itemize}
+            \end{itemize}
+            \item Tutkimuksessa toistui aikaisemmat ilmiöt: Error quotient toimii parhaiten pienemmillä tietolähteillä, ja Watwin suuremmilla tietolähteillä, 6.1:5:2
+            \item Watwin-asteikon "variance explained" toistuu muissa tutkimuksissa, missä taas Error Quotient:n vastaava arvo ei toistu, 6.1:5:7
+            \item Kaikki mallit vaativat lisätutkimuksia eri ympäristöissä, 6.1:5:13
+        \end{itemize}
+    \item RQ2
+    \begin{itemize}
+        \item NPSM päihitti mallit jotka keskittyivät vain kääntämis-käyttäytymiseen (compilation), 6.2:1
+        \begin{itemize}
+            \item Yksittäisissä tehtävissä Watwin asteikkoon nähden nelinkertaiset tulokset varianssin selitettävyydessä, ja Error Quotient:iin nähden prosentin verran
+            \item Tehtävä-arvosanojen keskiarvossa 4x Watwin-asteikkoon, ja 6x Error Quotient asteikkoon nähden
+            \item Loppuarvosanoijen ennustettavuudessa, 3x Watwin-asteikkoon, ja 12x Error Quotient nähden
+        \end{itemize}
+        \item Ajaminen semanttisesti väärää ohjelmaa, ja semanttisesti tuntematonta sovellusta edistivät onnistumista, 6.2:2:2
+        \item tuntematon tila (eli oletustila ennen ensimmäistä ajoa) ja syntaktisesti väärän ohjelman ajaminen tekivät hallaa onnistumiselle, 6.2:2:6
+        \item vetivät johtopäätöksen että sovelluksen ajaminen, oli kyseessä oikea ratkaisu tai ei, vaikuttaa olevan onnistuva ohjelmointi lähestymistapa, 6.2:2:11
+        \item koodin kirjoittaminen ilman ajamista isoissa paloissa, päinvastoin, 6.2:2:13
+    \end{itemize}
+\end{itemize} 
+
 
 \subsubsection{muistiinpanoja}
 
@@ -211,6 +242,15 @@ Normalized Programming State Model eli NPSM, suoriutui tutkimuksen\cite{carter20
     \item Mielenkiintoinen huomio optimaalisesta otoskoosta kappaaleessa 5:2:2
     \item Kurssin aikana ennustamista kappaleessa 5
     \item multivariate regression, 5.2:1:1
+    \item linear regression, 5.3:3:3
+    \item Mallista rakennetut ennustavat funktiot antavat käytettävissä olevia tuloksia, 5.3:3:12
+    \item Watwin-asteikko ja Error Quotient perustuvat NPSM mallin vähiten painotettuun merkittävään arvoon: "muokkaa syntaktisesti väärää koodia, edellinen ajo onnistunut", 6.2:3:1
+    \begin{itemize}
+        \item Lineaari regression ajaminen pelkästään tällä arvolla, NU:lla, "explains more variance" kuin kumpikaan asteikoista
+        \begin{itemize}
+            \item Vahva epäilys että mittaukset ohjelmointikäytökseen ajamis-käytöksen lisäksi suoriutuvat hyvin
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 
