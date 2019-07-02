@@ -163,7 +163,36 @@ Oppimenestyksen ennustamista voidaan tehdä usealla tasolla. Esimerkiksi yksitt�
 
 Oppimenestyksen ennustamisen menetelmät ovat jaettavissa luokitteluun, data-louhintaan, tilastollisiin mentelmiin ja klusterointiin\cite{hellas2018predicting}. Käytetyimpiä koneoppimismalleja akateemisen menestyksen ennustamiseen ovat lineaariset regressiomallit ja luokittelumenetelmät. Esimerkkinä monimutkaisemmasta mallista on transferenssi-oppiminen (transfer learning)\cite{lagus2018transfer} ja nönnönnöö.
 
-\subsection{Muistiinpanoja: The Normalized Programming State Model}
+
+
+\section{SQL-kurssien menestyksen ennustaminen}
+
+Ainakin kolme artikkelia aiheesta.
+
+
+\chapter{Koneoppimisen soveltaminen kurssi-dataan}
+
+\section{Data}
+
+Mitä dataa, mistä on saatu ja suunnitelmia käytöstä.
+
+
+\section{Valitut mentelmät}
+
+
+\chapter{SQL-kurssin oppimenestyksen ennustamisen toteutus}
+
+\section{Ohjelmakoodi}
+
+
+\section{Prosessi, haasteet, yms.}
+
+
+\section{Tulokset}
+
+\chapter{Muistiinpanoja}
+
+\section{Muistiinpanoja: The Normalized Programming State Model}
 
 Oleellinen termi: explained variance
 \begin{itemize}
@@ -171,7 +200,7 @@ Oleellinen termi: explained variance
     \item \url{http://www.csun.edu/~mr31841/documents/Varitionandpredictionintervals.pdf}
 \end{itemize}
 
-\subsubsection{tutkimuskysymys}
+\subsection{tutkimuskysymys}
 
 \begin{itemize}
     \item Miten eri tavoin eri ympäristöt, kielet ja ohjelmointiympäristöt vaikuttavat Error Quotient\cite{jadud2006methods}- ja Watwin\cite{watson2014no} piste-asteikon ennustaviin kykyihin?
@@ -179,7 +208,7 @@ Oleellinen termi: explained variance
 \end{itemize}
 
 
-\subsubsection{tutkimustulokset}
+\subsection{tutkimustulokset}
 
 Normalized Programming State Model eli NPSM, suoriutui tutkimuksen\cite{carter2015normalized} ympäristössä Error Qutient- ja Watwinin piste-asteikkoa paremmin.
 
@@ -215,7 +244,7 @@ Normalized Programming State Model eli NPSM, suoriutui tutkimuksen\cite{carter20
 \end{itemize} 
 
 
-\subsubsection{muistiinpanoja}
+\subsection{muistiinpanoja}
 
 \begin{itemize}
     \item Ennusteet auttavat opettajia tunnistamaan riskirajoilla olevia opiskelijoita, ja parantamaan opetusmenetelmiä\cite{carter2015normalized}, Abstract:1:3
@@ -260,31 +289,92 @@ Normalized Programming State Model eli NPSM, suoriutui tutkimuksen\cite{carter20
     \end{itemize}
 \end{itemize}
 
+\section{Muistiinpanoja: Methods and Tools for Exploring Novice Compilation Behaviour\cite{jadud2006methods}}
 
-\section{SQL-kurssien menestyksen ennustaminen}
+Skouppi: Ohjelmoinit kurssimenestyksen ennustaminen
 
-Ainakin kolme artikkelia aiheesta.
+\begin{itemize}
+    \item Tarkastelee kääntämis-käyttäytymistä, (compilation behaviour)
+    \begin{itemize}
+        \item Tarkastelee siis kirjoitettavan koodin syntaktista tilaa
+    \end{itemize}
+    \item Java kurssille tehty tutkimus
+    \begin{itemize}
+        \item BlueJ-ympäristö
+    \end{itemize}
+    \item Kysymyksiä
+    \begin{itemize}
+        \item Suuria muutoksia session aikana?
+        \item Pitkä-kestoisia muutoksia?
+        \item ongelmallisia syntaksi-virheitä?
+        \item minne muutokset sijoittuivat?
+    \end{itemize}
+    \item Valitut muuttujat:
+    \begin{itemize}
+        \item ErrType
+        \item Delta-T: ajojen välinen aika
+        \item Delta-Ch: muutettujen merkkien määrä
+        \item Location: sijainti koodissa
+    \end{itemize}
+    \item Error Quotient
+    \begin{itemize}
+        \item Collate: parit tapahtumien välillä sessiossa
+        \item Calculate: algoritmin mukainen pisteytys kunkin tapahtuman välillä
+        \begin{itemize}
+            \item Jos molemmat ovat virheellisiä -> pisteet kasvaa
+        \end{itemize}
+        \item Normalize: normalisoidaan pistemäärä jakamalla tulos yhdellätoista. Yksitoista on mahdollisten tilojen summa
+        \item Average: keskiarvo parien pisteistä sessiossa -> ERROR QUOTIENT
+    \end{itemize}
+    \item on korrelaatiota opiskelijan EQ:n, loppuarvosanana ja tehtävien arvosanojen keskiarvon välillä on korrelaatiota
+    \begin{itemize}
+        \item ei kuitenkaa sovi kovinkaan tarkasti: EQ lienee varsin kapea mittari
+        \item tarkempi sovitus EQ:n ja loppuarvosanan välillä, edelleen epätarkka
+    \end{itemize}
+    \item eivät voi tehdä vahvoja väitteitä, että EQ:ta voisi käyttää ennustavana asteikkona tentti-asteikkoon
+    \begin{itemize}
+        \item Liikaa puuttuvaa tietoa
+    \end{itemize}
+    \item Paperissa ei mainita mihinkään malliin sovittamista
+\end{itemize}
 
 
-\chapter{Koneoppimisen soveltaminen kurssi-dataan}
+\section{Watson-Score artikkelin muistiinpanoja}
 
-\section{Data}
-
-Mitä dataa, mistä on saatu ja suunnitelmia käytöstä.
-
-
-\section{Valitut mentelmät}
-
-
-\chapter{SQL-kurssin oppimenestyksen ennustamisen toteutus}
-
-\section{Ohjelmakoodi}
-
-
-\section{Prosessi, haasteet, yms.}
-
-
-\section{Tulokset}
+\begin{itemize}
+    \item Halutaan tunnistaa vaikeuksissa olevat opiskelijat mahdollisimman varhaisessa vaiheessa
+    \begin{itemize}
+        \item varhainen opettajan puuttuminen
+    \end{itemize}
+    \item otos: 45 oppilasta
+    \begin{itemize}
+        \item yliopiston johdatus ohjelmointiin-kursi
+        \item koodi-snapshot jokaisen ajon yhteydessä
+    \end{itemize}
+    \item pisteytys
+    \begin{itemize}
+        \item rangaistaan ajasta, joka kuluu tietyn ongelman ratkaisemiseen
+        \item verrokkina muut opiskelijat
+        \item normalisoituna arvo nollan ja yhden välillä
+    \end{itemize}
+    \item Käytännösssä kyseessä on tilakone: tarkastellaan perättäisten tilojen vuorovaikutusta
+    \item parit muodostettu perättäisistä ajoista ja tiloista tiedosto kohtaisesti. Kronologisessa järjestyksessä hukkuu tieto useamman tiedoston välisistä tiloista
+    \item identtiset, perättäiset tilat poistettu IDE:n ominaisuuden vuoksi
+    \item poisto-korjaukset suodatettu
+    \item virheviestien yleistys
+    \item työaikaarviointiin liittyi ongelmia, koska parit on muodostettu tiedostokohtaisesti. Aika käytetty kuhunkin tiedostoon arvioitu koko tapahtumajonosta
+    \item soveltuvat ennustavat ominaisuudet
+    \begin{itemize}
+        \item peräkkäiset virheet olivat
+        \begin{itemize}
+            \item virheellisiä yleensä
+            \item virhetyypit ovat samanlaisia
+            \item virhetyypit erilaiset
+            \item sama virhesijainti
+        \end{itemize}
+        \item keskiarvoinen virheen suoritus/selvitysaika. Huomioitiin että eri virheet vaativat eri aikamäärän
+    \end{itemize}
+\end{itemize}
 
 
 \chapter{Loppusanat\label{chapter:Loppusanat}}
