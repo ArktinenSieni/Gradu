@@ -339,7 +339,7 @@ Skouppi: Ohjelmoinit kurssimenestyksen ennustaminen
 \end{itemize}
 
 
-\section{Watson-Score artikkelin muistiinpanoja}
+\section{Watson-Score artikkelin muistiinpanoja\cite{watson2013predicting}}
 
 \begin{itemize}
     \item Halutaan tunnistaa vaikeuksissa olevat opiskelijat mahdollisimman varhaisessa vaiheessa
@@ -373,9 +373,66 @@ Skouppi: Ohjelmoinit kurssimenestyksen ennustaminen
             \item sama virhesijainti
         \end{itemize}
         \item keskiarvoinen virheen suoritus/selvitysaika. Huomioitiin että eri virheet vaativat eri aikamäärän
+        \begin{itemize}
+            \item Jälleen yleisen virhetyypin mukaan! Vertailu tapahtuu yleisen virhetyypin mukaan ja vertaillen muihin opiskelijoihin.
+        \end{itemize}
+        \item rangaistus-pisteet valittiin brute-force haulla, reilun pisteytyksen saavuttamiseksi. Testattiin cross-validation-menetelmällä
+    \end{itemize}
+    \item arviointi
+    \begin{itemize}
+        \item lineaari-regresio
+        \begin{itemize}
+            \item opiskelijoiden Watwin-pisteytys itsenäinen muuttuja
+            \item opiskelijoiden kurssin tehtävien pisteytys koko kurssin ajalta
+        \end{itemize} 
+        \item Harkittiin luokittelijaa kyseisen yliopiston arvosana-asteikon mukaan
+        \item on lineaarinen relaatio Watwin-pisteytyksen ja suorituksen välillä, ilman merkittäviä poikkeavuuksia
     \end{itemize}
 \end{itemize}
 
+\chapter{Berginin ohjelmointiennustamis-artikkelin muistiinpanot}
+
+Berginin artikkeli koneoppimisen käyttämisestä\cite{bergin2015using}
+
+\begin{itemize}
+    \item Motivaatio
+    \begin{itemize}
+        \item ohjelmoinnin oppimisessa vaikeuksia: korkea pudotusaste
+        \item vaikeuksissa olevan opiskelijan tunnistaminen on vaikeaa ajoissa suuresta opiskelija määrästä johtuen.
+        \begin{itemize}
+            \item ajoitus tärkeä! Liian myöhään, niin opiskelija ei voi jättäytyä pois, tai ohjaajan tuki on myöhässä
+        \end{itemize}
+        \item edeltävissä tutkimuksissa ongelmia
+        \begin{itemize}
+            \item tarkat parametrit: biased findings
+            \item validaatio-tutkimuksista puuteta
+            \item parhaimmissa lähinnä tilastollisia menetelmiä
+            \begin{itemize}
+                \item rajoittuneet näiden mallien oletuksiin -> ei välttämättä parhain malli
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \item Principal Component Analysis (PCA) ulottuvuuksien pienentämiseen
+    \item paperin tarkoituksena on ENNUSTAA ennen kurssin alkua, että miten kurssi etenee
+    \begin{itemize}
+        \item Tarkemmat kuvaukset arvoista löytyy artikkelin neljännestä viitteestä
+        \item etuna on että ei tarvita tietoa kurssityöstä, saati tarkkaa mallia tällaisen tiedon käyttämiseen
+    \end{itemize}
+    \item valittujen mallien vaatimuksena on että ne ovat toteutettavissa!
+    \item testatut koneoppimis-algoritmit
+    \begin{itemize}
+        \item logistic regression
+        \item k-nearest neighbor
+        \item backpropagation
+        \item C4.5
+        \begin{itemize}
+            \item Päättelypuu-algoritmi
+        \end{itemize}
+        \item naive Bayes
+        \item support vector machine
+    \end{itemize}
+    \item Naive Bayes vahvin tarkkuudessa ja herkkyydessä (accuracy, sensitivity)
+\end{itemize}
 
 \chapter{Loppusanat\label{chapter:Loppusanat}}
 
