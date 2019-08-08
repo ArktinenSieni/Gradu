@@ -133,7 +133,76 @@ The thesis should have an introduction chapter. Other chapters can be named acco
 
 \section{SQL:n oppiminen}
 
-Ainakin kolme artikkelia aiheesta.
+\begin{itemize}
+    \item syntaktiset- ja semanttiset virheet harvinaisempia kuin loogiset virheet ja sekaannukset
+    \item SQL on kuulunut yliopistotason opintoihin vuosikymmeniä
+    \item tieteellinen näyttö aiheille jotka ovat opiskelijoille vaikeita, on tulkinnanvaraista
+    \item tutkimus SQL:n opetuksesta keskittyy joko opinto-työkaluihin ja opiskelijoiden virheisiin SQL:ssä
+    \item virheet jaettavissa neljään luokkaan, lähteen 11 mukaan
+    \begin{itemize}
+        \item complication: eivät vaikuta tulostauluun
+        \item logical error: vaikuttaa tulostauluun joka vaikuttaa tulostauluun. Näille tauluille on olemassa pätevä kysyntää
+        \begin{itemize}
+            \item operaattorivirhe LOG-1
+            \item JOIN virhe LOG-2
+            \item sisennysvirhe LOG-3
+            \item määritelmävirhe LOG-4
+            \item projektiovirhe LOG-5
+            \item funktiovirhe LOG-6
+            \item pakko tietää kysyntä/tarkoitus
+        \end{itemize}
+        \item semanttinen virhe: vaikuttaa tulostauluun, jolle ei ole pätevää kysyntää
+        \begin{itemize}
+            \item epäjohdonmukainen määritelmä SEM-1
+            \item epäjohdonmukainen JOIN SEM-2
+            \item puuttuva JOIN SEM-3
+            \item toistuvia rivejä SEM-4
+            \item tarpeeton sarake SEM-5
+            \item ilmeinen katsomatta kysyntää/tarkoitusta
+        \end{itemize}
+        \item syntaktinen virhe: palauttaa virheviestin tulostaulun sijasta
+        \begin{itemize}
+            \item epäselvä tietokanta objekti SYN-1
+            \item määrittelemätön tietokantaobjekti SYN-2
+            \item yhteensopimaton tietotyyppi SYN-3
+            \item laiton ryhmittely(aggregation) funktion asettelu SYN-4
+            \item laiton tai riittämätön ryhmittely SYN-5
+            \item yleinen syntaksivirhe SYN-6
+        \end{itemize}
+    \end{itemize}
+    \item pysyvimmät virheet
+    \begin{itemize}
+        \item laiton tai riittämätön ryhmittely SYN-5
+        \item yleinen syntaksivirhe SYN-6
+        \item epäjohdonmukainen määritelmä SEM-1
+        \item epäjohdonmuainen JOIN SEM-2
+        \item puuttuva JOIN SEM-3
+        \item määritelmävirhe LOG-4
+        \item projektiovirhe LOG-6
+    \end{itemize}
+    \item kaikkien kyselyiden kesken yleisimpiä ovat
+    \begin{itemize}
+        \item yleinen syntaksivirhe SYN-6
+        \item määrittelemätön tietokantaobjekti SYN-2
+        \item laiton tai riittämätön ryhmittely SYN-5
+    \end{itemize}
+    \item loogiset virheet ovat vaikeita ratkaista
+    \item viite 10 ehdottaa että loogiset virheet liittyvät lyhytaikaiseen muistiin, ja ajatuksenkulusta mikä liittynee ajatusprosessiin luonnollisenkielenkääntämisestä SQL:n
+    \item sekaannukset (complications) ovat yleisiä, mutta yleensä korjaantuvat kyselyn kehittyessä
+    \item erilaiset kyselykonseptit tuovat erilaisia virheitä by design
+    \begin{itemize}
+        \item esimerkiksi kokoamisfunktiot tuovat funktiovirheitä
+    \end{itemize}
+    \item lienee johdonmukaista olettaa että opettajien ja tutkijoiden pitäisi keskittyä virheisiin jotka ovat yleisiä ja pysyviä
+    \item virheelliset datatietotyyppivirheet vähenivät kurssin edetessä
+    \item kokoamis (aggregate) funktiot voat vaikeita
+    \item kyselyt, jotka vaativat viittä tai kuutta SQL ehtoa (clauses) ovat vaikeita. Yleensä kyselyissä on kolmesta neljään ehtoa
+    \item epäjohdonmukaiset määritelmät olivat yleisiä: jokainen kysely sisältää niitä
+    \item moni-tauluiset kyselyt olivat yleisiä siellä missä niitä käytettiin.
+    \item loogiset virheet ja sekaannukset ovat pysyvämpiä verrattuna syntaktisiin ja semanttisiin virheisiin
+    \item funktiovirheet olivat yleisiä tehtävissä tietyillä kyselykonsepteilla
+    \item säilyvimmät virheet olivat määritelmä ja projektiovirheet kyselykonsepteista huolimatta
+\end{itemize}
 
 \subsection{SQL Opetusohjelmistot}
 
@@ -155,7 +224,7 @@ Ainakin kolme artikkelia aiheesta.
     \end{itemize}
 \end{itemize}
 
-Ohjelmointikurssit joiden tarkoitus on olla opiskelijoiden ensimmäinen kosketus ohjelmointiin ovat vaikeita huomattavalle osuudelle opiskelijoista. Tämä johtaa kursseilta pois jäämiseen ja hylättyihin arvosanoihin sekä heikkoihin arvosanoihin \cite{bergin2015using}. Aloittelijoiden ohjelmointikurssien läpipääsymäärä tutkimusaiheena on kasvattanut kasvattanut merkittävästi suosiotaan merkittävästi vuodesta 2009 alkaen\cite{hellas2018predicting}. Kiinnostuksen kasvusta huolimatta maailmanlaajuinen arvioitu läpipääsyjen määrä ICT-alan aloituskursseilla oli noin 68\% vuonna 2014\cite{watson2014failure}. 
+Ohjelmointikurssit joiden tarkoitus on olla opiskelijoiden ensimmäinen kosketus ohjelmointiin ovat vaikeita huomattavalle osuudelle opiskelijoista. Tämä johtaa kursseilta pois jäämiseen ja hylättyihin arvosanoihin sekä heikkoihin arvosanoihin \cite{bergin2015using}. Aloittelijoiden ohjelmointikurssien läpipääsymäärä tutkimusaiheena on kasvattanut kasvattanut merkittävästi suosiotaan merkittävästi vuodesta 2009 alkaen\cite{hellas2018predicting}. Kiinnostuksen kasvusta huolimatta maailmanlaajuinen arvioitu läpipääsyjen määrä ohjelmoinnin aloituskursseilla oli noin 68\% vuonna 2014\cite{watson2014failure}. 
 
 Vaikka halua opiskelijoiden auttamiseen onkin, on apua tarvitsevien löytäminen työlästä ja aikaa vievää. Ehdotettuja ratkaisuja ovat muun muassa ennakkoon tehtävät kyselyt\cite{watson2014no}. % Voi vaatia tarkemman sitaatin
 Kyselyt ovat kuitenkin hyödyttömiä opiskelijamäärien ollessa yli sata jokaista kurssiohjaajaa kohden: lomakkeiden läpikäyminen vie liikaa aikaa, ja näin apua tarvitsevat löydetään liian myöhään. Tukea tarvitaan mahdollisimman varhaisessa vaiheessa jotta arvosanoihin voidaan vaikuttaa merkittävällä tavalla\cite{bergin2015using}. 
