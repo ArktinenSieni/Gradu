@@ -1,0 +1,333 @@
+\begin{document}
+
+\begin{itemize}
+    \item syntaktiset- ja semanttiset virheet harvinaisempia kuin loogiset virheet ja sekaannukset
+    \item SQL on kuulunut yliopistotason opintoihin vuosikymmeniä
+    \item tieteellinen näyttö aiheille jotka ovat opiskelijoille vaikeita, on tulkinnanvaraista
+    \item tutkimus SQL:n opetuksesta keskittyy joko opinto-työkaluihin ja opiskelijoiden virheisiin SQL:ssä
+    \item virheet jaettavissa neljään luokkaan, lähteen 11 mukaan
+    \begin{itemize}
+        \item complication: eivät vaikuta tulostauluun
+        \item logical error: vaikuttaa tulostauluun joka vaikuttaa tulostauluun. Näille tauluille on olemassa pätevä kysyntää
+        \begin{itemize}
+            \item operaattorivirhe LOG-1
+            \item JOIN virhe LOG-2
+            \item sisennysvirhe LOG-3
+            \item määritelmävirhe LOG-4
+            \item projektiovirhe LOG-5
+            \item funktiovirhe LOG-6
+            \item pakko tietää kysyntä/tarkoitus
+        \end{itemize}
+        \item semanttinen virhe: vaikuttaa tulostauluun, jolle ei ole pätevää kysyntää
+        \begin{itemize}
+            \item epäjohdonmukainen määritelmä SEM-1
+            \item epäjohdonmukainen JOIN SEM-2
+            \item puuttuva JOIN SEM-3
+            \item toistuvia rivejä SEM-4
+            \item tarpeeton sarake SEM-5
+            \item ilmeinen katsomatta kysyntää/tarkoitusta
+        \end{itemize}
+        \item syntaktinen virhe: palauttaa virheviestin tulostaulun sijasta
+        \begin{itemize}
+            \item epäselvä tietokanta objekti SYN-1
+            \item määrittelemätön tietokantaobjekti SYN-2
+            \item yhteensopimaton tietotyyppi SYN-3
+            \item laiton ryhmittely(aggregation) funktion asettelu SYN-4
+            \item laiton tai riittämätön ryhmittely SYN-5
+            \item yleinen syntaksivirhe SYN-6
+        \end{itemize}
+    \end{itemize}
+    \item pysyvimmät virheet
+    \begin{itemize}
+        \item laiton tai riittämätön ryhmittely SYN-5
+        \item yleinen syntaksivirhe SYN-6
+        \item epäjohdonmukainen määritelmä SEM-1
+        \item epäjohdonmuainen JOIN SEM-2
+        \item puuttuva JOIN SEM-3
+        \item määritelmävirhe LOG-4
+        \item projektiovirhe LOG-6
+    \end{itemize}
+    \item kaikkien kyselyiden kesken yleisimpiä ovat
+    \begin{itemize}
+        \item yleinen syntaksivirhe SYN-6
+        \item määrittelemätön tietokantaobjekti SYN-2
+        \item laiton tai riittämätön ryhmittely SYN-5
+    \end{itemize}
+    \item loogiset virheet ovat vaikeita ratkaista
+    \item viite 10 ehdottaa että loogiset virheet liittyvät lyhytaikaiseen muistiin, ja ajatuksenkulusta mikä liittynee ajatusprosessiin luonnollisenkielenkääntämisestä SQL:n
+    \item sekaannukset (complications) ovat yleisiä, mutta yleensä korjaantuvat kyselyn kehittyessä
+    \item erilaiset kyselykonseptit tuovat erilaisia virheitä by design
+    \begin{itemize}
+        \item esimerkiksi kokoamisfunktiot tuovat funktiovirheitä
+    \end{itemize}
+    \item lienee johdonmukaista olettaa että opettajien ja tutkijoiden pitäisi keskittyä virheisiin jotka ovat yleisiä ja pysyviä
+    \item virheelliset datatietotyyppivirheet vähenivät kurssin edetessä
+    \item kokoamis (aggregate) funktiot voat vaikeita
+    \item kyselyt, jotka vaativat viittä tai kuutta SQL ehtoa (clauses) ovat vaikeita. Yleensä kyselyissä on kolmesta neljään ehtoa
+    \item epäjohdonmukaiset määritelmät olivat yleisiä: jokainen kysely sisältää niitä
+    \item moni-tauluiset kyselyt olivat yleisiä siellä missä niitä käytettiin.
+    \item loogiset virheet ja sekaannukset ovat pysyvämpiä verrattuna syntaktisiin ja semanttisiin virheisiin
+    \item funktiovirheet olivat yleisiä tehtävissä tietyillä kyselykonsepteilla
+    \item säilyvimmät virheet olivat määritelmä ja projektiovirheet kyselykonsepteista huolimatta
+\end{itemize}
+
+\chapter{Muistiinpanoja}
+
+\section{Muistiinpanoja: The Normalized Programming State Model}
+
+Oleellinen termi: explained variance
+\begin{itemize}
+    \item \url{https://en.m.wikipedia.org/wiki/Explained\_variation}
+    \item \url{http://www.csun.edu/~mr31841/documents/Varitionandpredictionintervals.pdf}
+\end{itemize}
+
+\subsection{tutkimuskysymys}
+
+\begin{itemize}
+    \item Miten eri tavoin eri ympäristöt, kielet ja ohjelmointiympäristöt vaikuttavat Error Quotient\cite{jadud2006methods}- ja Watwin\cite{watson2014no} piste-asteikon ennustaviin kykyihin?
+    \item Kuinka hyvin kokonaisvaltaisempi malli ennustaa suoritusta?
+\end{itemize}
+
+
+\subsection{tutkimustulokset}
+
+Normalized Programming State Model eli NPSM, suoriutui tutkimuksen\cite{carter2015normalized} ympäristössä Error Qutient- ja Watwinin piste-asteikkoa paremmin.
+
+\begin{itemize}
+    \item RQ1
+        \begin{itemize}
+            \item rajua vaihtelua mittauksissa Error Quotient ja Watwin-asteikossa, 6.1:1:1
+            \begin{itemize}
+                \item Tämän kokeen asetelmassa suurempi arvosanapainotus tehtäville, 6.1:2:5
+                \item edellämainitut tukeutuvat vahvemmin ohjelmointiympäristön virheviesteihin ja tukeen, ja Javan parempiin virheviesteihin. Verrattuna tämän tutkimuksen kieleen C++:n, 6.1:3:3
+                \item Molemmat rankaisevat toistuvista virheviesteistä, 6.1:3:9
+                \begin{itemize}
+                    \item C++:n virheviestit voivat sisältää samoja virkkeitä eri virheissä -> false positive
+                \end{itemize}
+            \end{itemize}
+            \item Tutkimuksessa toistui aikaisemmat ilmiöt: Error quotient toimii parhaiten pienemmillä tietolähteillä, ja Watwin suuremmilla tietolähteillä, 6.1:5:2
+            \item Watwin-asteikon "variance explained" toistuu muissa tutkimuksissa, missä taas Error Quotient:n vastaava arvo ei toistu, 6.1:5:7
+            \item Kaikki mallit vaativat lisätutkimuksia eri ympäristöissä, 6.1:5:13
+        \end{itemize}
+    \item RQ2
+    \begin{itemize}
+        \item NPSM päihitti mallit jotka keskittyivät vain kääntämis-käyttäytymiseen (compilation), 6.2:1
+        \begin{itemize}
+            \item Yksittäisissä tehtävissä Watwin asteikkoon nähden nelinkertaiset tulokset varianssin selitettävyydessä, ja Error Quotient:iin nähden prosentin verran
+            \item Tehtävä-arvosanojen keskiarvossa 4x Watwin-asteikkoon, ja 6x Error Quotient asteikkoon nähden
+            \item Loppuarvosanoijen ennustettavuudessa, 3x Watwin-asteikkoon, ja 12x Error Quotient nähden
+        \end{itemize}
+        \item Ajaminen semanttisesti väärää ohjelmaa, ja semanttisesti tuntematonta sovellusta edistivät onnistumista, 6.2:2:2
+        \item tuntematon tila (eli oletustila ennen ensimmäistä ajoa) ja syntaktisesti väärän ohjelman ajaminen tekivät hallaa onnistumiselle, 6.2:2:6
+        \item vetivät johtopäätöksen että sovelluksen ajaminen, oli kyseessä oikea ratkaisu tai ei, vaikuttaa olevan onnistuva ohjelmointi lähestymistapa, 6.2:2:11
+        \item koodin kirjoittaminen ilman ajamista isoissa paloissa, päinvastoin, 6.2:2:13
+    \end{itemize}
+\end{itemize} 
+
+
+\subsection{muistiinpanoja}
+
+\begin{itemize}
+    \item Ennusteet auttavat opettajia tunnistamaan riskirajoilla olevia opiskelijoita, ja parantamaan opetusmenetelmiä\cite{carter2015normalized}, Abstract:1:3
+    \item Error Quotient asteikko\cite{jadud2006methods} ja Watwinin pisteasteikko\cite{watson2014no} ovat saavuttaneet menestystä tarkastellen ainoastaan opiskelijoiden kääntämis-yrityksiä(compilation), Abstract:1:6
+    \item dataa ilmeisesti kerätty oppimisprosessin aikana striimaten\cite{carter2015normalized}, Introduction:1:1, 2. Background and related work:2:1
+        \begin{itemize}
+            \item NPSM keräsi 11 muuttujaa, joista yksi on käytetty aktiivinen aika, 3.2:2:8
+            \item näistä kymmenen normalisoitiin tehtävään käytettyyn aikaan, 3.2:1:7
+        \end{itemize}
+    \item menetelmät ovat koulutuksellinen (educational) datan louhinta ja oppimis analytiikka
+    \begin{itemize}
+        \item Lue ainakin sisälysluettelot viitteistä 3 ja 24
+    \end{itemize}
+    \item Ohjelmointi-opetukseen kätevää lisätä data-louhintaa, koska tavoitteena on parantaa opiskelijoiden toistoa, Introduction:2:4
+    \item ennusteita tehtiin
+    \begin{itemize}
+        \item yksittäisten tehtävänantojen arvosanoihin, 4.3.1
+        \begin{itemize}
+            \item selittävimmät oli tuntematon eli aloitustila, syntaksi virheiden kanssa painimenn ja ohjelman ajaminen ilman koodin korjausta (debugging), 4.3.2:3:3
+        \end{itemize}
+        \item tehtävien arvosanojen keskiarvoon, 4.3.2
+        \begin{itemize}
+            \item myöhäinen aloitusvaihe korreloi negatiivisesti, 4.3.2:3:4
+            \item syntaksivirheiden kanssa pitkään olo korreloi negatiivisesti, 4.3.2:3:4
+        \end{itemize}
+        \item Loppuarvosanan enenustaminen, 4.3.3
+        \begin{itemize}
+            \item tarkemmin, yritettiin selittää varianssi loppuarvosanoissa, 4.3.3:1:1
+        \end{itemize}
+    \end{itemize}
+    \item Mielenkiintoinen huomio optimaalisesta otoskoosta kappaaleessa 5:2:2
+    \item Kurssin aikana ennustamista kappaleessa 5
+    \item multivariate regression, 5.2:1:1
+    \item linear regression, 5.3:3:3
+    \item Mallista rakennetut ennustavat funktiot antavat käytettävissä olevia tuloksia, 5.3:3:12
+    \item Watwin-asteikko ja Error Quotient perustuvat NPSM mallin vähiten painotettuun merkittävään arvoon: "muokkaa syntaktisesti väärää koodia, edellinen ajo onnistunut", 6.2:3:1
+    \begin{itemize}
+        \item Lineaari regression ajaminen pelkästään tällä arvolla, NU:lla, "explains more variance" kuin kumpikaan asteikoista
+        \begin{itemize}
+            \item Vahva epäilys että mittaukset ohjelmointikäytökseen ajamis-käytöksen lisäksi suoriutuvat hyvin
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\section{Muistiinpanoja: Methods and Tools for Exploring Novice Compilation Behaviour\cite{jadud2006methods}}
+
+Skouppi: Ohjelmoinit kurssimenestyksen ennustaminen
+
+\begin{itemize}
+    \item Tarkastelee kääntämis-käyttäytymistä, (compilation behaviour)
+    \begin{itemize}
+        \item Tarkastelee siis kirjoitettavan koodin syntaktista tilaa
+    \end{itemize}
+    \item Java kurssille tehty tutkimus
+    \begin{itemize}
+        \item BlueJ-ympäristö
+    \end{itemize}
+    \item Kysymyksiä
+    \begin{itemize}
+        \item Suuria muutoksia session aikana?
+        \item Pitkä-kestoisia muutoksia?
+        \item ongelmallisia syntaksi-virheitä?
+        \item minne muutokset sijoittuivat?
+    \end{itemize}
+    \item Valitut muuttujat:
+    \begin{itemize}
+        \item ErrType
+        \item Delta-T: ajojen välinen aika
+        \item Delta-Ch: muutettujen merkkien määrä
+        \item Location: sijainti koodissa
+    \end{itemize}
+    \item Error Quotient
+    \begin{itemize}
+        \item Collate: parit tapahtumien välillä sessiossa
+        \item Calculate: algoritmin mukainen pisteytys kunkin tapahtuman välillä
+        \begin{itemize}
+            \item Jos molemmat ovat virheellisiä -> pisteet kasvaa
+        \end{itemize}
+        \item Normalize: normalisoidaan pistemäärä jakamalla tulos yhdellätoista. Yksitoista on mahdollisten tilojen summa
+        \item Average: keskiarvo parien pisteistä sessiossa -> ERROR QUOTIENT
+    \end{itemize}
+    \item on korrelaatiota opiskelijan EQ:n, loppuarvosanana ja tehtävien arvosanojen keskiarvon välillä on korrelaatiota
+    \begin{itemize}
+        \item ei kuitenkaa sovi kovinkaan tarkasti: EQ lienee varsin kapea mittari
+        \item tarkempi sovitus EQ:n ja loppuarvosanan välillä, edelleen epätarkka
+    \end{itemize}
+    \item eivät voi tehdä vahvoja väitteitä, että EQ:ta voisi käyttää ennustavana asteikkona tentti-asteikkoon
+    \begin{itemize}
+        \item Liikaa puuttuvaa tietoa
+    \end{itemize}
+    \item Paperissa ei mainita mihinkään malliin sovittamista
+\end{itemize}
+
+
+\section{Watson-Score artikkelin muistiinpanoja\cite{watson2013predicting}}
+
+\begin{itemize}
+    \item Halutaan tunnistaa vaikeuksissa olevat opiskelijat mahdollisimman varhaisessa vaiheessa
+    \begin{itemize}
+        \item varhainen opettajan puuttuminen
+    \end{itemize}
+    \item otos: 45 oppilasta
+    \begin{itemize}
+        \item yliopiston johdatus ohjelmointiin-kursi
+        \item koodi-snapshot jokaisen ajon yhteydessä
+    \end{itemize}
+    \item pisteytys
+    \begin{itemize}
+        \item rangaistaan ajasta, joka kuluu tietyn ongelman ratkaisemiseen
+        \item verrokkina muut opiskelijat
+        \item normalisoituna arvo nollan ja yhden välillä
+    \end{itemize}
+    \item Käytännösssä kyseessä on tilakone: tarkastellaan perättäisten tilojen vuorovaikutusta
+    \item parit muodostettu perättäisistä ajoista ja tiloista tiedosto kohtaisesti. Kronologisessa järjestyksessä hukkuu tieto useamman tiedoston välisistä tiloista
+    \item identtiset, perättäiset tilat poistettu IDE:n ominaisuuden vuoksi
+    \item poisto-korjaukset suodatettu
+    \item virheviestien yleistys
+    \item työaikaarviointiin liittyi ongelmia, koska parit on muodostettu tiedostokohtaisesti. Aika käytetty kuhunkin tiedostoon arvioitu koko tapahtumajonosta
+    \item soveltuvat ennustavat ominaisuudet
+    \begin{itemize}
+        \item peräkkäiset virheet olivat
+        \begin{itemize}
+            \item virheellisiä yleensä
+            \item virhetyypit ovat samanlaisia
+            \item virhetyypit erilaiset
+            \item sama virhesijainti
+        \end{itemize}
+        \item keskiarvoinen virheen suoritus/selvitysaika. Huomioitiin että eri virheet vaativat eri aikamäärän
+        \begin{itemize}
+            \item Jälleen yleisen virhetyypin mukaan! Vertailu tapahtuu yleisen virhetyypin mukaan ja vertaillen muihin opiskelijoihin.
+        \end{itemize}
+        \item rangaistus-pisteet valittiin brute-force haulla, reilun pisteytyksen saavuttamiseksi. Testattiin cross-validation-menetelmällä
+    \end{itemize}
+    \item arviointi
+    \begin{itemize}
+        \item lineaari-regresio
+        \begin{itemize}
+            \item opiskelijoiden Watwin-pisteytys itsenäinen muuttuja
+            \item opiskelijoiden kurssin tehtävien pisteytys koko kurssin ajalta
+        \end{itemize} 
+        \item Harkittiin luokittelijaa kyseisen yliopiston arvosana-asteikon mukaan
+        \item on lineaarinen relaatio Watwin-pisteytyksen ja suorituksen välillä, ilman merkittäviä poikkeavuuksia
+    \end{itemize}
+\end{itemize}
+
+\chapter{Berginin ohjelmointiennustamis-artikkelin muistiinpanot}
+
+Berginin artikkeli koneoppimisen käyttämisestä\cite{bergin2015using}
+
+\begin{itemize}
+    \item Motivaatio
+    \begin{itemize}
+        \item ohjelmoinnin oppimisessa vaikeuksia: korkea pudotusaste
+        \item vaikeuksissa olevan opiskelijan tunnistaminen on vaikeaa ajoissa suuresta opiskelija määrästä johtuen.
+        \begin{itemize}
+            \item ajoitus tärkeä! Liian myöhään, niin opiskelija ei voi jättäytyä pois, tai ohjaajan tuki on myöhässä
+        \end{itemize}
+        \item edeltävissä tutkimuksissa ongelmia
+        \begin{itemize}
+            \item tarkat parametrit: biased findings
+            \item validaatio-tutkimuksista puuteta
+            \item parhaimmissa lähinnä tilastollisia menetelmiä
+            \begin{itemize}
+                \item rajoittuneet näiden mallien oletuksiin -> ei välttämättä parhain malli
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \item Principal Component Analysis (PCA) ulottuvuuksien pienentämiseen
+    \item paperin tarkoituksena on ENNUSTAA ennen kurssin alkua, että miten kurssi etenee
+    \begin{itemize}
+        \item Tarkemmat kuvaukset arvoista löytyy artikkelin neljännestä viitteestä
+        \item etuna on että ei tarvita tietoa kurssityöstä, saati tarkkaa mallia tällaisen tiedon käyttämiseen
+    \end{itemize}
+    \item valittujen mallien vaatimuksena on että ne ovat toteutettavissa!
+    \item testatut koneoppimis-algoritmit
+    \begin{itemize}
+        \item logistic regression
+        \item k-nearest neighbor
+        \item backpropagation
+        \item C4.5
+        \begin{itemize}
+            \item Päättelypuu-algoritmi
+        \end{itemize}
+        \item naive Bayes
+        \item support vector machine
+    \end{itemize}
+    \item Naive Bayes vahvin tarkkuudessa ja herkkyydessä (accuracy, sensitivity)
+\end{itemize}
+
+\begin{itemize}
+    \item e-oppiminen on ollut suosittu tutkimuksen kohde vuodesta 2000 eteenpäin\cite{Brusilovsky:2010:LSP:1656255.1656257}
+    \item opetusohjelmistojen tukijat toivovat siirtymistä passiivisesta ja tehottomasta lukemalla oppimisesta, aktiiviseen tekemällä oppimiseen\cite{Brusilovsky:2010:LSP:1656255.1656257}
+    \item olemassa olevien työkalujen integroiminen ja personoiminen on ollut vähäistä teknisten vaikeuksien vuoksi
+    \item opiskelijoiden etenemisen seuraaminen hankalaa olemassa olevissa työkaluissa
+    \item integroidun järjestelmän on mahdollistettava työkalun käyttö ilman montaa kirjautumista
+    \item integroidun järjestelmän on pystyttävä seuraamaan opiskelijoiden toimintoja (kaikista mukana olevista järjestelmistä) ja tallennettuna siten että muut järjestelmät voivat hyödyntää niitä
+    \item integroidun järjestelmän on mahdollistettava opiskelijoiden tiedon päätteleminen heidän kirjatuista toiminnoistaan eri järjestelmissä
+    \item käytetyt työkalut parantavat tehtäväpalautukisen arvosanoja
+    \begin{itemize}
+        \item ei kyselyä ryhmälle, joka ei käyttänyt työkalua
+    \end{itemize}
+    \item Työkalua suunnitellessa käyttötarkoituksen mukainen työkalun personointi on tärkeää: vahvistaa e-oppimisen hyötyjä. Muun muassa luonteva ohjelmistossa suunnistaminen on tärkeää
+\end{itemize}
+
+\end{document}
