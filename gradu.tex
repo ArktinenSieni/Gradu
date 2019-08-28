@@ -133,20 +133,108 @@ The thesis should have an introduction chapter. Other chapters can be named acco
 
 \section{SQL:n oppiminen}
 
-Tietotekniikka-alalla SQL-opinnot ovat kuuluneet IT-alan opintoihin vuosikymmenien ajan. Tietokantakieli SQL on nykyajan standardi tekniikka pitkäaikaiseen ja saavutettavissa olevan tiedon tallentamiseen sekä käsittelyyn. Pitkään historaan nähden, SQL:n opetus on saanut varsin vähäistä huomiota tieteellisissä piireissä\cite{Taipalus:2019:EFS:3287324.3287359}. Esimerkiksi aiheesta että mikä on SQL:n opiskelussa vaikeaa. Kyseisen alueen tuloksen ovat tulkinnanvaraisia\cite{Taipalus:2019:EFS:3287324.3287359}.
+\begin{itemize}
+    \item SQL on yksi välttämättömistä aiheista korkeakouluopetuksessa
+    \item yksinkertaisen näköisen syntaksin vuoksi SQL:n koko tehon oppiminen voi olla hankalaa
+    \item SQLator on vuonna 2004 käytössä ollut web-pohjainen interaktiivinen nettikäyttöliittymä SQL:n oppimiseen
+    \item SQLator:n päätoimintona on kyselyjen arviointi, kuinka oiken kyselyn muodostus on
+    \item SQLator tarjoaa ohjaajille mahdollisuuden luoda ja täyttää tietokanta kaavioita, ja antaa niihin liittyvän kokoelman SQL-kyselyitä
+    \item e-oppiminen oli ainakin vuonna 2004 mielenkiintoa herättävä aihe akateemisessa maailmass a ja teollisuudessa
+    \item e-oppimista harkitessa on tärkeää kysyä että onko teknologian käyttö pedagogisesti järkevää, ja opetuksellisesti arvokasta
+    \item mielenkiintoa herättävä teknologia oikein käytettynä auttaa opiskelijoita saavuttamaan aiheen syväoppimista
+    \item on olemassa useita menestyksestä nauttivia e-oppimis teknologioita
+    \item e-oppimisen voi jakaa kolmeen luokkaan
+    \begin{itemize}
+        \item "management system"
+        \item "collaborative learning"
+        \item työkalut jotka kohdistavat tietyt oppimisaktiviteetit, esimerkiksi simulaattorit, interaktiiviset työkalut ja Multiple Choise Question-tietopankit
+    \end{itemize}
+    \item SQLator kuuluu kolmanteen luokkaan. On netti-oppimistyöalusta (online learning workbench)
+    \item SQLator tarjoaa
+    \begin{itemize}
+        \item lyhyitä multimediakursseja, jotka esittelevät peruskonsepteja
+        \item kokoelman tietokantoja joihin liittyy omia harjoituskyselyitä
+        \item mahdollisuuden kirjoittaa ja suorittaa mitä tahansa SQL-kyselyitä annettuihin tietokantoihin
+        \item pääominaisuutena kyvyn arvioida yritettyjä SQL-kyselyjä kysyttyihin harjoituskysymyksiin
+        \item oppijalle mahdollisuuden kirjata muistiinpanoja omista yrityksistä, seurata yksilön etenemistä tila-raporteilla, ja ryhmän etenemistä tilastojen perusteella
+        \item oppijalle mahdollisuuden antaa palautetta ja olla vuorovaikutuskessa suoraan opetus henkilökuntaan
+    \end{itemize}
+    \item ymmärrys siitä, mikä on opiskelijan käsitys oppimisesta, on tärkeää käyttäessä teknologia työkaluja fasilitoimaan oppimista. Tämä on tärkeää aina opettamisessa, mutta sitäkin tärkeämpää opiskelija-opettaja-kontaktin puuttuessa
+    \item SQLator lähestyy tätä kohdistamalla oppijan huomion tuotteen sijasta itse prosessiin. Tämä tapahtuu koska SQLator sallii opiskelijan keskittymisen konseptin kehittymiseen sen sijaan että opiskelija pyrkii arvioimaan häneen kohdistuvia odotuksia.
+    \item SQL on hyväksytyin ja laahasti käytetty kieli tietokantojen hallinnoimiseen
+    \item SQL-komennot sisällyttävät datan määrittämisen, manipuloimisen ja hallinnoimisen
+    \item SQL SELECT-komennon syntaksin yksinkertaisuus antaa helposti harhaanjohtavan kuvan yksinkertaisuudesta oppijoiden mielissä
+    \item SQL on vahva kyselykieli, jolla voidaan luoda hyvin monimutkaisia kyselyitä
+    \item SQL:n deklaratiivinen luonne on hankala monelle oppijalle: SQL vaatii oppijoita ajattelemaan kokelmissa askelten sijasta
+    \item kokemus osoittaa SQL:n olevan vaikea ja monimutkainen kieli oppia. SQL:n laaja käyttö ja sovellettavuus 
+    \item kokemukset osoittavat että paras tapa oppia SQL:a on tarjota hyvin ohjattuja harjoitus sessioita, ja oppia omista virheistä
+    \begin{itemize}
+        \item Yksi tapa saavuttaa: tehtäväkokoelma, jonka tarkastaa kokenut SQL-käyttäjä
+        \begin{itemize}
+            \item ongelmana tehtävien arvioiminen: monia tapoja kirjoittaa sama kysely -> tekee arvioimisesta aikaa vievää -> vaarantaa opiskelijoiden palautteen
+            \item SQLator rakennettu tällä oletuksella: korvaa ihminen koneella
+        \end{itemize}
+    \end{itemize}
+    
+    \item kehitetty SQL kyselyjen arvioimisen laskennallisen monimutkaisuuden vuoksi
+    \item kehitetty käytännön syistä: SQL:n laaja käyttö oppimisessa ja opetuksessa. Opetusta tapahtuu korkeakoulu opetuksessa sekä ammattilais koulutuskursseilla
+    \item tärkein ominaisuus on SQLator Equivalence Engine, joka arvioi vastaako ehdotettu vastaus englanninkielistä ohjetta
+    \item sisältää useita valittavia tietokantoja
+    \item kuhunkin tietokantaan kuuluu satoja skenaarioita joissa on haluttua kyselyä kuvaavia ohjeita
+    \item kukin skenaario voidaan kategorisoida eri ryhmiin monimutkaisuuden tai kontekstin mukaan
+    \item esi-määritellyt kyselyt edustavat SQLator:n ydin-tietoa
+    \item pääsy kaikkialta
+    \item autentikointi kirjautumistunnuksilla, jotka määrittävät käyttäjän roolin
+    \item opiskelijalla pääsy perusominaisuuksin. Opettajalla enemmän toimintoja, esimerkiksi opiskelijoiden valvominen. Admin ylläpitää järjestelmää, tietokantoja ja kyselyitä
+    \begin{itemize}
+        \item opisklija valitsee ja tututstuu tietokantaan
+        \item opiskelija valitsee kyselyn, ja lähtee ratkaisemaan kyselyä
+        \item SQLator arvioi kyselyn
+        \begin{itemize}
+            \item oikein: kirjataan ylös ja näkyy yhteenvetona opiskelijalla
+            \item väärin: opiskelija voi yrittää kyselyä uudestaan
+            \item ei saa ratkaistua: voi tarkkailla oikeaa ratkaisua
+        \end{itemize}
+    \end{itemize}
+    \item tarjoaa interaktiivisen ympäristön, millä tutustua tietokantoihin ilman tehtävää/arviointia
+    \item tarjoaa multimedia-opetusmateriaalia SQL:stä
+    \item tarjoaa mahdollisuudet palautteen, jota opettajat tarkastelevat palvelusta tai sähköpostitse
+    \item antaa hallinnan plagiarismista
+    \begin{itemize}
+        \item väheni, koska annetut kyselyt ovat satunnaisia
+        \item helppo suorittaa tarkistuksia
+    \end{itemize}
+    \item tilastot lokitiedoista mahdollistavat opiskelutapojen analysoimisen
+    \item käsityö väheni: merkkaaminen automaattista, ksysymykset suoraan ohjaajille
+    \item vertailussa kahden vuoden tenttiarvosanat ennen ja jälkeen SQLator:n käyttöönoton
+    \begin{itemize}
+        \item tentin kriteerit eivät muuttuneet
+        \item arvosanat paranivat
+        \item ei kuitenkaan täysin pätevä vertailu: eri opiskelijaryhmät
+    \end{itemize}
+    \item vihjesystemi tuleva ominaisuus
+\end{itemize}
 
-Perinteisesti SQL:n opetuksen tutkimus on kohdistunut opetustyökaluihin ja opiskelijoiden tekemiin virheisiin\cite{Taipalus:2019:EFS:3287324.3287359}. Opetustyökaluihin lukeutuu usein erilaiset opetusohjlemistot.
+SQL on laajasti hyväksytty kieli tietokantojen hallinnoimiseen niin akateemisissa kuin it-teollisuuden piirissä. Näennäisestä yksinkertaisesta syntaksistaan huolimatta se on voimakas kyselykieli, joka mahdollistaa monimutkaisiakin kyselyjä tietokantaan. SQL komennot sisällyttävät mahdollisuudet määritellä, manipuloida sekä hallinnoida dataa. Luonteeltaan SQL on deklaratiivinen, joka tarkoittaa sitä että kyselyjä kirjoittaessa on ajateltava kokoelmissa. Kyselyt käytännössä kuvailevat haluttua lopputulosta laskematta sitä ennen itse kyselyn suorittamista.
+
+Tietotekniikka-alalla SQL-opinnot ovat kuuluneet IT-alan opintoihin vuosikymmenien ajan. Pitkään historaan nähden, SQL:n opetus on saanut varsin vähäistä huomiota tieteellisissä piireissä\cite{Taipalus:2019:EFS:3287324.3287359}. Esimerkiksi aiheesta että mikä on SQL:n opiskelussa vaikeaa. SQL:n vaikeiden osa-alueiden tutkimuksen tulokset ovat tulkinnanvaraisia\cite{Taipalus:2019:EFS:3287324.3287359}. Perinteisesti SQL:n opetuksen tutkimus on kohdistunut opetustyökaluihin ja opiskelijoiden tekemiin virheisiin\cite{Taipalus:2019:EFS:3287324.3287359}. Opetustyökaluihin lukeutuvat esimerkiksi erilaiset e-oppimisohjelmistot. 
 
 
 \subsection{SQL opetustyökalut}
 
-Tutkimus SQL opetuskaluihin nousennee tutkijoiden kiinnostuksesta e-oppimiseen. Se on ollut suosittu tutkimuksen aihe vuodesta 2000 alkaen. E-oppimista perustellaan mahdollisuudella oppia aktiivisesti tekemällä, sen sijaan että opiskellaan asioita passiivisesti lukemalla. Kehitettyjen työkalujen on todettu parantavan opiskelijoiden kurssiarvosanaa\cite{Brusilovsky:2010:LSP:1656255.1656257}, tosin tilastoja verrokeista ei ole annettu.
+Parhaiten SQL:n oppimisen on havaittu toteutuvan ohjatuissa opetussessioissa ja siten että opiskelijoilla on mahdollisuus huomata ja oppia virheistään\cite{sadiq2004sqlator}. Yksi tapa näiden saavuttamiseen ovat tehtäväkokoelmat, jotka tarkistaa SQL:n ammattilainen. Ratkaisuna tämä on työläs muun muassa suuren opiskelijamäärän ja itse tuloksen tarkistamisen vaikeuden vuoksi. Kyselyjen tarkastaminen voi olla hidasta, sillä saman taulun saamiseen voidaan kirjoittaa erilaisia kyselyitä. Ratkaisun ollessa työläs vaarantuu opiskelijoiden saama yksilöllinen palaute. Näin perustellaan SQL e-opetustyökalujen kehittämistä.
 
-E-oppimistyökaluissa yleensä on olennaista käyttötarkoituksen mukainen suunnittelu. Muun muassa luonteva navigointi opetusympäristössä parantaa merkittävästi opetustyökalun käyttöastetta ja sen tarjoamaa hyötyä\cite{Brusilovsky:2010:LSP:1656255.1656257}.
+E-oppiminen on ollut tutkimusaiheena kasvavassa suosiossa ainakin vuodesta 2000 alkaen. E-oppimista perustellaan mahdollisuudella oppia aktiivisesti tekemällä, sen sijaan että opiskellaan asioita passiivisesti lukemalla. E-oppiminen on jaoteltavissa kolmeen luokkaan\cite{sadiq2004sqlator}: hallintajärjestelmiin (management system), yhteisölliseen oppimiseen (collaborative learning) ja kohdennettuihin työkaluihin. Hallintajärjestelmiin lukeutuvat esimerkiksi sovellukset WebCT ja Blackboard. Yhteisölliseen oppimiseen kuuluu erilaiset kommunikointitavat, esimerkiksi foorumit, video-konferenssit tai sähköposti. Kohdennetut työkalut ovat puolestaan esimerkiksi simulaattoreita, interaktiivisia työkaluja sekö monikysymys-tietopankkeja (Multiple Choice Question bank). SQL e-oppimistyökalut, kuten esimerkiksi SQLator kuuluvat kolmanteen luokkaan.
 
-SQL-kyselykielen opetteluun on olemassa useita opetustyökaluja. Yksittäinen opetustyökalu ei yksinään välttämättä tarjoa opetuksen vaatimia ominaisuuksia. Integroida olemassa olevia työkaluja, joissa tuodaa useampi opetusympäristö yhteen käyttöliittymään. Tutkimus olemassa olevien opetustyökalujen yhdistämiseen on vähäistä, ilmeisesti integroitujen työkalujen teknisestä vaikeudesta johtuen\cite{Brusilovsky:2010:LSP:1656255.1656257}.
+Kehitettyjen e-oppimistyökalujen on todettu parantavan opiskelijoiden kurssiarvosanaa, ja saavat käyttäjiltään hyvää palautetta\cite{Brusilovsky:2010:LSP:1656255.1656257}. Suuntaa antava vertailu SQL:n kontekstissa saatiin vertailemalla kahden perättäisen vuoden tenttiarvosanajakaumaa, jossa jälkimmäisenä vuotena käyttöön otettiin SQLator\cite{sadiq2004sqlator}. Tenttiarvosanajakauma parani vuonna jona SQLator otettiin käyttöön. Onnistuneesti toteutettuna e-oppimistyökalut tukee opiskelijoittensa syväoppimista opettamastaan aiheestaan\cite{sadiq2004sqlator}. 
 
-Integroitujen työkalujen helppokäyttöisyyden varmistamiseksi on Brislovin ym. \cite{Brusilovsky:2010:LSP:1656255.1656257} mukaan mahdollistettava single sign-on, opiskelijoiden toimintojen seuraaminen ja tallennettujen tietojen saatavuus. Tallennetun tiedon olisi tärkeää olla muodossa josta opiskelijoiden osaamista on mahdollista päätellä.
+E-oppimistyökaluissa on olennaista käyttötarkoituksen mukainen suunnittelu. Muun muassa luonteva navigointi opetusympäristössä parantaa merkittävästi opetustyökalun käyttöastetta ja sen tarjoamaa hyötyä\cite{Brusilovsky:2010:LSP:1656255.1656257}. Aktiivisen opettajan läsnäolon puute oppimistilanteessa korostaa tarvetta ymmärtää opiskelijan käsitystä oppimisesta\cite{sadiq2004sqlator}.
+
+% Kerro SQLator:sta
+
+SQLatorin lisäksi SQL-kyselykielen opetteluun on olemassa useita e-oppimistyökaluja. Yksittäinen opetustyökalu ei yksinään välttämättä tarjoa opetuksen vaatimia ominaisuuksia. Integroida olemassa olevia työkaluja, joissa tuodaa useampi opetusympäristö yhteen käyttöliittymään. Tutkimus olemassa olevien opetustyökalujen yhdistämiseen on vähäistä, ilmeisesti integroitujen työkalujen teknisestä vaikeudesta johtuen\cite{Brusilovsky:2010:LSP:1656255.1656257}.
+
+Integroitujen työkalujen helppokäyttöisyyden varmistamiseksi on Brusilovskyn ym. \cite{Brusilovsky:2010:LSP:1656255.1656257} mukaan mahdollistettava single sign-on, opiskelijoiden toimintojen seuraaminen ja tallennettujen tietojen saatavuus. Tallennetun tiedon on tärkeää olla muodossa josta opiskelijoiden osaamista on mahdollista päätellä.
 
 
 \subsection{Tutkimusta SQL:n oppimisesta / Opiskelijoiden virheet SQL:ssä}
