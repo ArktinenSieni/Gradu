@@ -330,4 +330,133 @@ Berginin artikkeli koneoppimisen käyttämisestä\cite{bergin2015using}
     \item Työkalua suunnitellessa käyttötarkoituksen mukainen työkalun personointi on tärkeää: vahvistaa e-oppimisen hyötyjä. Muun muassa luonteva ohjelmistossa suunnistaminen on tärkeää
 \end{itemize}
 
+
+\begin{itemize}
+    \item SQL on yksi välttämättömistä aiheista korkeakouluopetuksessa
+    \item yksinkertaisen näköisen syntaksin vuoksi SQL:n koko tehon oppiminen voi olla hankalaa
+    \item SQLator on vuonna 2004 käytössä ollut web-pohjainen interaktiivinen nettikäyttöliittymä SQL:n oppimiseen
+    \item SQLator:n päätoimintona on kyselyjen arviointi, kuinka oiken kyselyn muodostus on
+    \item SQLator tarjoaa ohjaajille mahdollisuuden luoda ja täyttää tietokanta kaavioita, ja antaa niihin liittyvän kokoelman SQL-kyselyitä
+    \item e-oppiminen oli ainakin vuonna 2004 mielenkiintoa herättävä aihe akateemisessa maailmass a ja teollisuudessa
+    \item e-oppimista harkitessa on tärkeää kysyä että onko teknologian käyttö pedagogisesti järkevää, ja opetuksellisesti arvokasta
+    \item mielenkiintoa herättävä teknologia oikein käytettynä auttaa opiskelijoita saavuttamaan aiheen syväoppimista
+    \item on olemassa useita menestyksestä nauttivia e-oppimis teknologioita
+    \item e-oppimisen voi jakaa kolmeen luokkaan
+    \begin{itemize}
+        \item "management system"
+        \item "collaborative learning"
+        \item työkalut jotka kohdistavat tietyt oppimisaktiviteetit, esimerkiksi simulaattorit, interaktiiviset työkalut ja Multiple Choise Question-tietopankit
+    \end{itemize}
+    \item SQLator kuuluu kolmanteen luokkaan. On netti-oppimistyöalusta (online learning workbench)
+    \item SQLator tarjoaa
+    \begin{itemize}
+        \item lyhyitä multimediakursseja, jotka esittelevät peruskonsepteja
+        \item kokoelman tietokantoja joihin liittyy omia harjoituskyselyitä
+        \item mahdollisuuden kirjoittaa ja suorittaa mitä tahansa SQL-kyselyitä annettuihin tietokantoihin
+        \item pääominaisuutena kyvyn arvioida yritettyjä SQL-kyselyjä kysyttyihin harjoituskysymyksiin
+        \item oppijalle mahdollisuuden kirjata muistiinpanoja omista yrityksistä, seurata yksilön etenemistä tila-raporteilla, ja ryhmän etenemistä tilastojen perusteella
+        \item oppijalle mahdollisuuden antaa palautetta ja olla vuorovaikutuskessa suoraan opetus henkilökuntaan
+    \end{itemize}
+    \item ymmärrys siitä, mikä on opiskelijan käsitys oppimisesta, on tärkeää käyttäessä teknologia työkaluja fasilitoimaan oppimista. Tämä on tärkeää aina opettamisessa, mutta sitäkin tärkeämpää opiskelija-opettaja-kontaktin puuttuessa
+    \item SQLator lähestyy tätä kohdistamalla oppijan huomion tuotteen sijasta itse prosessiin. Tämä tapahtuu koska SQLator sallii opiskelijan keskittymisen konseptin kehittymiseen sen sijaan että opiskelija pyrkii arvioimaan häneen kohdistuvia odotuksia.
+    \item SQL on hyväksytyin ja laahasti käytetty kieli tietokantojen hallinnoimiseen
+    \item SQL-komennot sisällyttävät datan määrittämisen, manipuloimisen ja hallinnoimisen
+    \item SQL SELECT-komennon syntaksin yksinkertaisuus antaa helposti harhaanjohtavan kuvan yksinkertaisuudesta oppijoiden mielissä
+    \item SQL on vahva kyselykieli, jolla voidaan luoda hyvin monimutkaisia kyselyitä
+    \item SQL:n deklaratiivinen luonne on hankala monelle oppijalle: SQL vaatii oppijoita ajattelemaan kokelmissa askelten sijasta
+    \item kokemus osoittaa SQL:n olevan vaikea ja monimutkainen kieli oppia. SQL:n laaja käyttö ja sovellettavuus 
+    \item kokemukset osoittavat että paras tapa oppia SQL:a on tarjota hyvin ohjattuja harjoitus sessioita, ja oppia omista virheistä
+    \begin{itemize}
+        \item Yksi tapa saavuttaa: tehtäväkokoelma, jonka tarkastaa kokenut SQL-käyttäjä
+        \begin{itemize}
+            \item ongelmana tehtävien arvioiminen: monia tapoja kirjoittaa sama kysely -> tekee arvioimisesta aikaa vievää -> vaarantaa opiskelijoiden palautteen
+            \item SQLator rakennettu tällä oletuksella: korvaa ihminen koneella
+        \end{itemize}
+    \end{itemize}
+    
+    \item kehitetty SQL kyselyjen arvioimisen laskennallisen monimutkaisuuden vuoksi
+    \item kehitetty käytännön syistä: SQL:n laaja käyttö oppimisessa ja opetuksessa. Opetusta tapahtuu korkeakoulu opetuksessa sekä ammattilais koulutuskursseilla
+    \item tärkein ominaisuus on SQLator Equivalence Engine, joka arvioi vastaako ehdotettu vastaus englanninkielistä ohjetta
+    \item sisältää useita valittavia tietokantoja
+    \item kuhunkin tietokantaan kuuluu satoja skenaarioita joissa on haluttua kyselyä kuvaavia ohjeita
+    \item kukin skenaario voidaan kategorisoida eri ryhmiin monimutkaisuuden tai kontekstin mukaan
+    \item esi-määritellyt kyselyt edustavat SQLator:n ydin-tietoa
+    \item pääsy kaikkialta
+    \item autentikointi kirjautumistunnuksilla, jotka määrittävät käyttäjän roolin
+    \item opiskelijalla pääsy perusominaisuuksin. Opettajalla enemmän toimintoja, esimerkiksi opiskelijoiden valvominen. Admin ylläpitää järjestelmää, tietokantoja ja kyselyitä
+    \begin{itemize}
+        \item opisklija valitsee ja tututstuu tietokantaan
+        \item opiskelija valitsee kyselyn, ja lähtee ratkaisemaan kyselyä
+        \item SQLator arvioi kyselyn
+        \begin{itemize}
+            \item oikein: kirjataan ylös ja näkyy yhteenvetona opiskelijalla
+            \item väärin: opiskelija voi yrittää kyselyä uudestaan
+            \item ei saa ratkaistua: voi tarkkailla oikeaa ratkaisua
+        \end{itemize}
+    \end{itemize}
+    \item tarjoaa interaktiivisen ympäristön, millä tutustua tietokantoihin ilman tehtävää/arviointia
+    \item tarjoaa multimedia-opetusmateriaalia SQL:stä
+    \item tarjoaa mahdollisuudet palautteen, jota opettajat tarkastelevat palvelusta tai sähköpostitse
+    \item antaa hallinnan plagiarismista
+    \begin{itemize}
+        \item väheni, koska annetut kyselyt ovat satunnaisia
+        \item helppo suorittaa tarkistuksia
+    \end{itemize}
+    \item tilastot lokitiedoista mahdollistavat opiskelutapojen analysoimisen
+    \item käsityö väheni: merkkaaminen automaattista, ksysymykset suoraan ohjaajille
+    \item vertailussa kahden vuoden tenttiarvosanat ennen ja jälkeen SQLator:n käyttöönoton
+    \begin{itemize}
+        \item tentin kriteerit eivät muuttuneet
+        \item arvosanat paranivat
+        \item ei kuitenkaan täysin pätevä vertailu: eri opiskelijaryhmät
+    \end{itemize}
+    \item vihjesystemi tuleva ominaisuus
+\end{itemize}
+
+\begin{itemize}
+    \item Ahadi ym. \cite{Ahadi:2016:SSM:2839509.2844640}  käyttivät datana yli 160 000 SQL snäpshottia yli 2000 opiskelijalta kahdeksan vuoden ajalta
+    \item Ahadi ym. \cite{Ahadi:2016:SSM:2839509.2844640} tekivät sääntö-pohjaisen luokittelijan jolla on kokonaistarkkuus 78\% enustaessa opiskelijan suoritusta
+    \item parempi ymmärrys opiskelijoiden SQL virheistä ja väärinymmärryksistä tarjoaa mahdollisuuden tehdä parempaa oppimateriaalia ja opetusta
+    \item SQL kielessä voi tehdä semanttisia ja syntaktisia virheitä
+    \item yleensä virheitä tarkastelevat tutkimukset ovat keskittyneet semanttisiin virheisiin
+    \item harvoin tutkimukset SQL työkaluista tarjoavat analyysia kerätystä datasta
+    \item AsseSQL
+    \item alustava (introductory) tietokanta-kurssi, suuri osa ohjelmissa Information Technology tai Software Engineering kandidaatti-tasolla
+    \item joka lukukauden päätteeksi seitsemän kysymyksen tentti, joissa kirjoitettiin SQL SELECT-kyselyjä. Kukin kysymyksistä kattaa yhden olennaisen alueen. Kysymykset tarkistettiin ajamalla ne oikeassa tietokannassa ja luokittelemalla mahdolliset virheet tarkemmin käsin
+    \item rakennettiin luokittelija luokittelemaan onnistuneet ja epäonnistuneet luokittelijat. Sai syötteenä tiedon syntaktisista virheistä, semanttisista virheistä ja yritysten määrän 480:lta oppilaalta. Luokittelija koulutettiin opiskelijoista joille annettiin sama identtinen kysymys.
+    \item luokittelijana PART: sääntöpohjainen luokittelija, rakentaa osittaisen (partial) C4.5. Esittää parhaan lehden sääntönä. Hallitsee hyvin puuttuvat arvot ja tarjoaa selkeän selityksen generoiduista C4.5 iteraatioista
+    \begin{itemize}
+        \item koulutettiin otoksella, jossa on yhtämonta onnistunutta ja epänonnistunutta opiskelijaa
+        \item N=480
+        \item 10-kertainen cross-validation
+        \item 77\% luokiteltiin oikein
+        \item toistuvien piirteiden, ylisovittamisen välttämiseksi ja ennustustarkkuuden parantamiseksi tehtiin piirre-valintaa (feature selection)
+        \begin{itemize}
+            \item correlation-based feature subset selection:
+            \begin{itemize}
+                \item genetic search
+                \item best first method
+                \item greedy stepwise method
+            \end{itemize}
+            \item valittiin neljä piirrettä luokittelijan kouluttamiseen
+            \begin{itemize}
+                \item kuinka monta ryhmittelyvirhettä
+                \item kuinka monta syntaksivirhettä
+                \item kuinka monta semanttista virhettä
+                \item yritysten kokonaislukumäärä
+            \end{itemize}
+        \end{itemize}
+        \item PART generoi viisi sääntöä
+    \end{itemize}
+    \item usein jos opiskelija lopettaa yrittämisen, on kyseessä syntaksivirhe, jota opiskelija ei saa korjattua
+    \item syntaktiset virheet yleisimpiä
+    \item epäonnistuvilla opiskelijoilla on enemmän virheitä ylipäänsä, molempia syntaktisia ja semanttisia
+    \item luokittelijan tutkimuskysymyksenä oli, mikä on sopiva määrä kamppailua on hyvä ennuset oikean vastauksen saamiseksi
+    \item ryhmittelyvirhe kolmanneksi yleisin, lähes aina esiintyi WHERE-komennossa jos oli esiintyäkseen: todennäköisesti vakava väärinymmärrys
+    \item määrittelemätön taulu kolmen yleisimmän syntaksivirheen joukossa. Tapahtuu kun useampi kuin yksi taulu, tai enemmän kun yksi SELECT-komento. 
+    \begin{itemize}
+        \item joko puuttuu ymmärrys halutun tiedon oikeasta sijainnista, tai taulun nimen väärin kirjoittaminen
+    \end{itemize}
+    \item koneoppimis-algoritmien tulokset ovat rajusti konteksti-riippuvaisia. Tarkkuus vaihteli 60\% ja 79\% välillä vaikka kyse olisi ollut samasta algoritmista ja samasta otoksesta
+\end{itemize}
 \end{document}

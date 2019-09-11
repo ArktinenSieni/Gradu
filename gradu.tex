@@ -133,106 +133,26 @@ The thesis should have an introduction chapter. Other chapters can be named acco
 
 \section{SQL:n oppiminen}
 
-\begin{itemize}
-    \item SQL on yksi välttämättömistä aiheista korkeakouluopetuksessa
-    \item yksinkertaisen näköisen syntaksin vuoksi SQL:n koko tehon oppiminen voi olla hankalaa
-    \item SQLator on vuonna 2004 käytössä ollut web-pohjainen interaktiivinen nettikäyttöliittymä SQL:n oppimiseen
-    \item SQLator:n päätoimintona on kyselyjen arviointi, kuinka oiken kyselyn muodostus on
-    \item SQLator tarjoaa ohjaajille mahdollisuuden luoda ja täyttää tietokanta kaavioita, ja antaa niihin liittyvän kokoelman SQL-kyselyitä
-    \item e-oppiminen oli ainakin vuonna 2004 mielenkiintoa herättävä aihe akateemisessa maailmass a ja teollisuudessa
-    \item e-oppimista harkitessa on tärkeää kysyä että onko teknologian käyttö pedagogisesti järkevää, ja opetuksellisesti arvokasta
-    \item mielenkiintoa herättävä teknologia oikein käytettynä auttaa opiskelijoita saavuttamaan aiheen syväoppimista
-    \item on olemassa useita menestyksestä nauttivia e-oppimis teknologioita
-    \item e-oppimisen voi jakaa kolmeen luokkaan
-    \begin{itemize}
-        \item "management system"
-        \item "collaborative learning"
-        \item työkalut jotka kohdistavat tietyt oppimisaktiviteetit, esimerkiksi simulaattorit, interaktiiviset työkalut ja Multiple Choise Question-tietopankit
-    \end{itemize}
-    \item SQLator kuuluu kolmanteen luokkaan. On netti-oppimistyöalusta (online learning workbench)
-    \item SQLator tarjoaa
-    \begin{itemize}
-        \item lyhyitä multimediakursseja, jotka esittelevät peruskonsepteja
-        \item kokoelman tietokantoja joihin liittyy omia harjoituskyselyitä
-        \item mahdollisuuden kirjoittaa ja suorittaa mitä tahansa SQL-kyselyitä annettuihin tietokantoihin
-        \item pääominaisuutena kyvyn arvioida yritettyjä SQL-kyselyjä kysyttyihin harjoituskysymyksiin
-        \item oppijalle mahdollisuuden kirjata muistiinpanoja omista yrityksistä, seurata yksilön etenemistä tila-raporteilla, ja ryhmän etenemistä tilastojen perusteella
-        \item oppijalle mahdollisuuden antaa palautetta ja olla vuorovaikutuskessa suoraan opetus henkilökuntaan
-    \end{itemize}
-    \item ymmärrys siitä, mikä on opiskelijan käsitys oppimisesta, on tärkeää käyttäessä teknologia työkaluja fasilitoimaan oppimista. Tämä on tärkeää aina opettamisessa, mutta sitäkin tärkeämpää opiskelija-opettaja-kontaktin puuttuessa
-    \item SQLator lähestyy tätä kohdistamalla oppijan huomion tuotteen sijasta itse prosessiin. Tämä tapahtuu koska SQLator sallii opiskelijan keskittymisen konseptin kehittymiseen sen sijaan että opiskelija pyrkii arvioimaan häneen kohdistuvia odotuksia.
-    \item SQL on hyväksytyin ja laahasti käytetty kieli tietokantojen hallinnoimiseen
-    \item SQL-komennot sisällyttävät datan määrittämisen, manipuloimisen ja hallinnoimisen
-    \item SQL SELECT-komennon syntaksin yksinkertaisuus antaa helposti harhaanjohtavan kuvan yksinkertaisuudesta oppijoiden mielissä
-    \item SQL on vahva kyselykieli, jolla voidaan luoda hyvin monimutkaisia kyselyitä
-    \item SQL:n deklaratiivinen luonne on hankala monelle oppijalle: SQL vaatii oppijoita ajattelemaan kokelmissa askelten sijasta
-    \item kokemus osoittaa SQL:n olevan vaikea ja monimutkainen kieli oppia. SQL:n laaja käyttö ja sovellettavuus 
-    \item kokemukset osoittavat että paras tapa oppia SQL:a on tarjota hyvin ohjattuja harjoitus sessioita, ja oppia omista virheistä
-    \begin{itemize}
-        \item Yksi tapa saavuttaa: tehtäväkokoelma, jonka tarkastaa kokenut SQL-käyttäjä
-        \begin{itemize}
-            \item ongelmana tehtävien arvioiminen: monia tapoja kirjoittaa sama kysely -> tekee arvioimisesta aikaa vievää -> vaarantaa opiskelijoiden palautteen
-            \item SQLator rakennettu tällä oletuksella: korvaa ihminen koneella
-        \end{itemize}
-    \end{itemize}
-    
-    \item kehitetty SQL kyselyjen arvioimisen laskennallisen monimutkaisuuden vuoksi
-    \item kehitetty käytännön syistä: SQL:n laaja käyttö oppimisessa ja opetuksessa. Opetusta tapahtuu korkeakoulu opetuksessa sekä ammattilais koulutuskursseilla
-    \item tärkein ominaisuus on SQLator Equivalence Engine, joka arvioi vastaako ehdotettu vastaus englanninkielistä ohjetta
-    \item sisältää useita valittavia tietokantoja
-    \item kuhunkin tietokantaan kuuluu satoja skenaarioita joissa on haluttua kyselyä kuvaavia ohjeita
-    \item kukin skenaario voidaan kategorisoida eri ryhmiin monimutkaisuuden tai kontekstin mukaan
-    \item esi-määritellyt kyselyt edustavat SQLator:n ydin-tietoa
-    \item pääsy kaikkialta
-    \item autentikointi kirjautumistunnuksilla, jotka määrittävät käyttäjän roolin
-    \item opiskelijalla pääsy perusominaisuuksin. Opettajalla enemmän toimintoja, esimerkiksi opiskelijoiden valvominen. Admin ylläpitää järjestelmää, tietokantoja ja kyselyitä
-    \begin{itemize}
-        \item opisklija valitsee ja tututstuu tietokantaan
-        \item opiskelija valitsee kyselyn, ja lähtee ratkaisemaan kyselyä
-        \item SQLator arvioi kyselyn
-        \begin{itemize}
-            \item oikein: kirjataan ylös ja näkyy yhteenvetona opiskelijalla
-            \item väärin: opiskelija voi yrittää kyselyä uudestaan
-            \item ei saa ratkaistua: voi tarkkailla oikeaa ratkaisua
-        \end{itemize}
-    \end{itemize}
-    \item tarjoaa interaktiivisen ympäristön, millä tutustua tietokantoihin ilman tehtävää/arviointia
-    \item tarjoaa multimedia-opetusmateriaalia SQL:stä
-    \item tarjoaa mahdollisuudet palautteen, jota opettajat tarkastelevat palvelusta tai sähköpostitse
-    \item antaa hallinnan plagiarismista
-    \begin{itemize}
-        \item väheni, koska annetut kyselyt ovat satunnaisia
-        \item helppo suorittaa tarkistuksia
-    \end{itemize}
-    \item tilastot lokitiedoista mahdollistavat opiskelutapojen analysoimisen
-    \item käsityö väheni: merkkaaminen automaattista, ksysymykset suoraan ohjaajille
-    \item vertailussa kahden vuoden tenttiarvosanat ennen ja jälkeen SQLator:n käyttöönoton
-    \begin{itemize}
-        \item tentin kriteerit eivät muuttuneet
-        \item arvosanat paranivat
-        \item ei kuitenkaan täysin pätevä vertailu: eri opiskelijaryhmät
-    \end{itemize}
-    \item vihjesystemi tuleva ominaisuus
-\end{itemize}
-
 SQL on laajasti hyväksytty kieli tietokantojen hallinnoimiseen niin akateemisissa kuin it-teollisuuden piirissä. Näennäisestä yksinkertaisesta syntaksistaan huolimatta se on voimakas kyselykieli, joka mahdollistaa monimutkaisiakin kyselyjä tietokantaan. SQL komennot sisällyttävät mahdollisuudet määritellä, manipuloida sekä hallinnoida dataa. Luonteeltaan SQL on deklaratiivinen, joka tarkoittaa sitä että kyselyjä kirjoittaessa on ajateltava kokoelmissa. Kyselyt käytännössä kuvailevat haluttua lopputulosta laskematta sitä ennen itse kyselyn suorittamista.
 
-Tietotekniikka-alalla SQL-opinnot ovat kuuluneet IT-alan opintoihin vuosikymmenien ajan. Pitkään historaan nähden, SQL:n opetus on saanut varsin vähäistä huomiota tieteellisissä piireissä\cite{Taipalus:2019:EFS:3287324.3287359}. Esimerkiksi aiheesta että mikä on SQL:n opiskelussa vaikeaa. SQL:n vaikeiden osa-alueiden tutkimuksen tulokset ovat tulkinnanvaraisia\cite{Taipalus:2019:EFS:3287324.3287359}. Perinteisesti SQL:n opetuksen tutkimus on kohdistunut opetustyökaluihin ja opiskelijoiden tekemiin virheisiin\cite{Taipalus:2019:EFS:3287324.3287359}. Opetustyökaluihin lukeutuvat esimerkiksi erilaiset e-oppimisohjelmistot. 
+Laajan käytön vuoksi SQL on helposti sovellettavissa opintojen ulkopuolella ja on näin yksi välttämättömämmistä oppiaineista IT-alalla. Laajasta käytöstä huolimatta SQL vaikuttaa olevan vaikea oppia. Vaikeuksien on arvioitu johtuvan SQL:n deklaratiivisesta luonteesta, ja SELECT-kyselyjen näennäisestä yksinkertaisuudesta\cite{sadiq2004sqlator}.
+
+Tietotekniikka-alalla SQL-opinnot ovat kuuluneet IT-alan opintoihin vuosikymmenien ajan. Pitkään historaan nähden, SQL:n opetus on saanut varsin vähäistä huomiota tieteellisissä piireissä\cite{Taipalus:2019:EFS:3287324.3287359}. Esimerkiksi aiheesta että mikä on SQL:n opiskelussa vaikeaa. SQL:n vaikeiden osa-alueiden tutkimuksen tulokset ovat tulkinnanvaraisia\cite{Taipalus:2019:EFS:3287324.3287359}. Perinteisesti SQL:n opetuksen tutkimus on kohdistunut opetustyökaluihin ja opiskelijoiden tekemiin virheisiin\cite{Taipalus:2019:EFS:3287324.3287359}. Opetustyökaluihin lukeutuvat esimerkiksi erilaiset e-oppimisohjelmistot.
 
 
 \subsection{SQL opetustyökalut}
 
-Parhaiten SQL:n oppimisen on havaittu toteutuvan ohjatuissa opetussessioissa ja siten että opiskelijoilla on mahdollisuus huomata ja oppia virheistään\cite{sadiq2004sqlator}. Yksi tapa näiden saavuttamiseen ovat tehtäväkokoelmat, jotka tarkistaa SQL:n ammattilainen. Ratkaisuna tämä on työläs muun muassa suuren opiskelijamäärän ja itse tuloksen tarkistamisen vaikeuden vuoksi. Kyselyjen tarkastaminen voi olla hidasta, sillä saman taulun saamiseen voidaan kirjoittaa erilaisia kyselyitä. Ratkaisun ollessa työläs vaarantuu opiskelijoiden saama yksilöllinen palaute. Näin perustellaan SQL e-opetustyökalujen kehittämistä.
+Parhaiten SQL:n oppimisen on havaittu toteutuvan ohjatuissa opetussessioissa ja siten että opiskelijoilla on mahdollisuus huomata virheitään ja oppia virheistään\cite{sadiq2004sqlator}. Yksi tapa näiden saavuttamiseen ovat tehtäväkokoelmat, jotka tarkistaa SQL:n ammattilainen. Ratkaisuna tämä on työläs muun muassa suuren opiskelijamäärän ja itse tuloksen tarkistamisen vaikeuden vuoksi. Kyselyjen tarkastaminen voi olla hidasta, sillä saman taulun saamiseen voidaan kirjoittaa erilaisia kyselyitä. Ratkaisun ollessa työläs vaarantuu opiskelijoiden saama yksilöllinen palaute. Näin perustellaan SQL e-opetustyökalujen kehittämistä.
 
-E-oppiminen on ollut tutkimusaiheena kasvavassa suosiossa ainakin vuodesta 2000 alkaen. E-oppimista perustellaan mahdollisuudella oppia aktiivisesti tekemällä, sen sijaan että opiskellaan asioita passiivisesti lukemalla. E-oppiminen on jaoteltavissa kolmeen luokkaan\cite{sadiq2004sqlator}: hallintajärjestelmiin (management system), yhteisölliseen oppimiseen (collaborative learning) ja kohdennettuihin työkaluihin. Hallintajärjestelmiin lukeutuvat esimerkiksi sovellukset WebCT ja Blackboard. Yhteisölliseen oppimiseen kuuluu erilaiset kommunikointitavat, esimerkiksi foorumit, video-konferenssit tai sähköposti. Kohdennetut työkalut ovat puolestaan esimerkiksi simulaattoreita, interaktiivisia työkaluja sekö monikysymys-tietopankkeja (Multiple Choice Question bank). SQL e-oppimistyökalut, kuten esimerkiksi SQLator kuuluvat kolmanteen luokkaan.
+E-oppiminen on ollut tutkimusaiheena kasvavassa suosiossa ainakin vuodesta 2000 alkaen. Se on herättänyt kiinnostusta niin työmaailmassa kuin akateemisissa piireissä. E-oppimista perustellaan mahdollisuudella oppia aktiivisesti tekemällä, sen sijaan että opiskellaan asioita passiivisesti lukemalla\cite{Brusilovsky:2010:LSP:1656255.1656257}. E-oppiminen on jaoteltavissa kolmeen luokkaan\cite{sadiq2004sqlator}: hallintajärjestelmiin (management system), yhteisölliseen oppimiseen (collaborative learning) ja kohdennettuihin työkaluihin. Hallintajärjestelmiin lukeutuvat esimerkiksi sovellukset WebCT ja Blackboard. Yhteisölliseen oppimiseen kuuluu erilaiset kommunikointitavat, esimerkiksi foorumit, video-konferenssit tai sähköposti. Kohdennetut työkalut ovat puolestaan esimerkiksi simulaattoreita, interaktiivisia työkaluja sekö monikysymys-tietopankkeja (Multiple Choice Question bank). SQL e-oppimistyökalut, kuten esimerkiksi SQLator tai AsseSQL kuuluvat kolmanteen luokkaan.
 
-Kehitettyjen e-oppimistyökalujen on todettu parantavan opiskelijoiden kurssiarvosanaa, ja saavat käyttäjiltään hyvää palautetta\cite{Brusilovsky:2010:LSP:1656255.1656257}. Suuntaa antava vertailu SQL:n kontekstissa saatiin vertailemalla kahden perättäisen vuoden tenttiarvosanajakaumaa, jossa jälkimmäisenä vuotena käyttöön otettiin SQLator\cite{sadiq2004sqlator}. Tenttiarvosanajakauma parani vuonna jona SQLator otettiin käyttöön. Onnistuneesti toteutettuna e-oppimistyökalut tukee opiskelijoittensa syväoppimista opettamastaan aiheestaan\cite{sadiq2004sqlator}. 
+Kun harkitaan e-oppimisen käyttöön ottoa on huomioitava muun muassa onko teknologian käyttö pedagogisesti ja opetuksellisesti arvokasta käyttökohteessa\cite{sadiq2004sqlator}. Olennaista itse työkalun kehityksessä on käyttökohteen huomioiminen suunnittelussa siten että se tukee oppimista mahdollisimman hyvin. Esimerkiksi luonteva navigointi opetusympäristössä parantaa merkittävästi opetustyökalun käyttöastetta ja sen tarjoamaa hyötyä\cite{Brusilovsky:2010:LSP:1656255.1656257}. Koska e-oppimistyökalut korostavat itseopiskelua, korostuu opettajan läsnäolon puutteessa tarve ymmärtää opiskelijan käsitystä oppimisesta\cite{sadiq2004sqlator}.
 
-E-oppimistyökaluissa on olennaista käyttötarkoituksen mukainen suunnittelu. Muun muassa luonteva navigointi opetusympäristössä parantaa merkittävästi opetustyökalun käyttöastetta ja sen tarjoamaa hyötyä\cite{Brusilovsky:2010:LSP:1656255.1656257}. Aktiivisen opettajan läsnäolon puute oppimistilanteessa korostaa tarvetta ymmärtää opiskelijan käsitystä oppimisesta\cite{sadiq2004sqlator}.
+Kehitettyjen e-oppimistyökalujen on todettu parantavan opiskelijoiden kurssiarvosanaa, ja saavat käyttäjiltään hyvää palautetta\cite{Brusilovsky:2010:LSP:1656255.1656257}. Suuntaa antava vertailu SQL:n kontekstissa saatiin vertailemalla kahden perättäisen vuoden tenttiarvosanajakaumaa, jossa jälkimmäisenä vuotena käyttöön otettiin SQLator\cite{sadiq2004sqlator}. Tenttiarvosanajakauma parani vuonna jona SQLator otettiin käyttöön. Onnistuneesti toteutettuna e-oppimistyökalut tukee opiskelijoittensa syväoppimista opettamastaan aiheestaan\cite{sadiq2004sqlator}.
 
-% Kerro SQLator:sta
+Kohdennetut e-oppimistyökalut jotka on toteutettu SQL:n oppimiseen, vähentävät ihmisen työn tekemää määrää vaarantamatta oppijoiden saamaa palautetta. Koska tarkistuksen tekee oppimistyökalu, tapahtuu kyselyn oikeellisuuden tarkistaminen nopeasti antaen välitöntä palautetta oppijalle. SQLator on esimerkki kohdennetusta e-oppimistyökalusta\cite{sadiq2004sqlator}. Sen kuvaillaan olevan verkko-oppimis työpöytä (online learning workbench). Käytännössä se on interaktiivinen oppiympäristö verkko-pohjaisella käyttöliittymällä, joka mahdollistaa pääsyn oppimisympäristöön kaikkialta internet-yhteyden päästä. SQLatorin kehityksen motivaationa on SQL-kielen laaja käyttö, ja SQL kyselyjen arvioinnin laskennallinen monimutkaisuus. Kyselyjen tarkastamisen ollessa SQLator:n tärkein ominaisuus tarjoaa se lisäksi oppijalle oppimateriaalia, turvallisen ympäristön vapaalle harjoittelulle sekä yhteyden opettajiin. Opettajat saavat mahdollisuuden luoda ja muokata tietokantoja ja tietokantakohtaisia tehtäviä. SQLator kerää opiskelijoilta dataa esimerkiksi lokeja etenemisestä ja tehtävien suoritusyrityksistä, jotka mahdollistavat tilastojen keräämisen ja opiskelijoiden tarkkailun sekä plagiarismin tunnistamisen.
 
-SQLatorin lisäksi SQL-kyselykielen opetteluun on olemassa useita e-oppimistyökaluja. Yksittäinen opetustyökalu ei yksinään välttämättä tarjoa opetuksen vaatimia ominaisuuksia. Integroida olemassa olevia työkaluja, joissa tuodaa useampi opetusympäristö yhteen käyttöliittymään. Tutkimus olemassa olevien opetustyökalujen yhdistämiseen on vähäistä, ilmeisesti integroitujen työkalujen teknisestä vaikeudesta johtuen\cite{Brusilovsky:2010:LSP:1656255.1656257}.
+SQLatorin lisäksi SQL-kyselykielen opetteluun on olemassa useita e-oppimistyökaluja. Yksittäinen opetustyökalu ei yksinään välttämättä tarjoa opetuksen vaatimia ominaisuuksia. Yksi mahdollisuus on integroida olemassa olevia työkaluja, joissa tuodaan useampi opetusympäristö yhteen käyttöliittymään. Tutkimus olemassa olevien opetustyökalujen yhdistämiseen on vähäistä, ilmeisesti integroitujen työkalujen teknisestä vaikeudesta johtuen\cite{Brusilovsky:2010:LSP:1656255.1656257}.
 
 Integroitujen työkalujen helppokäyttöisyyden varmistamiseksi on Brusilovskyn ym. \cite{Brusilovsky:2010:LSP:1656255.1656257} mukaan mahdollistettava single sign-on, opiskelijoiden toimintojen seuraaminen ja tallennettujen tietojen saatavuus. Tallennetun tiedon on tärkeää olla muodossa josta opiskelijoiden osaamista on mahdollista päätellä.
 
@@ -241,10 +161,10 @@ Integroitujen työkalujen helppokäyttöisyyden varmistamiseksi on Brusilovskyn 
 
 Taipalus ym. \cite{Taipalus:2019:EFS:3287324.3287359} tekivät tutkimusta opiskelijoiden tekemistä virheistä SQL-opetuskurssilla. Data kerättiin heidän tekemässä verkkosovelluksessa, jossa tavoite-taulu oli näkyvillä koko tehtävän tekemisen ajan. Kun tehtävän tekijä oli yritysten jälkeen tyytyväinen kyselyynsä, hän palautti vastauksen. Eniten heitä kiinnosti pysyvät virheet (persistent error), eli virheet jotka esiintyivät palautetuissa tehtävissä. 
 
-Taipalus ym. \cite{Taipalus:2019:EFS:3287324.3287359} jakoi tehdyt virheet neljään yläluokkaan: sekaannuksiin (complication), loogisiin-, semanttisiin- sekä syntaktisiin virheisiin. Sekaannukset eivät vaikuta itse tulostauluun. % tsekkaa niitten toinen artikkeli, jos sais enemmän irti
+Taipalus ym. \cite{Taipalus:2019:EFS:3287324.3287359} jakoivat tehdyt virheet neljään yläluokkaan: sekaannuksiin (complication), loogisiin-, semanttisiin- sekä syntaktisiin virheisiin. Sekaannukset eivät vaikuta itse tulostauluun. % tsekkaa niitten toinen artikkeli, jos sais enemmän irti
 Loogiset virheet vaikuttavat tulostauluun, mutta tavalla jolla sen tunnistamiseen vaaditaan käsitys ja ymmärrys kyselyn taivoitteesta. Loogisia virheitä ovat esimerkiksi määritelmävirheet (expression error) tai funktiovirheet. Virheet joissa on loogisia virheitä voivat olla hyödyllisiä johonkin toiseen käyttötarkoitukseen. Semanttiset virheet myös vaikuttavat tulostauluun, mutta niiden tunnistaminen on ilmeisempää esimerkiksi toistuvista riveistä. Semanttisesti virheellisillä kyselyillä ei ole käyttökohdetta. Kyselyt joissa on syntaksisia virheitä palauttavat virheilmoituksen ilman vastaustaulua. Syntaktisiin virheisiin lukeutuu esimerkiksi laiton rymittelyfunktio (aggregation-function) tai määrittelemätön tietokantaobjekti.
 
-Yleisin virhe kaikissa SQL kyselyissä ovat syntaktiset virheet\cite{Taipalus:2019:EFS:3287324.3287359}. Luonnollisesti syntaktisten virheiden määrä oli suurempi kurssin alussa, ja vähenivät kurssin edetessä. Yleisimmät pysyvien virheiden luokat ovat puolestaan loogiset virheet ja sekaannukset\cite{Taipalus:2019:EFS:3287324.3287359}. Loogiset virheet ovat vaikeita ratkaista, ja tämä oli tapaus myös Taipaluksen ym. \cite{Taipalus:2019:EFS:3287324.3287359} mainitsemalla SQL kurssilla. Loogisten virheiden vaikeuden on ehdotettu juontuvat ihmisen työmuistin luonteeseen, ja tapaan jolla ihminen kääntää ajatuksiaan SQL:ään\cite{SMELCER1995353}. 
+Yleisin virhe kaikissa SQL kyselyissä ovat syntaktiset virheet\cite{Taipalus:2019:EFS:3287324.3287359, Ahadi:2016:SSM:2839509.2844640}. Luonnollisesti syntaktisten virheiden määrä oli suurempi kurssin alussa, ja vähenivät kurssin edetessä. Ahadi ym. \cite{Ahadi:2016:SSM:2839509.2844640} huomauttivat syntaktisten olevan yleisin virhe, jossa opiskelija päättää luovuttaa jos hän ei saa virhettä ratkaistua. Yleisimmät pysyvien virheiden luokat ovat puolestaan loogiset virheet ja sekaannukset\cite{Taipalus:2019:EFS:3287324.3287359}. Loogiset virheet ovat vaikeita ratkaista, ja tämä oli tapaus myös Taipaluksen ym. \cite{Taipalus:2019:EFS:3287324.3287359} mainitsemalla SQL kurssilla. Loogisten virheiden vaikeuden on ehdotettu juontuvat ihmisen työmuistin luonteeseen, ja tapaan jolla ihminen kääntää ajatuksiaan SQL:ään\cite{SMELCER1995353}. 
 
 Tehtävät joiden ratkaisut vaativat jokaista kuutta SQL-kielen lauseketta (SQL clause) tuottivat vaikeuksia\cite{Taipalus:2019:EFS:3287324.3287359}. Tavallisesti tehtävissä käytettiin kolmesta neljää eri lauseketta. Jotkin käsitteet ja konseptit toivat mukaansa itsellensä tyypillisiä virheitä mukaan tilastoihin. Esimerkiksi monitauluisissa kyselyissä esiintyi JOIN-kyselyille tyypillisiä syntaktisia- ja semanttisia virheitä. Yksittäinen yleisin ja pysyvin virhetyyppi nousi kokoamisfunktioiden (aggregation function) käytöstä, aina kun tehtävässä niitä tarvittiin. 
 
@@ -275,7 +195,13 @@ Koneoppimisalgoritmien ongelmana on usein niiden joustamattomuus: ne on koulutet
 
 \section{SQL-kurssien menestyksen ennustaminen}
 
-Ainakin kolme artikkelia aiheesta.
+Kurssimenestyksen ennustamisesta SQL-kurssien kontekstissa oli tausta-artikkelien keräämisen hetkellä varsin vähän. Ainoa artikkeli jossa suoraan puhuttiin koneoppimisen soveltamisesta oppilaiden menestyksen ennustamiseen SQL-kurssilla on Ahadin ym. kirjoittama "Students' Syntactic Mistakes in Writing Seven Differente Types of SQL Queries and its Application to Predicting Students' Success"\cite{Ahadi:2016:SSM:2839509.2844640}. Tutkimuksen lähestymistapana on luokitella opiskelijat onnistuneisiin ja epäonnistuneisiin heidän kääntämisyritysten perusteella PART-luokittelijalla.
+
+PART luokittelija on sääntöpohjainen luokitteija joka perustuu C4.5 algoritmiin\cite{Ahadi:2016:SSM:2839509.2844640}. PART valittiin luokittelijaksi koska se hallitsee puuttuvat arvot, ja se tarjoaa selkeän esityksen generoiduista säännöistä. Itse kysymys johon luokittelijalla haettiin vastausta, oli selvittää mikä määrä kamppailua on hyvä ennuste sille että onnistuuko oppilas tuottamaan oikean kyselyn. Luokittelija koulutettiin ennustamaan että onnistuuko oppilas tuottamaan GROUP BY-kyselyn oikein.
+
+Luokittelija sai syötteekseen 480 oppilaan yritykset yhteen tehtävään. Puolet oppilaista onnistui vastaamaan kysymykseen ja puolet eivät. Syötteeksi PART-luokittelijalle annettiin oppilaitten suorittamat kyselyt, sekä virheelliset että oikein menneet. Piirteitä valittiin (feature selection) korrelaatio-pohjaisilla menetelmillä ylisovittamisen välttämiseksi, piirteiden päällekkäisyyksien vähentämiseksi ja ennustustarkkuuden parantamiseksi. Koulutettu luokittelija validoitiin kymmenkertaisella cross-validation-menetelmällä. GROUP BY-kyselyn ennustamisessa saavutettiin 77\% tarkkuus.
+
+Kuten edellissä kappaleessa todettiinkin, Ahadi ym. \cite{Ahadi:2016:SSM:2839509.2844640} muistuttavat eri koneopimisalgoritmien olevan voimakkaasti kontekstiriippuvaisia. Samalla tavoitteella koulutetut koneoppimismallit saavuttivat tarkkuuden 60\%:n ja 79\%:n väliltä.
 
 
 \chapter{Koneoppimisen soveltaminen kurssi-dataan}
