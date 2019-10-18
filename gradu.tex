@@ -197,7 +197,7 @@ Koneoppimisalgoritmien ongelmana on usein niiden joustamattomuus: ne on koulutet
 
 Kurssimenestyksen ennustamisesta SQL-kurssien kontekstissa oli tausta-artikkelien keräämisen hetkellä varsin vähän. Ainoa artikkeli jossa suoraan puhuttiin koneoppimisen soveltamisesta oppilaiden menestyksen ennustamiseen SQL-kurssilla on Ahadin ym. kirjoittama "Students' Syntactic Mistakes in Writing Seven Differente Types of SQL Queries and its Application to Predicting Students' Success"\cite{Ahadi:2016:SSM:2839509.2844640}. Tutkimuksen lähestymistapana on luokitella opiskelijat onnistuneisiin ja epäonnistuneisiin heidän kääntämisyritysten perusteella PART-luokittelijalla.
 
-PART luokittelija on sääntöpohjainen luokitteija joka perustuu C4.5 algoritmiin\cite{Ahadi:2016:SSM:2839509.2844640}. PART valittiin luokittelijaksi koska se hallitsee puuttuvat arvot, ja se tarjoaa selkeän esityksen generoiduista säännöistä. Itse kysymys johon luokittelijalla haettiin vastausta, oli selvittää mikä määrä kamppailua on hyvä ennuste sille että onnistuuko oppilas tuottamaan oikean kyselyn. Luokittelija koulutettiin ennustamaan että onnistuuko oppilas tuottamaan GROUP BY-kyselyn oikein.
+PART luokittelija on sääntöpohjainen luokitteija joka perustuu C4.5 algoritmiin\cite{Ahadi:2016:SSM:2839509.2844640}. PART valittiin luokittelijaksi koska se hallitsee puuttuvat arvot, ja se tarjoaa selkeän esityksen generoiduista säännöistä. Itse kysymys johon luokittelijalla haettiin vastausta, oli selvittää mikä määrä kamppailua on hyviä ennuste sille että onnistuuko oppilas tuottamaan oikean kyselyn. Luokittelija koulutettiin ennustamaan että onnistuuko oppilas tuottamaan GROUP BY-kyselyn oikein.
 
 Luokittelija sai syötteekseen 480 oppilaan yritykset yhteen tehtävään. Puolet oppilaista onnistui vastaamaan kysymykseen ja puolet eivät. Syötteeksi PART-luokittelijalle annettiin oppilaitten suorittamat kyselyt, sekä virheelliset että oikein menneet. Piirteitä valittiin (feature selection) korrelaatio-pohjaisilla menetelmillä ylisovittamisen välttämiseksi, piirteiden päällekkäisyyksien vähentämiseksi ja ennustustarkkuuden parantamiseksi. Koulutettu luokittelija validoitiin kymmenkertaisella cross-validation-menetelmällä. GROUP BY-kyselyn ennustamisessa saavutettiin 77\% tarkkuus.
 
@@ -206,12 +206,187 @@ Kuten edellissä kappaleessa todettiinkin, Ahadi ym. \cite{Ahadi:2016:SSM:283950
 
 \chapter{Koneoppimisen soveltaminen kurssi-dataan}
 
+\begin{itemize}
+    \item meneekö seuraava tehtävä oikein
+    \item tuleva tenttiarvosana SQL tehtävissä
+\end{itemize}
+
 \section{Data}
 
 Mitä dataa, mistä on saatu ja suunnitelmia käytöstä.
 
 
 \section{Valitut mentelmät}
+
+\begin{itemize}
+    \item supervised learning valittu
+\end{itemize}
+
+\begin{itemize}
+    \item mikä menetelmä, mukaanlukien matemaattinen selitys?
+    \item mikä hyvää/huonoa?
+    \item missä käytetty opetuksen kontekstissa?
+    \item miksi valittu?
+\end{itemize}
+
+\subsection{Linear regression}
+
+Lineaarinen regressio on yksinkertainen valvotun oppimisen (supervised learning) sovellus\cite{james2013ISLR}. Se on ollut käytössä pitkään ja se on edelleen laajasti käytetty tilastollinen menetelmä. Sen katsotaan olevan hyvä lähtökohta muiden koneoppimismenetelmien ymmärtämiseen. Iästään huolimatta lineaarinen regressio pystyy vastaamaan varsin joustavasti ilmiön ominaisuuksien välisiin kysymyksiin. 
+
+Yksinkertainen lineaarinen regressio olettaa vasteen Y ja syötteen X välillä olevan lineaarinen suhde. Tämä suhde voidaan ilmaista seuraavasti. 
+
+\begin{equation} \label{eq:1}
+    Y = \beta_0 + \beta_1 X + \epsilon
+\end{equation}
+
+Yhtälössä $\epsilon$ kuvaa virhettä, jota ei yhtälöstä saada poistettua. Se syntyy arvoista, joita ei ole otettu tai pystytä ottamaan yhtälössä huomioon. Sitä voidaan ajatella satunnaisena kohinana jota datasta löytyy. Yhtälössä $\beta_0$ edustavaa leikkauspistettä, ja $\beta_1$ puolestaan on yhtälön kerroin. Ne ovat prosessin aloittamista tuntemattomia arvoja. Kun data on saatavilla, voidaan yhtälöstä laskea arvot $\hat{\beta_0}$ ja $\hat{\beta_1}$. Nämä arvoilla voidaan antaa ennuste vasteesta $\hat{y}$ annetule syötteelle $x$.
+
+Yksinkertaisella lineaarisella regressiolla voidaan yrittää ennustaa vastetta yksittäisen ennustavan syötteen perusteella. Usein ennustavia parametreja on useita, ja näin yksinkertaista lineaarista regressiota laajennetaan moni-lineaariseksi regressioksi (multiple linear regression) seuraavasti.
+
+\begin{equation} \label{eq:2}
+    Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p + \epsilon
+\end{equation}
+
+Tässä $p$ kuvaa valittujen parametrien määrää, numeroidut syötteet $X_1\dots p$ kuvaavat kutakin valittua parametriä, joilla jokaisella on oma kertoimensa $\beta_1\dots p$.
+
+Lineaarisella regressiolla saadaan nopeasti aikaiseksi suuntaa antavaa tietoa datan ominaisuuksista. Onko esimerkiksi syötteen ja vasteen välinen suhde lineaarinen, tai kuinka vahva syötteen ja vasteen välinen suhde. Vastaukset ovat kuitenkin vain suuntaa antavia. Tarkempina heikkouksina lineaariselle regressiolle mainitaan että sille ei ole luontevaa tapaa käsitellä kvalitatiivisia, eli laadullisia syötteitä\cite{james2013ISLR}. 
+
+Akateemisen suoritumisen ennustamisessa lineaariset mallit, joihin lineaarinen regressio kuuluu, ovat käytetyimpiä. Lineaaristen mallien osuus käytetyistä ennustamisen menetelmistä oli vuonna 2018 31\%\cite{hellas2018predicting}. Lineaarista regressiota käyttivät muun muassa Carter ym. \cite{carter2015normalized} sekä Watson ym. \cite{watson2013predicting}.
+
+Valitsin lineaarisen regression yhdeksi menetelmistä sen yksinkertaisuuden ja laajan käytön vuoksi. Yksinkertaisena mallina se tarjonnee jonkinlaisen vertailukohdan muita koneoppimismalleja soveltaessa.
+
+
+\subsection{Support Vector Machine}
+
+\begin{itemize}
+    \item askel eteenpäin
+    \item saanut hyvää palautetta
+    \item kirjasta\cite{james2013ISLR}
+\end{itemize}
+
+Tukivektorikone on luokittelumenetelmä (classification), joka pyrkii jakamaan havaintoavaruuden kahteen osaan. Se laajentaa tukivektoriluokittelijaa mahdollistamalla epälineaarisen luokittelun kahden luokan välillä\cite{james2013ISLR}. Tukivektorikone saa syötteekseen $n \times p$ kokoisen matriisin $\textbf{X}$, jossa on $p$-ulottuvuutta, ja $n$-syötettä. Havaintojen luokat $y_1, \dots, y_n \in \{-1, 1\}$ ovat binäärisiä, joissa $-1$ ja $1$ ovat mahdollisia ennustettavia luokkia. Tukivektoriluokittelijan tavoin tukivektorikone pyrkii etsimään kahden luokan välisen rajan eli hypertason (hyperplane), ja saamaan mahdollisimman leveän marginaalin $M$ eri luokkiin kuuluvien havaintojen välille. Kullakin havainnolla $x_i$ on löysäysparametri (slack variable) $\epsilon_i$, joka kertoo havainnon sijainnin marginaaliin ja hypertasoon nähden seuraavasti. 
+
+\begin{gather}
+    \epsilon_i = 0\text{, niin havainto $x_i$ on oikealla puolella marginaalia}\\
+    \epsilon_i > 0\text{, niin havainto $x_i$ on väärällä puolella marginaalia}\\
+    \epsilon_i > 1\text{, niin havainto $x_i$ on väärällä puolella hypertasoa}
+\end{gather}
+
+Vektorit (eli havainnot) jotka ovat marginaalin sisällä tai ovat hypertason väärällä puolella, ovat nimeltään tukivektoreita. Sallittujen löysäysparametrien summaa määrää viritysparametri $C$, joka käytännössä valitaan ristivalidoinnilla (cross-validation). Löysäysparametrien summa $\sum^n_{i=1} \epsilon_i$ ei ylitä viritysparametria $C$. Viritysparametri säätelee tukivektoriluokittelijan ja tukivektorikoneen vinouma-varianssi tasapainoa (bias-variance trade-off). Siinä missä tukivektoriluokittelijaa käytetään kun havaintoavaruus on lineaarisesti jaettavissa, on tukivektorikone laajennettavissa muunkin muotoisilla funktioilla. Yleisesti tukivektorikone on ilmaistavissa seuraavasti.
+
+\begin{equation}
+    f(x) = \beta_0 + \sum_{i \in \textbf{S}} \alpha_i K(x, x_i)
+\end{equation}
+
+Jossa $\beta_0$ ilmaisee leikkauspistettä, $\textbf{S}$ sisältää havaintojen indeksit jotka ovat tukivektoreita, $\alpha_i$ on havainnon $x_i$ kerroin. Funktio $K$ on tukivektorikoneen ydinfunktio (kernel function). Tukivektorikoneen ydinfunktioksi voi asetella muun muassa polynomisen funktion, radiaalisen funktion tai tukivektoriluokittelijan lineaarisen funktion.
+
+\begin{align}
+    K(x_i, x_{i'}) &= \sum^p_{j=1} x_{i, j} x_{i', j} \text{ Lineaarinen ydinfunktio}\\
+    K(x_i, x_{i'}) &= (1 + \sum^p_{j=1} x_{i, j} x_{i', j} )^d \text{ Polynominen funktio}\\
+    K(x_i, x_{i'}) &= \exp{-\gamma \sum^p_{j=1}( x_{i, j} - x_{i', j} )^2} \text{ Radiaalinen funktio}
+\end{align}
+
+Parametri $p$ kertoo havaintoavaruuden ulottuvuuksien määrän. Polynomisessa funktiossa parametri $d$ on polynomisen funktion valittu aste. Radiaalisen funktion $\gamma$ on positiivinen vakio.
+
+Ydin-funktioiden voimin tukivektorikoneet ovat laskennallisesti yksinkertaisia, ja pystyvät käsittelemään moniulotteista dataa. Lisäksi tukivektorikoneen kouluttaminen on varsin muistitehokasta koska ainoastaan tukivektorit, eli havainnot jotka ovat marginaalin sisäpuolella tai hypertason väärällä puolella osallistuvat tukivektorikoneen oppimiseen. Kuten lineaariregressiossa, tukivektorikone ei tarjoa todennäköisyyksiä luokkien ennustamisen tueksi. Datasta riippuen ydin-funktion valitseminen voi olla haastavaa, varsinkin datassa jossa on rajusti kohinaa. Suuren kohinan määrän läsnäollessa tukivektorikone saattaa ylisovittua kohinaa myötäillen, rampauttaen tukivektorikoneen suoriutumista.
+
+Opetuksen kontekstissa Kentli ym. \cite{kentli2011svm} pyrkivät ennustamaan tekniikan alan kurssin opiskelijoiden suoriutumista tukivektorikoneen avulla. Lagus ym. \cite{lagus2018transfer} tekivät vastaavia ennusteita ohjelmointikurssilla. Artikkeli\cite{lagus2018transfer} tutki transfer learning-koneoppimismallien suoritumista, jossa tukivektorikone oli verrokkina. Tukivektorikoneet toimivat kunnioitettavalla tarkkuudella opiskelijat, jotka pääsivät kurssista läpi. Ennustetarkkuuksien keskiarvot vaihtelivat kurssien edetessä aina 82\% ja 87\% prosentin väliltä.
+
+Tukivektorikone on lineaariregression jälkeen luonteva jatke. Se on hyvin toteutettavissa ja siitä on olemassa olevia toteutuksia. Tukivektorikone on hyvä yleistämään dataa ja pystyy antamaan hyviä ennusteita yksinkertaisuuteensa nähden.
+
+
+\subsection{Random Forest}
+
+\begin{itemize}
+    \item välttää hyvin ylisovittamista
+    \item hyvää palautetta ennustamisessa ohjelmointikurssi-kontekstissa
+    \item sivu 316\cite{james2013ISLR}
+    \item on päättely puu, tarkemmin sanoen monta päättelypuuta
+    \item koostuu kahdesta osasta: bootstrapping-menetelmän soveltamisesta dataan ja ennusteiden $p$ satunnaisesta otannasta
+    \item bootstrapping-menetelmässä sen sijaan että kouluttamisessa käytetään itse dataa, poimitaan datasta satunnaisesti datan määrän $n$ verran syötteitä
+    \begin{itemize}
+        \item näin sama syöte voi esiintyä useamman kerran pussitetussa datassa
+        \item koska otanta on satunnainen, väkisinkin päädytään tilanteeseen jossa osa datasta jää koulutuksen aikana pois: saadaan testaustdataa joka on ns. "pussin ulkopuolella" (out-of-bag)
+    \end{itemize}
+    \item aina kun random forest-päättelypuussa harkitaan jakoa (split), käytetään kaikkien ennusteiden sijaan vain syötteiden satunnaisesti valittuje ennusteita, poimitaan $m$-kappaletta
+    \item usein $m \approx \sqrt{p}$, jossa $p$ on kunkin syötteen ennusteiden määrä
+    \item tällä tavalla piirteet ja puut dekorreloidaan (decorrelate)
+    \item näitä random forest-puita rakennetaan useita, $B$ kappalette, ja jokainen puu äänestää ennustettaan: näin saadaan luokittelu
+    \begin{itemize}
+        \item parametri $B$ valitaan usein siten, että kasvatetaan puiden lukumäärää kunnes testi-virhe tasaantuu
+        \item parametrin $B$ ei johda tässä menetelmässä ylisovittamiseen
+    \end{itemize}
+    \item jokainen puu koulutetaan omalla bootstrapping-menetelmällä valittu data
+    \item regressiossa: $\hat{f}(x) = \frac{1}{B} \sum^B_{b=1} \hat{f}^{*b}(x)$
+    \item kvalitatiivisessa tilanteessa enemmistöääni on ennuste
+\end{itemize}
+
+Random forest-menetelmä on kokoelma päättelypuita, ja on laajennus pussittamisesta (bagging)\cite{james2013ISLR}. Pussittaminen perustuu bootstarpping-menetelmälle. Ajatuksena on tehdä useita satunnisia otoksia datasta. Tuotettu otos on alkuperäisen datan kokoinen. Kun datasta tehdään satunnaisia otoksia, voi muun muassa jokin syöte esiintyä useamman kerran bootstrapping-menetelllä tuotetussa datassa, ja osa taas voi jäädä otoksen ulkopuolelle. Datan ulkopuolisia syötteitä, eli "pussin ulkuopuolisia"  (out-of-bag) arvoja hyödynnetään tuotetun mallin virheen arvioimiseen. Pussittamisessa tämä satunnainen otos tehdään $B$-kertaa, ja jokaiselle data-otokselle tehdään oma päättelypuu. Regressio-ongelmassa päättelypuut antavat oman arvionsa, ja näistä arvioista lasketaan keskiarvo ennusteeksi.
+
+\begin{equation}
+    \hat{f}_{bag}(x) = \frac{1}{B} \sum^B_{b=1} \hat{f}^{*b}(x)
+\end{equation}
+
+Jos kyseessä on luokitteluongelma, saadaan luokan ennuste puiden enemmistöäänellä.\cite{james2013ISLR} 
+
+Pussien määrä $B$:n kasvattaminen ei lisää ennusteiden ylisovittamista\cite{james2013ISLR}. Usein pussien määrän $B$ valinta tapahtuu siten, että sitä kasvatetaan kunnes luokitteluvirhe tasaantuu. 
+
+Verrattuna yksittäiseen päättelypuuhun pussittaminen ennustusmenetelmänä on paljon tarkempi. Pussittamisen ongelmana on sama kuin yksittäisellä päätteylypuulla, eli syötteen korreloivat ennusteet ja vahvemmat ennusteet. Jos yksittäisellä ennusteella on vahva painoarvo ennusteessa, näyttävät pussittamisen päättelypuut samanlaisilta. Vastaavanlainen ongelma ilmenee korreloivissa ennusteissa luoden toistuvia rakenteita päättelypuissa.
+
+Random forest ratkaisee ongelmaa vaikuttamalla logiikkaan, että millä valitaan kunkin puun haaran merkitsevä syötteen ennuste. Sen sijaan että syötteen jokaista ennustetta harkitaan kunkin haaran jakavaksi tekijäksi, valitaan jakava piirre vain satunnaisen $m$-kappaleen joukosta. Parametrin $m$ määrittelee usein $m \approx \sqrt{p}$, eli syötteiden ennusteiden määrän neliöjuuri. Näin random forest dekorreloi syötteiden ennusteita, ja saadaan suurempaa variaatiota luotujen päättelypuiden välille\cite{james2013ISLR}.
+
+Ytimessään random forest on kokoelma päättelypuita. Sen ennusteet ovat huomattavasti merkittävästi varrattuna yksittäiseen päättelypuuhun\cite{james2013ISLR}. Koska päättelypuita on kokoelmassa useita ja satunnaisuus on olennainen osa mallin rakentamista, välttää random forest hyvin ylisovittamista\cite{james2013ISLR}. Usean päättelypuun käytön vuoksi random forest kuitenkin menettää yhden päättelypuun suurimmista eduista, joka on selkeä tulkittavuus\cite{james2013ISLR}. Päättelypuussa tuloksen tulkitseminen on yksinkertaista, sillä jokaista tulosta edustaa yksittäinen puun "lehti". Jokaisella lehdellä on selkeä reitti ja solmut, joita kautta kyseiseen lehteen on päädytty. Tämän sijasta random forest käyttää jokaisen puunsa antamaa ennustetta, joten ei tulos ole enään yhtä helposti luettavissa.
+
+Opetukessa random forest on ollut mukana ennustamassa muun muassa hyvin ja heikosti suoriutuvia ohjelmointi-opiskelijoita. Yleisesti sitä on tarkasteltu muiden koneoppimismenetelmien rinnalla\cite{Ahadi:2015:EML:2787622.2787717}. Lisäksi se on ollut vertailussa tutkimuksessa transfer learning-menetelmän soveltuvuudesta samaan kontekstiin\cite{lagus2018transfer}. Molemmissa artikkeleissa random forest toimii poikkeuksellisella tarkkuudella.
+
+Valitsin random forestin mukaan vertailuun koska se on mainittu erikseen ohjelmointiopetuksen kontekstissa. Haluan päästä näkemään saavutanko random forest-menetelmällä sen aiemman havaitun tarkkuuden.
+
+
+\subsection{Naive Bayes}
+
+Naive Bayes nimensä mukaisesti perustuu Bayesin teoreemaan. Se on yksinkertaistettu versio Bayes-optimoidusta luokittelijasta. Parametreina Bayes-optimoitu luokittelija saa havaintovektoreita ja ilmaisee todennäköisyyksinä että mihin luokkaan havainto kuuluu\cite{rish2001empirical}.
+
+\begin{equation}
+    f^*_i(\textbf{x}) = P(\textbf{X}=\textbf{x} | C=i) P(C=i)
+\end{equation}
+
+Bayes-optimoidun luokittelijan diskirminantissa funktiossa $\textbf{X}$ ilmaisee $j$-ulotteista havaintoa. $C$ on puolestaan luokka, johon pyritään havaintoa luokitella. Tavoitteena on siis ratkaista posterioritodennäköisyys Bayesin yhtälössä. Koska tavoitteena on kuitenkin luokitella havainto johonkin luokkaan $C$, on funktio ilmaistavissa seuraavasti\cite{rish2001empirical}:
+
+\begin{equation}
+    h^*(\textbf{x}) = \arg \max_i P(\textbf{X} = \textbf{x}|C=i) P(C = i)
+\end{equation}
+
+Tässä pyritään etsimään luokka $C = i$, joka maksimoi posterioritodennäköisyyden.
+
+Koska kyse on ehdollisesta todennäköisyydestä, on havaintoken ulottuvuuksien määrän kasvaessa todennäköisyyden $P(\textbf{X} = \textbf{x}|C=i)$ suoraan laskennallisesti raskasta. Tämän vuoksi otetaan usein käyttöön estimaatteja tai yksinkertaistuksia, joista yksi esimerkki on naive Bayes-luokittelija. Naive Bayes tekee rajun yksinkertaistuksen olettaen että kaikki havaintojen piirteet ovat toisistaan riippumattomia. Tämä yksinkertaistaa kyseisen ehdollisen todennäköisyyden muotoon $P(\textbf{X}|C) = \Pi^n_{i=1} P(X_i | C)$, jolloin saadaan naive Bayesin funktio diskriminantissa muodossa:
+
+\begin{equation}
+    f^{NB}_i(\textbf{x}) = \Pi^n_{j=1} P(X_j=x_j | C=i) P(C=i)
+\end{equation}
+
+Tässä $j$ on havainnon indeksi, $i$ on luokan indeksi ja $n$ on havaintojen määrä. 
+
+Rajusta yksinkertaistamisestaan huolimatta naive Bayes kilpailee suorituskyvyllään hienostuneempien koneoppimismenetelmien kanssa\cite{rish2001empirical}. Parhaiten se toimii havaintojen kanssa joiden piirteet ovat toisistaan riippumattomia, ja kun piirteet ovat toisistaan funktionaalisesti riippuvaisia. Naive Bayesin rajoituksen ovat nominaaliset koneoppimispiirteet, eli piirteet joilla on rajallinen määrä mahdollisia arvoja. Binääristen piirteiden kohdalla naive Bayes voi oppia vain lineaarisia suhteita, ja kun piirteiden mahdollisten arvojen määrä ylittää kaksi, on havaintoavaruden oltava polynomisesti jakautunut\cite{rish2001empirical}.
+
+Opetuksessa naive Bayesia on käytetty esimerkiksi koulutuksellisen datan louhintaan\cite{bhardwaj2012data}, ja opiskelijoiden soveltuvuuden arviointiin kirjallisuuden opinnoissa\cite{hellas2018predicting}.
+
+Naive Bayes on valittu menetelmänä mukaan sen saaman menestyksen ja yksinkertaisuuden vuoksi. Bayes-sukuiset menetelmät omaavat kokonaisen tilastotieteen koulukunnan, jonka opetusta löytyy myös Helsingin Yliopistossa. Haluan nähdä tämän yksinkertaisen Bayes-menetelmän sovelluksen käytännössä.
+
+
+\subsection{Linear Discriminant Analysis}
+
+\begin{itemize}
+    \item koska Bayes? :D
+    \item parhaiten normaalijakautuneen datan kanssa
+\end{itemize}
+
+
+\subsection{Neural network}
+
+\begin{itemize}
+    \item transfer learing, jos data antaa periksi?
+    \item datan määrä saattaa olla rajoittava tekijä
+\end{itemize}
 
 
 \chapter{SQL-kurssin oppimenestyksen ennustamisen toteutus}

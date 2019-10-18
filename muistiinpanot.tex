@@ -459,4 +459,117 @@ Berginin artikkeli koneoppimisen käyttämisestä\cite{bergin2015using}
     \end{itemize}
     \item koneoppimis-algoritmien tulokset ovat rajusti konteksti-riippuvaisia. Tarkkuus vaihteli 60\% ja 79\% välillä vaikka kyse olisi ollut samasta algoritmista ja samasta otoksesta
 \end{itemize}
+
+\begin{itemize}
+    \item oleellinen osuus: hyperplane, eli hypertaso
+    \begin{itemize}
+        \item $p$-ulotteisessa avaruudessa jakava litteä $p-1$ ulotteinen taso
+        \item $\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p = 0$ $p$-ulotteisessa avaruudessa
+        \item jos $X = (X_1, X_2, \dots , X_p)^T$, niin X on hypertasolla
+        \item vastaavasti jos $\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p > 0$, niin vektori $X$ on toisella puolella hypertasoa, ja päinvastoin
+        \item jakaa avaruuden kahtia
+    \end{itemize}
+    \item separating hyperplane eli jakava hypertaso, jakaa avaruudessa olevat harjoitus-havainnot täydellisesti luokkiensa mukaan
+    \item luokittely jakavalla hypertasolla:
+    \begin{itemize}
+        \item syöte on $n \times p$ kokoinen matriisi $\textbf{X}$, jossa on $p$-ulottuvuutta ja $n$-syötettä
+        \item $x_1 = \begin{pmatrix}
+            x_{1,1} & \\ 
+            \vdots & \\ 
+            x_{1,p}
+        \end{pmatrix}, \dots , x_n = \begin{pmatrix}
+            x_{n,1} &\\
+            \vdots & \\
+            x_{n,p}
+        \end{pmatrix}$
+        \item havainnot kuuluvat kahteen luokkaan: $y_1, \dots, y_n \in {-1, 1}$, jossa -1 ja 1 ovat mahdollisia luokkia
+    \end{itemize}
+    \item hypertason avulla saadaan maximal margin classifier: etsitään hypertaso joka on mahdollisimman kaukana harjoitus-havainnoista. Etäisyys-vektorit "tukevat" hypertasoa
+    \begin{itemize}
+        \item ylisovittaa ulottuvuuksien määrän ollessa suuri
+        \item koska todellisessa datassa on harvinaista että data on eroteltavissa (separable), ei pelkkä maksimaalisen marginaalin luokittelija toimi
+        \item yksittäinen havainto saattaa dramaattisesti kääntää hypertasoa
+    \end{itemize}
+    \item support vector classifier, tukivektoriluokittelija, myöskin soft margin classifier
+    \begin{itemize}
+        \item joustava yksittäisille havainnoille
+        \item hyvä luokittelu suurimmalle osalle havainnoista
+    \end{itemize}
+    \item sallii havaintojen olevan väärällä marginaalin ja hypertason puolella
+    \begin{itemize}
+        \item $maksimoi_{\beta_0, \beta_1, \dots, \beta_p, \epsilon_1, \dots, \epsilon_n, M} M$
+        \item riippuen $\sum^p_{j=1}\beta^2_j=1$
+        \item $y_i(\beta_o + \beta_1 x_{i,1} + \beta_2 x_{i, 2} + \dots + \beta_p x_{i, p}) \geq M(1 - \epsilon_i)$
+        \item $\epsilon_i \geq 0, \sum^n_{i=1} \epsilon_i \leq C$
+        \item $C$ on positiivinen viritysparametri
+        \begin{itemize}
+            \item voidaan ajatella "budjettina", jolla määrällä on lupa loukata marginaalia tai hypertasoa
+            \item jos $C = 0$, vastaa tukivektorikone maksimaalisen marginaalin luokittelijaa
+            \item löysäysparametrien $\epsilon_i$ summa ei ylitä viritysparametria $C$
+            \item marginaalin leveys $M$ laajenee viritysparametrin $C$ kasvaessa
+            \item hallitsee vinouma-varianssi tasapainoa (bias-variance trade-off)
+            \item $C$ on pieni: pieni vinouma ja korkea varianssi, ja päinvastoin
+            \item käytännössä $C$ valitaan ristiin-validoinnin avulla (cross-validation)
+        \end{itemize}
+        \item $M$ on marginaalin leveys, jota pyritään saamaan mahdollisimman suureksi
+        \item $\epsilon_1, \dots, \epsilon_n$: slack variable, löysäysparametreja, jotka sallivat havaintojen olevan marginaalin tai hyperparametrin väärällä puolella
+        \begin{itemize}
+            \item jos $\epsilon_i = 0$, niin havainto $i$ on oikella puolella marginaalia
+            \item jos $\epsilon_i > 0$, niin havainto $i$ on väärällä puolella marginaalia, ja täten loukkaa (violates) marginaalia
+            \item jos $\epsilon_i > 1$, niin havainto $i$ on väärällä puolella hypertasoa, ja täten loukkaa hypertasoa
+        \end{itemize}
+        \item kun edelliset vaiheet on ratkaistu, testihavainto $x^*$ luokitellaan hypertason mukaan: $f(x^*) = \beta_0 + \beta_1 x^*_1 + \dots + \beta_p x^*_p$
+        \item havainnot marginaalin oikealla puolella eivät vaikuta tukivektorikoneeseen
+        \item havainnot marginaalin sisällä tai hypertason väärällä puolella ovat tukivektoreita
+        \item tukivektoriluokittelija käyttää lineaarista funktiota hypertason ja marginaalin määrittämiseen, joka ei aina todellisessa datassa toimi
+        \item tukivektorikone on tukivektoriluokittelijan laajennus, joka laajentaa piirreavaruutta tietyllä tavalla hyödyntäen tietynlaista kerneliä (kernel)
+        \item kernelien pääajatus on ottaa huomioon epälineaariset rajat luokkien välillä
+        \item tukivektoriluokittelija voidaan esittää tukivektorikoneena seuraavasti:
+        \begin{itemize}
+            \item $f(x) = \beta_0 + \sum^n_{i=1} \alpha_i \langle x, x_i \rangle$
+        \end{itemize}
+        \item parametrien $\alpha_1, \dots, \alpha_n$ ja $\beta_0$ arvioimiseen tarvitaan vain syötteiden $\binom{n}{2}$ sisätulot $\langle x_i, x_{i'} \rangle$ kaikkien harjoitus-havaintojen väliltä
+        \item jos kyseessä ei ole tukivektori, on kahden pisteen välinen sisätulo nolla. Näissä tapauksissa myös estimaatti $\alpha_i$ on nolla. Näin voidaan tarkentaa funktiota ryhmällä $S$, jossa on pisteiden indeksit jotka ovat tukivektoreita:
+        \begin{itemize}
+            \item $f(x) = \beta_0 + \sum_{i \in S} \alpha_i \langle x, x_i \rangle$
+        \end{itemize}
+        \item tukivektorikoneen sisätulot voidaan yleistää muotoon $K(x_i, x_{i'})$, jota kutsutaan kerneliksi
+        \item tukivektorikone voidaan siis sanoa yleisesti seuraavasti:
+        \begin{itemize}
+            \item $f(x) = \beta_0 + \sum_{i \in S} \alpha_i K(x, x_i)$
+            \item jossa funktio K on kerneli, joka voidaan vaihtaa dataan sopivaan funktioon
+            \item kerneli voi olla esimerkiksi lineaarinen, radiaalinen tai polynominen
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+    \item artikkeli \cite{rish2001empirical}
+    \item Bayesian luokittelijat tarjoavat todennäköisyyden mahdollisesta luokasta
+    \item tekemällä oletuksen/yksinkertaistuksen, että havaintojen piirteet ovat itsenäisiä, saadaan Naivé Bayes-luokittelija
+    \item $P(\textbf{X} | C) = \Pi^n_{i=1} P(X_i|C)$
+    \begin{itemize}
+        \item $\textbf{X} = (X_1, \dots, X_n)$ eli havaintovektori
+        \item $C$ on havaittu luokka
+    \end{itemize}
+    \item epärealistisesta yksinkertaistuksesta huolimatta Naivé Bayes kilpailee tarkkuudella hienostuneempien tekniikoiden kanssa\cite{rish2001empirical}
+    \item toimii parhaiten kun syötteet ovat tilastollisesti riippumattomia, tai kun syötteet ovat funktionaalisesti riippuvaisia toisistaan
+    \item tarkkuus ei korreloidu syötteiden määrään, vaan korreloi yksinkertaisuudessa menetetyn tiedon määrään
+    \item Bayes-optimaalinen luokittelija pyrkii maksimoimaan posteriori todennäköisyyden kullekin luokalle $C$, jonka perusteella se tekee ennusteensa todennäköiselle luokalle
+    \begin{itemize}
+        \item diskriminanttina funktiona: $f^*_i(\textbf{x}) = P(\textbf{X}=\textbf{x} | C=i) P(C=i)$
+        \item toisin sanoen siis: $BO(\textbf{x}) = \arg \max_i P(\textbf{X} = \textbf{x}|C=i) P(C = i)$
+        \item koska kyseessä on ehdollinen todennäköisyys ja ennustavana tekijänä on havaintovektori $\textbf{x}$, on havainnon piirteiden määrän kasvaessa $P(\textbf{X} = \textbf{x} | C = i)$ Bayes-optimaalinen luokittelija laskennallisesti raskas prosessi
+        \item tämän vuoksi suoraan laskemisen sijasta käytetään jonkinlaisia estimaatteja tai yksinkertaistuksia, joihin naive Bayes lukeutuu
+    \end{itemize}
+    \item Naive Bayes diskriminanttina funktiona: $f^{NB}_i(\textbf{x}) = \Pi^n_{j=1} P(X_j=x_j | C=i) P(C=i)$
+    \begin{itemize}
+        \item jossa $j$ vastaa havaintojen ulottuvuuksia
+    \end{itemize}
+    \item rajoituksia nominaalisten piirteiden kanssa: arvot joita on rajallinen määrä, ja piirteiden eri arvot voidaan vaihtaa omaan indeksiinsä
+    \begin{itemize}
+        \item binääriset: vain lineaarisia funktioita
+        \item useampi-arvoinen piirre: jonkin asteista polynomista oppimista. Vaikka olisi polynomisesti eroteltavissa, ei silti ole riittävää
+    \end{itemize}
+\end{itemize}
 \end{document}
