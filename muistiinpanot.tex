@@ -572,4 +572,28 @@ Berginin artikkeli koneoppimisen käyttämisestä\cite{bergin2015using}
         \item useampi-arvoinen piirre: jonkin asteista polynomista oppimista. Vaikka olisi polynomisesti eroteltavissa, ei silti ole riittävää
     \end{itemize}
 \end{itemize}
+
+\begin{itemize}
+    \item välttää hyvin ylisovittamista
+    \item hyvää palautetta ennustamisessa ohjelmointikurssi-kontekstissa
+    \item sivu 316\cite{james2013ISLR}
+    \item on päättely puu, tarkemmin sanoen monta päättelypuuta
+    \item koostuu kahdesta osasta: bootstrapping-menetelmän soveltamisesta dataan ja ennusteiden $p$ satunnaisesta otannasta
+    \item bootstrapping-menetelmässä sen sijaan että kouluttamisessa käytetään itse dataa, poimitaan datasta satunnaisesti datan määrän $n$ verran syötteitä
+    \begin{itemize}
+        \item näin sama syöte voi esiintyä useamman kerran pussitetussa datassa
+        \item koska otanta on satunnainen, väkisinkin päädytään tilanteeseen jossa osa datasta jää koulutuksen aikana pois: saadaan testaustdataa joka on ns. "pussin ulkopuolella" (out-of-bag)
+    \end{itemize}
+    \item aina kun random forest-päättelypuussa harkitaan jakoa (split), käytetään kaikkien ennusteiden sijaan vain syötteiden satunnaisesti valittuje ennusteita, poimitaan $m$-kappaletta
+    \item usein $m \approx \sqrt{p}$, jossa $p$ on kunkin syötteen ennusteiden määrä
+    \item tällä tavalla piirteet ja puut dekorreloidaan (decorrelate)
+    \item näitä random forest-puita rakennetaan useita, $B$ kappalette, ja jokainen puu äänestää ennustettaan: näin saadaan luokittelu
+    \begin{itemize}
+        \item parametri $B$ valitaan usein siten, että kasvatetaan puiden lukumäärää kunnes testi-virhe tasaantuu
+        \item parametrin $B$ ei johda tässä menetelmässä ylisovittamiseen
+    \end{itemize}
+    \item jokainen puu koulutetaan omalla bootstrapping-menetelmällä valittu data
+    \item regressiossa: $\hat{f}(x) = \frac{1}{B} \sum^B_{b=1} \hat{f}^{*b}(x)$
+    \item kvalitatiivisessa tilanteessa enemmistöääni on ennuste
+\end{itemize}
 \end{document}

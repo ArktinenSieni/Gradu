@@ -297,30 +297,6 @@ Tukivektorikone on lineaariregression jälkeen luonteva jatke. Se on hyvin toteu
 
 \subsection{Random Forest}
 
-\begin{itemize}
-    \item välttää hyvin ylisovittamista
-    \item hyvää palautetta ennustamisessa ohjelmointikurssi-kontekstissa
-    \item sivu 316\cite{james2013ISLR}
-    \item on päättely puu, tarkemmin sanoen monta päättelypuuta
-    \item koostuu kahdesta osasta: bootstrapping-menetelmän soveltamisesta dataan ja ennusteiden $p$ satunnaisesta otannasta
-    \item bootstrapping-menetelmässä sen sijaan että kouluttamisessa käytetään itse dataa, poimitaan datasta satunnaisesti datan määrän $n$ verran syötteitä
-    \begin{itemize}
-        \item näin sama syöte voi esiintyä useamman kerran pussitetussa datassa
-        \item koska otanta on satunnainen, väkisinkin päädytään tilanteeseen jossa osa datasta jää koulutuksen aikana pois: saadaan testaustdataa joka on ns. "pussin ulkopuolella" (out-of-bag)
-    \end{itemize}
-    \item aina kun random forest-päättelypuussa harkitaan jakoa (split), käytetään kaikkien ennusteiden sijaan vain syötteiden satunnaisesti valittuje ennusteita, poimitaan $m$-kappaletta
-    \item usein $m \approx \sqrt{p}$, jossa $p$ on kunkin syötteen ennusteiden määrä
-    \item tällä tavalla piirteet ja puut dekorreloidaan (decorrelate)
-    \item näitä random forest-puita rakennetaan useita, $B$ kappalette, ja jokainen puu äänestää ennustettaan: näin saadaan luokittelu
-    \begin{itemize}
-        \item parametri $B$ valitaan usein siten, että kasvatetaan puiden lukumäärää kunnes testi-virhe tasaantuu
-        \item parametrin $B$ ei johda tässä menetelmässä ylisovittamiseen
-    \end{itemize}
-    \item jokainen puu koulutetaan omalla bootstrapping-menetelmällä valittu data
-    \item regressiossa: $\hat{f}(x) = \frac{1}{B} \sum^B_{b=1} \hat{f}^{*b}(x)$
-    \item kvalitatiivisessa tilanteessa enemmistöääni on ennuste
-\end{itemize}
-
 Random forest-menetelmä on kokoelma päättelypuita, ja on laajennus pussittamisesta (bagging)\cite{james2013ISLR}. Pussittaminen perustuu bootstarpping-menetelmälle. Ajatuksena on tehdä useita satunnisia otoksia datasta. Tuotettu otos on alkuperäisen datan kokoinen. Kun datasta tehdään satunnaisia otoksia, voi muun muassa jokin syöte esiintyä useamman kerran bootstrapping-menetelllä tuotetussa datassa, ja osa taas voi jäädä otoksen ulkopuolelle. Datan ulkopuolisia syötteitä, eli "pussin ulkuopuolisia"  (out-of-bag) arvoja hyödynnetään tuotetun mallin virheen arvioimiseen. Pussittamisessa tämä satunnainen otos tehdään $B$-kertaa, ja jokaiselle data-otokselle tehdään oma päättelypuu. Regressio-ongelmassa päättelypuut antavat oman arvionsa, ja näistä arvioista lasketaan keskiarvo ennusteeksi.
 
 \begin{equation}
@@ -378,14 +354,76 @@ Naive Bayes on valittu menetelmänä mukaan sen saaman menestyksen ja yksinkerta
 \begin{itemize}
     \item koska Bayes? :D
     \item parhaiten normaalijakautuneen datan kanssa
-\end{itemize}
-
-
-\subsection{Neural network}
-
-\begin{itemize}
-    \item transfer learing, jos data antaa periksi?
-    \item datan määrä saattaa olla rajoittava tekijä
+    \item Bayes-luokittelijan jatke: se on arvio (approximation) Bayes-luokittelijasta
+    \begin{itemize}
+        \item priori $\pi_k$: todennäköisyys että satunnainen havainto kuuluu luokkaan $k$
+        \begin{itemize}
+            \item Helppo: se on luokkien välinen suhde
+        \end{itemize}
+        \item tiheysfunktio: $f_k(x) \equiv Pr(X = x | Y = k)$
+        \begin{itemize}
+            \item monimutkainen saavuttaa, jollei tehdä jakaumasta yksinkertaistuksia
+        \end{itemize}
+        \begin{itemize}
+            \item Jos $f_k(x)$ on suuri, se kuuluu todennäköisesti luokkaan $k$
+        \end{itemize}
+        \item Bayesin kaava: $Pr(Y = k | X = x) = \frac{\pi_k f_k(x)}{\sum^K_{l=1} \pi_l f_l(x)}$
+        \begin{itemize}
+            \item jatkossa $p_k(X) = Pr(Y = k | X = x)$
+        \end{itemize}
+    \end{itemize}
+    \item LDA olettaa datan jakauman seuraavan normaalijakaumaa
+    \item käyttää
+    \begin{itemize}
+        \item normaalijakauman tiheysfunktiota
+        \item luokkakohtaista keskiarvoa $\mu_k$
+        \item luokkakohtaista varianssia $\sigma_k^2$
+    \end{itemize}
+    \item kun ennusteita $p$ on yksi, käytetään normaalia riheysfunktiota
+    \begin{itemize}
+        \item $f_k(x) = \frac{1}{\sqrt{2 \pi \sigma_k}} \exp{-\frac{1}{2 \sigma^2_k (x - \mu_k)^2}}$
+    \end{itemize}
+    \item tiheysfunktio sijoitetaan Bayesin kaavaan, ja otetaan siitä logaritmi ja näin saadaan diskriminantti funktio
+    \begin{itemize}
+        \item $\delta_k(x) = x \cdot \frac{\mu_k}{\sigma^2} - \frac{\mu^2_k}{2 \sigma^2} + \log(\pi_k)$
+        \item tämä pyritään maksimoimaan
+        \item luokka jolla tämä on suurin, on luokka johon havainto luokitellaan
+    \end{itemize}
+    \item koska ei tiedetä aitoja arvoja keskiarvoille $\mu_1, \dots, \mu_K$, prioreille $\pi_1, \dots, \pi_K$, eikä varianssille $\sigma^2$, LDA approksimoi Bayes luokittelijaa sijoittamalla aitojen arvojen tilalle arvioita aidoista arvoista havaintojen perusteella
+    \begin{itemize}
+        \item $\hat{\mu}_k = \frac{1}{n_k} \sum_{i:y_i = k} x_i$
+        \item $\hat{\sigma}^2 = \frac{1}{n - K} \sum^K_{k=1} \sum_{i:y_i = k} (x_i - \hat{\mu}_k)^2$
+        \item jos havaintojen luokan todennäköisyys tiedetään etukäteen, voidaan sitä käyttää suoraan priorina $\pi_1, \dots, \pi_K$ 
+        \item jos havaintojen luokan esiintymistodennäköisyyttä ei tiedetä, voidaan priorina käyttää esiintyneiden havaintojen luokan suhdetta $\hat{\pi}_k = n_k / n$
+    \end{itemize}
+    \item näin saadaan diskriminantin funktion arvio, joka pyritään maksimoimaan luokan määrittelemiseksi
+    \begin{itemize}
+        \item $\hat{\delta_k(x)} = x \cdot \frac{\hat{\mu}_k}{\hat{\sigma}^2} - \frac{\hat{\mu}^2_k}{2 \hat{\sigma}^2} + \log(\hat{\pi}_k)$
+    \end{itemize}
+    \item tuloksena saadaan LINEAARINEN FUNKTIO $x$:n suhteen!
+    \item useampaa havainnon $X = (X_1, X_2, \dots, X_p)$ ennusetta $p$ käyttäessä, käytetään
+    \begin{itemize}
+        \item monimuuttuja normaalijakauman tiheysfunktiota
+        \item luokkakohtaista keskiarvovektoria
+        \item yhteistä kovarianssi-matriisia
+    \end{itemize}
+    \item monimuuttuja nromaalijakauman tiheysfunktio $f(x)$
+    \begin{itemize}
+        \item $N(\mu_k, \pmb{\Sigma})$
+        \item $\mu_k$ eli luokkakohtainen keskiarvo
+        \item eli toisin sanoen $f(k) = \frac{1}{(2\pi)^{p/2} |\pmb{\Sigma}|^{1/2}} \exp{-\frac{1}{2} (x - \mu)^T \pmb{\Sigma}^{-1} (x - \mu)}$
+        \item $X \sim N(\mu, \pmb{\Sigma})$
+        \item $E(X) = \mu$
+        \item $Cov(X) = \pmb{\Sigma}$
+        \begin{itemize}
+            \item $p \times p$ matriisi
+        \end{itemize}
+    \end{itemize}
+    \item jälleen sijoitetaan tiheysfunktio Bayesin kaavaan, josta selvitetään jälleen diskriminantti funktio $\delta_k(x)$. Havainto sijoitetaan luokkaan jonka diskriminantti $\delta_k(x)$ funktio tuottaa suurimman arvon.
+    \begin{itemize}
+        \item $\delta_k(x) = x^T \pmb{\Sigma}^{-1} \mu_k - \frac{1}{2} \mu_k^T \pmb{\Sigma}^{-1} \mu_k + \log \pi_k$
+    \end{itemize}
+    \item arvojen estimaatit ovat samoja kuin yhden ennusteen $p$ tapauksessa, joista saadaan diskriminantin funktion $\hat{\delta}_k(x)$ arvio
 \end{itemize}
 
 
