@@ -318,6 +318,20 @@ Opetukessa random forest on ollut mukana ennustamassa muun muassa hyvin ja heiko
 Valitsin random forestin mukaan vertailuun koska se on mainittu erikseen ohjelmointiopetuksen kontekstissa. Haluan päästä näkemään saavutanko random forest-menetelmällä sen aiemman havaitun tarkkuuden.
 
 
+\subsection{Bayes luokittelija}
+
+Bayes luokittelija perustuu nimensä mukaisesti bayesin kaavaan\cite{james2013ISLR}. Olettaen että Bayesin luokittelijan ehdot on määritelty oikein, olisi sillä luokittelijoista matalin virhetaso.
+
+\begin{equation} \label{eq:bayes}
+    Pr(Y = k | X = x) = \frac{\pi_k f_k(x)}{\sum^K_{l=1} \pi_l f_l(x)}
+\end{equation}
+
+Kaava antaa todennäköisyyden sille että havainto $x$ kuuluu luokkan $k$. Merkintään $Pr(Y = k | X = x)$ jatkossa viittaan merkinnällä $p_k(X)$. % Tän voi poistaa jos ei käytetä enempää
+Bayes luokittelija pyrkii etsimään luokan $k$ joka maksimoi posteriorin $p_k(X)$. Bayes luokittelijan ennakkotietoa luokkien todennäköisyyksistä kuvaa priori $\pi_k$. Jos tarkkaa ennakkotietoa todellisesta luokkien todennäköisyydestä ei ole, voidaan se helposti arvioida satunnaisotoksen esiintyvistä luokista: ottamalla kunkin luokan lukumäärän osuus kaikista havainnoista. 
+
+Bayesin kaavan tiheysfunktio $f_k(x)$ on hankalampaa ratkaista. Se on laskennallisesti raskasta, ja sen arvot ovat todellisuudessa saavuttamattomia ilman kaikkea dataa. Tiheysfunktiota ei käytännössä ikinä lasketa, tai edes pystytä laskemaan suoraan. Tästä syystä Bayes luokittelijaa pyritään tavalla tai toisella approksimoimaan\cite{james2013ISLR}.
+
+
 \subsection{Naive Bayes}
 
 Naive Bayes nimensä mukaisesti perustuu Bayesin teoreemaan. Se on yksinkertaistettu versio Bayes-optimoidusta luokittelijasta. Parametreina Bayes-optimoitu luokittelija saa havaintovektoreita ja ilmaisee todennäköisyyksinä että mihin luokkaan havainto kuuluu\cite{rish2001empirical}.
@@ -351,80 +365,55 @@ Naive Bayes on valittu menetelmänä mukaan sen saaman menestyksen ja yksinkerta
 
 \subsection{Linear Discriminant Analysis}
 
-\begin{itemize}
-    \item koska Bayes? :D
-    \item parhaiten normaalijakautuneen datan kanssa
-    \item Bayes-luokittelijan jatke: se on arvio (approximation) Bayes-luokittelijasta
-    \begin{itemize}
-        \item priori $\pi_k$: todennäköisyys että satunnainen havainto kuuluu luokkaan $k$
-        \begin{itemize}
-            \item Helppo: se on luokkien välinen suhde
-        \end{itemize}
-        \item tiheysfunktio: $f_k(x) \equiv Pr(X = x | Y = k)$
-        \begin{itemize}
-            \item monimutkainen saavuttaa, jollei tehdä jakaumasta yksinkertaistuksia
-        \end{itemize}
-        \begin{itemize}
-            \item Jos $f_k(x)$ on suuri, se kuuluu todennäköisesti luokkaan $k$
-        \end{itemize}
-        \item Bayesin kaava: $Pr(Y = k | X = x) = \frac{\pi_k f_k(x)}{\sum^K_{l=1} \pi_l f_l(x)}$
-        \begin{itemize}
-            \item jatkossa $p_k(X) = Pr(Y = k | X = x)$
-        \end{itemize}
-    \end{itemize}
-    \item LDA olettaa datan jakauman seuraavan normaalijakaumaa
-    \item käyttää
-    \begin{itemize}
-        \item normaalijakauman tiheysfunktiota
-        \item luokkakohtaista keskiarvoa $\mu_k$
-        \item luokkakohtaista varianssia $\sigma_k^2$
-    \end{itemize}
-    \item kun ennusteita $p$ on yksi, käytetään normaalia riheysfunktiota
-    \begin{itemize}
-        \item $f_k(x) = \frac{1}{\sqrt{2 \pi \sigma_k}} \exp{-\frac{1}{2 \sigma^2_k (x - \mu_k)^2}}$
-    \end{itemize}
-    \item tiheysfunktio sijoitetaan Bayesin kaavaan, ja otetaan siitä logaritmi ja näin saadaan diskriminantti funktio
-    \begin{itemize}
-        \item $\delta_k(x) = x \cdot \frac{\mu_k}{\sigma^2} - \frac{\mu^2_k}{2 \sigma^2} + \log(\pi_k)$
-        \item tämä pyritään maksimoimaan
-        \item luokka jolla tämä on suurin, on luokka johon havainto luokitellaan
-    \end{itemize}
-    \item koska ei tiedetä aitoja arvoja keskiarvoille $\mu_1, \dots, \mu_K$, prioreille $\pi_1, \dots, \pi_K$, eikä varianssille $\sigma^2$, LDA approksimoi Bayes luokittelijaa sijoittamalla aitojen arvojen tilalle arvioita aidoista arvoista havaintojen perusteella
-    \begin{itemize}
-        \item $\hat{\mu}_k = \frac{1}{n_k} \sum_{i:y_i = k} x_i$
-        \item $\hat{\sigma}^2 = \frac{1}{n - K} \sum^K_{k=1} \sum_{i:y_i = k} (x_i - \hat{\mu}_k)^2$
-        \item jos havaintojen luokan todennäköisyys tiedetään etukäteen, voidaan sitä käyttää suoraan priorina $\pi_1, \dots, \pi_K$ 
-        \item jos havaintojen luokan esiintymistodennäköisyyttä ei tiedetä, voidaan priorina käyttää esiintyneiden havaintojen luokan suhdetta $\hat{\pi}_k = n_k / n$
-    \end{itemize}
-    \item näin saadaan diskriminantin funktion arvio, joka pyritään maksimoimaan luokan määrittelemiseksi
-    \begin{itemize}
-        \item $\hat{\delta_k(x)} = x \cdot \frac{\hat{\mu}_k}{\hat{\sigma}^2} - \frac{\hat{\mu}^2_k}{2 \hat{\sigma}^2} + \log(\hat{\pi}_k)$
-    \end{itemize}
-    \item tuloksena saadaan LINEAARINEN FUNKTIO $x$:n suhteen!
-    \item useampaa havainnon $X = (X_1, X_2, \dots, X_p)$ ennusetta $p$ käyttäessä, käytetään
-    \begin{itemize}
-        \item monimuuttuja normaalijakauman tiheysfunktiota
-        \item luokkakohtaista keskiarvovektoria
-        \item yhteistä kovarianssi-matriisia
-    \end{itemize}
-    \item monimuuttuja nromaalijakauman tiheysfunktio $f(x)$
-    \begin{itemize}
-        \item $N(\mu_k, \pmb{\Sigma})$
-        \item $\mu_k$ eli luokkakohtainen keskiarvo
-        \item eli toisin sanoen $f(k) = \frac{1}{(2\pi)^{p/2} |\pmb{\Sigma}|^{1/2}} \exp{-\frac{1}{2} (x - \mu)^T \pmb{\Sigma}^{-1} (x - \mu)}$
-        \item $X \sim N(\mu, \pmb{\Sigma})$
-        \item $E(X) = \mu$
-        \item $Cov(X) = \pmb{\Sigma}$
-        \begin{itemize}
-            \item $p \times p$ matriisi
-        \end{itemize}
-    \end{itemize}
-    \item jälleen sijoitetaan tiheysfunktio Bayesin kaavaan, josta selvitetään jälleen diskriminantti funktio $\delta_k(x)$. Havainto sijoitetaan luokkaan jonka diskriminantti $\delta_k(x)$ funktio tuottaa suurimman arvon.
-    \begin{itemize}
-        \item $\delta_k(x) = x^T \pmb{\Sigma}^{-1} \mu_k - \frac{1}{2} \mu_k^T \pmb{\Sigma}^{-1} \mu_k + \log \pi_k$
-    \end{itemize}
-    \item arvojen estimaatit ovat samoja kuin yhden ennusteen $p$ tapauksessa, joista saadaan diskriminantin funktion $\hat{\delta}_k(x)$ arvio
-\end{itemize}
+Linear Discriminant Analysis (LDA) on approksimaatio Bayes luokittelijasta joka pyrkii yksinkertaistamaan havaintoavaruuden lineaariseksi. LDA saavuttaa tämän olettamalla tiheysfunktion olevan normaalisti jakautunut, ja estimoimalla havaintojen keskiarvoa $\mu_k$varianssia $\sigma^2$ sekä prioria $\pi_k$.
+
+Kun havainnoista käytetään yhtä piirrettä $p$, käytetään tiheysfunktiona siis normaalijakauman tiheysfunktiota.
+
+\begin{equation}
+    f_k(x) = \frac{1}{\sqrt{2 \pi \sigma_k}} \exp{(-\frac{1}{2 \sigma^2_k (x - \mu_k)^2})}
+\end{equation}
+
+Normaalijaakuman tiheysfunktio sijoitetaan Bayesin kaavaan \ref{eq:bayes} ja josta otetaan logaritmi. Näin saadaan funktion lineaarinen diskriminantti funktio.
+
+\begin{equation}
+    \delta_k(x) = x \cdot \frac{\mu_k}{\sigma^2} - \frac{\mu^2_k}{2 \sigma^2} + \log(\pi_k)
+\end{equation}
+
+Tosiaan koska todelliset arvot keskiarvolle $\mu_k$, yhteiselle varianssille $\sigma^2$ ja priorille $\pi_k$ ovat tuntemattomia, approksimoidaan ne seuraavasti ja sijoitetaan ne vastaaviin paikkoihin funktiossa.
+
+\begin{equation} \label{eq:estimate-mu}
+    \hat{\mu}_k = \frac{1}{n_k} \sum_{i:y_i = k} x_i
+\end{equation}
+
+\begin{equation}
+    \hat{\sigma}^2 = \frac{1}{n - K} \sum^K_{k=1} \sum_{i:y_i = k} (x_i - \hat{\mu}_k)^2
+\end{equation}
+
+\begin{equation} \label{eq:estimate-pi}
+    \hat{\pi}_k = n_k / n
+\end{equation}
+
+Ja näillä arvoilla saadaan todellisen diskriminantin funktion estimaatti $\hat{\delta_k}(x)$. Havainto $x$ luokitellaan luokkaan $k$ jolla $\hat{\delta_k}(x)$ on suurin.
+
+Tapauksessa jossa kullakin havainnolla $X$ on $p$ piirrettä, eli $X = (X_1, X_2, \dots, X_p)$ oletetaan että havainnot riippuvat moniarvo normaalijakaumasta $X \sim N(\mu_k, \pmb{\Sigma})$. Tässä $\mu_k$ on luokan $k$ yhteinen odotusarvo $E(X)$, ja $\pmb{\Sigma}$ on havainnon $X$ $p \times p$ kokoinen kovarianssimatriisi $Cov(X)$. Kovarianssimatriisi on kaikille havainnoille yhteinen arvo. Moniarvo normaalijakauman tiheysfunktio saa seuraavan muodon.
+
+\begin{equation} \label{eq:multivariate}
+    f(k) = \frac{1}{(2\pi)^{p/2} |\pmb{\Sigma}|^{1/2}} \exp{-\frac{1}{2} (x - \mu)^T \pmb{\Sigma}^{-1} (x - \mu)}
+\end{equation}
+
+Samalla tavalla kuin yksittäisellä ennusteella $p$, sijoitetaan kaava \ref{eq:multivariate} tiheysfunktion paikalle $f_k = (X = x)$ Bayesin kaavaan \ref{eq:bayes}, ja otetaan tästä kaavasta logaritmi, jolloin saavutetaan luokittelun päättävä kaava.
+
+\begin{equation}
+    \delta_k(x) = x^T \pmb{\Sigma}^{-1} \mu_k - \frac{1}{2} \mu_k^T \pmb{\Sigma}^{-1} \mu_k + \log \pi_k
+\end{equation}
+
+Arvot $\mu_1, \dots, \mu_K$, $\pi_1, \dots, \pi_K$ korvataan arvioilla \ref{eq:estimate-mu} ja \ref{eq:estimate-pi} edellisessä kaavassa ja kovarianssin $\pmb{\Sigma}$ löytämiseen, kaavan arvion $\hat{\delta}_k$ selvittämiseksi. Päälle näkyvästä monimutkaisuudestaan huolimatta LDA:n vektori-versiokin riippuu vain arvojensa lineaarisesta suhteesta.
+
+LDA:n on toimiva approksimaatio Bayesin luokittelijasta\cite{james2013ISLR}. Sen suurimpana rajoituksena on oletus havaintojen tiheyden funktiosta. Jos havainnot eivät seuraa normaalijakaumaa ovat LDA:n antamat ennusteet tarkkuudeltaan varsin rajallisia.
+
+Opetuksessa on LDA:ta käytetty opiskelijoiden suoriutumisen ennustamiseen tenttikysymyksien perusteella\cite{7265316} IT-aiheisella kurssilla. 
+
+Valitsin LDA:n vertailtavaksi algoritmiksi koska se on Bayes-luokittelijan approksimaatio. Se tarjoaa mahdollisuuden vertailla kahta approksimoitua Bayes luokittelijaa, naive Bayes- ja LDA-luokittelijaa.
 
 
 \chapter{SQL-kurssin oppimenestyksen ennustamisen toteutus}
