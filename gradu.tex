@@ -21,6 +21,8 @@
 \usepackage{titlesec}
 \usepackage[titletoc]{appendix}
 \usepackage{hyperref}
+\usepackage{array}
+\usepackage{listings} % For code listing
 
 \onehalfspacing %line spacing
 %\singlespacing
@@ -108,7 +110,7 @@ additional insight.
 % to change the parameters. Removing the abstract and ToC commands will mess up stuff.
 \chapter{Johdanto}
 
-The thesis should have an introduction chapter. Other chapters can be named according to the topic. In the end, some summary chapter is needed; see Chapter~\ref{chapter:Loppusanat} for an example.
+The thesis should have an introduction chapter. Other chapters can be named according to the topic. In the end, some summary chapter is needed; see Chapter~\ref{chapter:Yhteenveto} for an example.
 
 \section{Tutkimuskysymykset}
 
@@ -129,28 +131,111 @@ The thesis should have an introduction chapter. Other chapters can be named acco
 \end{itemize}
 
 
+\chapter{Termistöä}
+
+
+
+\begin{center}
+    \begin{tabular}{|| m{3cm} | m{3cm} | m{8cm} ||} 
+        \hline
+        Suomeksi                                    & Engalnniksi           &   Selitys \\ [0.5ex] 
+        \hline\hline
+        (tietokanta)taulu                           & (database) table      & Tietokannan tai SQL:n tietorakenne, johon on säilötty tietokannan yksittäinen looginen kokonaisuus. Taulu koostuu riveistä ja sarakkeista. \\ 
+        \hline
+        rivi                                        & row                   & Kuvaa tietokantataulussa yksittäistä säilöttyä data-objektia. \\
+        \hline
+        sarake                                      & column                & Kuvailee tietokantataulun rivin ominaisuuksia. \\
+        \hline
+        kysely                                      & query                 & Tietokantakyselyllä haetaan tietokannasta rivejä kyselyn määrittämillä rajoitteilla \\
+        \hline
+        tietokantalauseke                           & database clause       & Tietokantakyselyn tyyppi, esimerkiksi SELECT, tai JOIN \\
+        \hline
+        ohjattu oppiminen \label{term:supervised}     & supervised learning   & Koneoppimisen laji jossa saadut havainnot yritetään luokitella omaan luokkaansa \\
+        \hline
+        aineisto                                    & data                  & Kokoelma havaintoja. \\
+        \hline
+        havainto                                    & observation           & Viitataan myös merkinnällä $X$. Ohjatussa oppimisessa kukin havainto pyritään luokittelemaan johonkin luokkaan. \\
+        \hline
+        ennuste                                     & feature               & Havainnon ominaisuus. Esimerkiksi ihmisen ikä tai pituus. \\
+        \hline
+        luokka, vaste                               & class, response       & Ominaisuus joka pyritään ennustamaan kullekin havainnolle $X$. Viitataan merkinnällä $Y$. \\
+        \hline
+        (SQL-)lauseke                               & (SQL) clause          & Osa SQL-kyselyä. Esimerkiksi JOIN, ORDER BY tai DISTINCT. \\ [1ex] 
+        \hline
+    \end{tabular}
+\end{center}
+
+
 \chapter{Taustaa}
+
+\section{Tietokannat ja hallinnointijärjestelmät}
+
+Tietokanta on kokoelma yhtenäistä tietoa joka on tallennettu siten että se on monen käyttäjän saatavissa erilaisiin tarkoituksiin\cite{pathak2007dbms}. Tietokannat koostuvat kentistä (field), tietueista (record), tiedostoista (file) sekä avainkentistä (key field).
+
+Kenttä on tietokannan pienin mahdollinen tietoa sisältävä kokonaisuus. Se voi sisältää esimerkiksi merkkijonoja tai numeroita. 
+
+Tietue on kokoelma toisiinsa liittyviä kenttiä, jotka yhdessä muodostavat yhden tietokokonaisuuden. Esimerkiksi tietue verkkosivun käyttäjästä voi sisältää käyttäjänimen, sähköpostin ja nimen.
+
+Tiedosto on kokoelma kaikista saman muotoisista tietueista. Esimerkiksi tiedosto käyttäjistä sisältää kaikki käyttäjiä kuvaavat tietueet.
+
+Tietokanta puolestaan sisältää kaikki toisiinsa liittyvät tiedostot. Esimerkiksi tiedoston käyttäjistä, ja tiedoston käyttäjien eri rooleista sekä tiedoston käyttäjien lähettämistä viesteistä.
+
+Avainkenttä on kunkin tietueen uniikki tunniste, jolla se on eroteltavissa muista tietueista. Se on avainasemassa tietokannan manipuloimiseen ja tiedon noutamiseen tietokannasta.
+
+Usein tietokantojen rinnalla käytetään tietokantojen hallinnointijärjestelmiä (database management system). Hallinnointijärjestelmät auttavat luomaan ja hallinnoimaan tietokantoja yhtenäisellä tavalla. Yksi esimerkki tietokantahallinnointijärjestelmästä on SQL.
+
+
+\section{Structured Query Language}
+
+Structured Query Language eli lyhyemmin SQL on relaatiotietokantojen\cite{Codd:1970:RMD:362384.362685} hallinnointijärjestelmä\cite{pathak2007dbms}. Sen tarkoituksena on luoda ja määritellä tietokantojen rakenne, mahdollistaa tiedon noutaminen tietokannasta ja pyrkiä takaamaan tietokannan turvallisuus\cite{wilton2005beginning}.
+
+Tietokantataulujen (eli tiedostojen) luominen, tiedon syöttämisen säännöt ja rivien (eli tietueiden) noutaminen tehdään SQL-ohjelmointikielellä. SQL-kieli on luonteeltaan deklaritiivinen ohjelmointikieli\cite{sadiq2004sqlator}, eli kirjoitetuilla kyselyillä pyritään kuvailemaan haluttua lopputulosta. Seuraavana on esimerkki yksinkertaisesta tietokantakyselystä.
+
+\begin{lstlisting}[language=SQL]
+    SELECT name, breed, age
+    FROM Dogs
+    WHERE age BETWEEN 2 AND 5;
+\end{lstlisting}
+
+Tässä esimerkissä tietokantataulusta $Dogs$, etsitään rivejä joiden sarakkeiden $age$-arvot ovat lukujen 2 ja 5 välillä. Näistä riveistä pyydetään tuloksena saatavaan tauluun sarakket $name$, $breed$, sekä $age$.
+
+SQL-kielen näennäisestä yksinkertaisesta syntaksista huolimatta se on voimakas kyselykieli, joka mahdollistaa monimutkaisiakin kyselyjä tietokantaan.
+
 
 \section{SQL:n oppiminen}
 
-SQL on laajasti hyväksytty kieli tietokantojen hallinnoimiseen niin akateemisissa kuin it-teollisuuden piirissä. Näennäisestä yksinkertaisesta syntaksistaan huolimatta se on voimakas kyselykieli, joka mahdollistaa monimutkaisiakin kyselyjä tietokantaan. SQL komennot sisällyttävät mahdollisuudet määritellä, manipuloida sekä hallinnoida dataa. Luonteeltaan SQL on deklaratiivinen, joka tarkoittaa sitä että kyselyjä kirjoittaessa on ajateltava kokoelmissa. Kyselyt käytännössä kuvailevat haluttua lopputulosta laskematta sitä ennen itse kyselyn suorittamista.
+SQL on kirjattuna suositelluksi opeteltavaksi aiheeksi tietojenkäsittelytieteen-\cite{acm2013currilum} ja ohjelmistoinsinöörien\cite{swebok} perusopinnoissa. SQL on laajan käyttönsä vuoksi helposti sovellettavissa opintojen ulkopuolella IT-alalla.
 
-Laajan käytön vuoksi SQL on helposti sovellettavissa opintojen ulkopuolella ja on näin yksi välttämättömämmistä oppiaineista IT-alalla. Laajasta käytöstä huolimatta SQL vaikuttaa olevan vaikea oppia. Vaikeuksien on arvioitu johtuvan SQL:n deklaratiivisesta luonteesta, ja SELECT-kyselyjen näennäisestä yksinkertaisuudesta\cite{sadiq2004sqlator}.
+Laajasta käytöstä huolimatta SQL vaikuttaa olevan vaikea oppia. Vaikeuksien on arvioitu johtuvan SQL:n deklaratiivisesta luonteesta, ja SELECT-kyselyjen näennäisestä yksinkertaisuudesta\cite{sadiq2004sqlator}.
 
-Tietotekniikka-alalla SQL-opinnot ovat kuuluneet IT-alan opintoihin vuosikymmenien ajan. Pitkään historaan nähden, SQL:n opetus on saanut varsin vähäistä huomiota tieteellisissä piireissä\cite{Taipalus:2019:EFS:3287324.3287359}. Esimerkiksi aiheesta että mikä on SQL:n opiskelussa vaikeaa. SQL:n vaikeiden osa-alueiden tutkimuksen tulokset ovat tulkinnanvaraisia\cite{Taipalus:2019:EFS:3287324.3287359}. Perinteisesti SQL:n opetuksen tutkimus on kohdistunut opetustyökaluihin ja opiskelijoiden tekemiin virheisiin\cite{Taipalus:2019:EFS:3287324.3287359}. Opetustyökaluihin lukeutuvat esimerkiksi erilaiset e-oppimisohjelmistot.
+SQL:n opetus on saanut varsin vähäistä huomiota tieteellisissä piireissä\cite{Taipalus:2019:EFS:3287324.3287359}: esimerkiksi SQL:n vaikeiden osa-alueiden tutkimuksen tulokset ovat tulkinnanvaraisia\cite{Taipalus:2019:EFS:3287324.3287359}. Perinteisesti SQL:n opetuksen tutkimus on kohdistunut opetustyökaluihin ja opiskelijoiden tekemiin virheisiin\cite{Taipalus:2019:EFS:3287324.3287359}. Opetustyökaluihin lukeutuvat esimerkiksi erilaiset e-oppimisohjelmistot.
+
+\subsection{E-oppiminen}
+
+E-oppiminen on ollut tutkimusaiheena kasvavassa suosiossa ainakin vuodesta 2000 alkaen. Se on herättänyt kiinnostusta niin työmaailmassa kuin akateemisissa piireissä. Niiden käyttöä perustellaan mahdollisuudella oppia aktiivisesti tekemällä, sen sijaan että opiskellaan asioita passiivisesti lukemalla\cite{Brusilovsky:2010:LSP:1656255.1656257}. 
+
+E-oppiminen on jaoteltavissa kolmeen luokkaan\cite{sadiq2004sqlator}: hallintajärjestelmiin (management system), yhteisölliseen oppimiseen (collaborative learning) ja kohdennettuihin työkaluihin. Hallintajärjestelmiin lukeutuvat esimerkiksi sovellukset WebCT ja Blackboard. Yhteisölliseen oppimiseen kuuluu erilaiset kommunikointitavat, esimerkiksi foorumit, video-konferenssit tai sähköposti. Kohdennetut työkalut ovat puolestaan esimerkiksi simulaattoreita, interaktiivisia työkaluja sekö monikysymys-tietopankkeja (Multiple Choice Question bank).
+
+Kun harkitaan e-oppimisen käyttöönottoa on huomioitava muun muassa onko teknologian käyttö pedagogisesti ja opetuksellisesti arvokasta käyttökohteessa\cite{sadiq2004sqlator}. Olennaista itse työkalun kehityksessä on käyttökohteen huomioiminen suunnittelussa siten että se tukee oppimista mahdollisimman hyvin. Esimerkiksi luonteva navigointi opetusympäristössä parantaa merkittävästi opetustyökalun käyttöastetta ja sen tarjoamaa hyötyä\cite{Brusilovsky:2010:LSP:1656255.1656257}. Koska e-oppimistyökalut korostavat itseopiskelua, korostuu opettajan läsnäolon puutteessa tarve ymmärtää opiskelijan käsitystä oppimisesta\cite{sadiq2004sqlator}.
+
+Onnistuneesti toteutettuna e-oppimistyökalut tukee opiskelijoittensa syväoppimista opettamastaan aiheestaan\cite{sadiq2004sqlator}.
 
 
 \subsection{SQL opetustyökalut}
 
-Parhaiten SQL:n oppimisen on havaittu toteutuvan ohjatuissa opetussessioissa ja siten että opiskelijoilla on mahdollisuus huomata virheitään ja oppia virheistään\cite{sadiq2004sqlator}. Yksi tapa näiden saavuttamiseen ovat tehtäväkokoelmat, jotka tarkistaa SQL:n ammattilainen. Ratkaisuna tämä on työläs muun muassa suuren opiskelijamäärän ja itse tuloksen tarkistamisen vaikeuden vuoksi. Kyselyjen tarkastaminen voi olla hidasta, sillä saman taulun saamiseen voidaan kirjoittaa erilaisia kyselyitä. Ratkaisun ollessa työläs vaarantuu opiskelijoiden saama yksilöllinen palaute. Näin perustellaan SQL e-opetustyökalujen kehittämistä.
+Parhaiten SQL:n oppimisen on havaittu toteutuvan ohjatuissa opetussessioissa ja siten että opiskelijoilla on mahdollisuus huomata virheitään ja oppia virheistään\cite{sadiq2004sqlator}. Yksi tapa näiden saavuttamiseen ovat tehtäväkokoelmat, jotka tarkistaa SQL:n ammattilainen. 
 
-E-oppiminen on ollut tutkimusaiheena kasvavassa suosiossa ainakin vuodesta 2000 alkaen. Se on herättänyt kiinnostusta niin työmaailmassa kuin akateemisissa piireissä. E-oppimista perustellaan mahdollisuudella oppia aktiivisesti tekemällä, sen sijaan että opiskellaan asioita passiivisesti lukemalla\cite{Brusilovsky:2010:LSP:1656255.1656257}. E-oppiminen on jaoteltavissa kolmeen luokkaan\cite{sadiq2004sqlator}: hallintajärjestelmiin (management system), yhteisölliseen oppimiseen (collaborative learning) ja kohdennettuihin työkaluihin. Hallintajärjestelmiin lukeutuvat esimerkiksi sovellukset WebCT ja Blackboard. Yhteisölliseen oppimiseen kuuluu erilaiset kommunikointitavat, esimerkiksi foorumit, video-konferenssit tai sähköposti. Kohdennetut työkalut ovat puolestaan esimerkiksi simulaattoreita, interaktiivisia työkaluja sekö monikysymys-tietopankkeja (Multiple Choice Question bank). SQL e-oppimistyökalut, kuten esimerkiksi SQLator tai AsseSQL kuuluvat kolmanteen luokkaan.
+Ratkaisuna tämä on työläs muun muassa suuren opiskelijamäärän ja itse tuloksen tarkistamisen vaikeuden vuoksi. Kyselyjen tarkastaminen voi olla hidasta, sillä saman taulun saamiseen voidaan kirjoittaa erilaisia kyselyitä. Ratkaisun ollessa työläs vaarantuu opiskelijoiden saama yksilöllinen palaute\cite{sadiq2004sqlator}.
 
-Kun harkitaan e-oppimisen käyttöön ottoa on huomioitava muun muassa onko teknologian käyttö pedagogisesti ja opetuksellisesti arvokasta käyttökohteessa\cite{sadiq2004sqlator}. Olennaista itse työkalun kehityksessä on käyttökohteen huomioiminen suunnittelussa siten että se tukee oppimista mahdollisimman hyvin. Esimerkiksi luonteva navigointi opetusympäristössä parantaa merkittävästi opetustyökalun käyttöastetta ja sen tarjoamaa hyötyä\cite{Brusilovsky:2010:LSP:1656255.1656257}. Koska e-oppimistyökalut korostavat itseopiskelua, korostuu opettajan läsnäolon puutteessa tarve ymmärtää opiskelijan käsitystä oppimisesta\cite{sadiq2004sqlator}.
+Kurssien ohjaajien työmäärän vähentämiseen e-oppimistyökalut ovat luonteva ratkaisu. SQL e-oppimistyökalut, kuten esimerkiksi SQLator tai AsseSQL kuuluvat e-oppimistyökalujen kolmanteen luokkaan eli kohdennettuihin työkaluihin\cite{sadiq2004sqlator}.
 
-Kehitettyjen e-oppimistyökalujen on todettu parantavan opiskelijoiden kurssiarvosanaa, ja saavat käyttäjiltään hyvää palautetta\cite{Brusilovsky:2010:LSP:1656255.1656257}. Suuntaa antava vertailu SQL:n kontekstissa saatiin vertailemalla kahden perättäisen vuoden tenttiarvosanajakaumaa, jossa jälkimmäisenä vuotena käyttöön otettiin SQLator\cite{sadiq2004sqlator}. Tenttiarvosanajakauma parani vuonna jona SQLator otettiin käyttöön. Onnistuneesti toteutettuna e-oppimistyökalut tukee opiskelijoittensa syväoppimista opettamastaan aiheestaan\cite{sadiq2004sqlator}.
+Kehitettyjen SQL e-oppimistyökalujen on todettu parantavan opiskelijoiden kurssiarvosanaa, ja saavat käyttäjiltään hyvää palautetta\cite{Brusilovsky:2010:LSP:1656255.1656257}. Suuntaa antava vertailu SQL:n kontekstissa saatiin vertailemalla kahden perättäisen vuoden tenttiarvosanajakaumaa, jossa jälkimmäisenä vuotena käyttöön otettiin SQLator\cite{sadiq2004sqlator}. Tenttiarvosanajakauma parani vuonna jona SQLator otettiin käyttöön.
 
-Kohdennetut e-oppimistyökalut jotka on toteutettu SQL:n oppimiseen, vähentävät ihmisen työn tekemää määrää vaarantamatta oppijoiden saamaa palautetta. Koska tarkistuksen tekee oppimistyökalu, tapahtuu kyselyn oikeellisuuden tarkistaminen nopeasti antaen välitöntä palautetta oppijalle. SQLator on esimerkki kohdennetusta e-oppimistyökalusta\cite{sadiq2004sqlator}. Sen kuvaillaan olevan verkko-oppimis työpöytä (online learning workbench). Käytännössä se on interaktiivinen oppiympäristö verkko-pohjaisella käyttöliittymällä, joka mahdollistaa pääsyn oppimisympäristöön kaikkialta internet-yhteyden päästä. SQLatorin kehityksen motivaationa on SQL-kielen laaja käyttö, ja SQL kyselyjen arvioinnin laskennallinen monimutkaisuus. Kyselyjen tarkastamisen ollessa SQLator:n tärkein ominaisuus tarjoaa se lisäksi oppijalle oppimateriaalia, turvallisen ympäristön vapaalle harjoittelulle sekä yhteyden opettajiin. Opettajat saavat mahdollisuuden luoda ja muokata tietokantoja ja tietokantakohtaisia tehtäviä. SQLator kerää opiskelijoilta dataa esimerkiksi lokeja etenemisestä ja tehtävien suoritusyrityksistä, jotka mahdollistavat tilastojen keräämisen ja opiskelijoiden tarkkailun sekä plagiarismin tunnistamisen.
+Kohdennetut e-oppimistyökalut jotka on toteutettu SQL:n oppimiseen, vähentävät ihmisen työn tekemää määrää vaarantamatta oppijoiden saamaa palautetta. Koska tarkistuksen tekee oppimistyökalu, tapahtuu kyselyn oikeellisuuden tarkistaminen nopeasti antaen välitöntä palautetta oppijalle. 
+
+SQLator on esimerkki kohdennetusta e-oppimistyökalusta\cite{sadiq2004sqlator}. Sen kuvaillaan olevan verkko-oppimis työpöytä (online learning workbench). Käytännössä se on interaktiivinen oppiympäristö verkko-pohjaisella käyttöliittymällä, joka mahdollistaa pääsyn oppimisympäristöön kaikkialta internet-yhteyden päästä. SQLatorin kehityksen motivaationa on SQL-kielen laaja käyttö, ja SQL kyselyjen arvioinnin laskennallinen monimutkaisuus. 
+
+Kyselyjen tarkastamisen ollessa SQLator:n tärkein ominaisuus tarjoaa se lisäksi oppijalle oppimateriaalia, turvallisen ympäristön vapaalle harjoittelulle sekä yhteyden opettajiin. Opettajat saavat mahdollisuuden luoda ja muokata tietokantoja ja tietokantakohtaisia tehtäviä. SQLator kerää opiskelijoilta dataa esimerkiksi lokeja etenemisestä ja tehtävien suoritusyrityksistä, jotka mahdollistavat tilastojen keräämisen ja opiskelijoiden tarkkailun sekä plagiarismin tunnistamisen.
 
 SQLatorin lisäksi SQL-kyselykielen opetteluun on olemassa useita e-oppimistyökaluja. Yksittäinen opetustyökalu ei yksinään välttämättä tarjoa opetuksen vaatimia ominaisuuksia. Yksi mahdollisuus on integroida olemassa olevia työkaluja, joissa tuodaan useampi opetusympäristö yhteen käyttöliittymään. Tutkimus olemassa olevien opetustyökalujen yhdistämiseen on vähäistä, ilmeisesti integroitujen työkalujen teknisestä vaikeudesta johtuen\cite{Brusilovsky:2010:LSP:1656255.1656257}.
 
@@ -161,45 +246,115 @@ Integroitujen työkalujen helppokäyttöisyyden varmistamiseksi on Brusilovskyn 
 
 Taipalus ym. \cite{Taipalus:2019:EFS:3287324.3287359} tekivät tutkimusta opiskelijoiden tekemistä virheistä SQL-opetuskurssilla. Data kerättiin heidän tekemässä verkkosovelluksessa, jossa tavoite-taulu oli näkyvillä koko tehtävän tekemisen ajan. Kun tehtävän tekijä oli yritysten jälkeen tyytyväinen kyselyynsä, hän palautti vastauksen. Eniten heitä kiinnosti pysyvät virheet (persistent error), eli virheet jotka esiintyivät palautetuissa tehtävissä. 
 
-Taipalus ym. \cite{Taipalus:2019:EFS:3287324.3287359} jakoivat tehdyt virheet neljään yläluokkaan: sekaannuksiin (complication), loogisiin-, semanttisiin- sekä syntaktisiin virheisiin. Sekaannukset eivät vaikuta itse tulostauluun. % tsekkaa niitten toinen artikkeli, jos sais enemmän irti
-Loogiset virheet vaikuttavat tulostauluun, mutta tavalla jolla sen tunnistamiseen vaaditaan käsitys ja ymmärrys kyselyn taivoitteesta. Loogisia virheitä ovat esimerkiksi määritelmävirheet (expression error) tai funktiovirheet. Virheet joissa on loogisia virheitä voivat olla hyödyllisiä johonkin toiseen käyttötarkoitukseen. Semanttiset virheet myös vaikuttavat tulostauluun, mutta niiden tunnistaminen on ilmeisempää esimerkiksi toistuvista riveistä. Semanttisesti virheellisillä kyselyillä ei ole käyttökohdetta. Kyselyt joissa on syntaksisia virheitä palauttavat virheilmoituksen ilman vastaustaulua. Syntaktisiin virheisiin lukeutuu esimerkiksi laiton rymittelyfunktio (aggregation-function) tai määrittelemätön tietokantaobjekti.
+Taipalus ym. \cite{Taipalus:2019:EFS:3287324.3287359} jakoivat tehdyt virheet neljään yläluokkaan: sekaannuksiin (complication), loogisiin-, semanttisiin- sekä syntaktisiin virheisiin. 
+
+Kyselyt joissa on syntaksisia virheitä palauttavat virheilmoituksen ilman tietokantataulua. Syntaktiset virheet ovat käytännössä kirjoitusvirheitä jotka SQL-kielen ympäristö itse havaitsee. Ne ilmenevät muun muassa määrittelemättönä tietokantaobjekteina, väärään järjestykseen asetettuina kyselyinä tai yksinkertaisesti puuttuvana puolipisteenä.
+
+Semanttiset virheet ovat syntaktsiesti oikein eli ne palauttavat tietokantataulun. Niiden tunnistaminen on ilmeistä, vaikka ei kyselyn tavoitetta tietäisikään. Usein ne ilmenevät joko puuttuvina tai toistuvina tietokanta-riveinä. Semanttisesti virheellisillä kyselyillä ei ole käyttökohdetta. 
+
+Taipalus ym. \cite{taipalus2018errors} esitti esimerkin semanttisesta virheestä, jossa kyselyssä etsittiin työntekijöitä joilla kullakin on yksi omaan työtehtävään liittyvä titteli. Tehtävänä oli etsiä managerin ja toimistovirkailijan asemassa olevat työntekijät. Kyselyllä joka täyttää ehdon "toimistovirkailija AND manageri", saadaan tulokseksi aina tyhjä taulu. Tämä johtuu kyseisen tietokannan työntekijä tietokantataulun rajoitteesta, jossa kullakin työntekijällä on yksi titteli, eli yksikään tietokantarivi ei täytä ehtoa jossa joku työntekijä olisi molempien toimistovirkailijan ja managerin asemassa. Tämä on esimerkki semanttisesta virheestä, jossa ilmeisesti sekoitetaan puhutun kielen ja logiikan "ja". Kyselyllä "toimistovirkailija OR manageri", tässä tapauksessa  saataisiin haluttu tulos.
+
+Kuten semnattiset virheet, myös loogiset virheet ovat syntaktisesti oikeita. Niiden tunnistamiseen vaaditaan käsitys ja ymmärrys kyselyn taivoitteesta. Virheet joissa on loogisia virheitä voivat olla hyödyllisiä johonkin toiseen käyttötarkoitukseen. 
+
+Jatkaen edellistä esimerkkiä\cite{taipalus2018errors}, jos tavoitteena on etsiä tietokannan toimistovirkalijoita ja managereita rajoituksella "toimistovirkalija OR manageri", niin virhettä ei ole. Jos kuitenkin tämä ei ole tavoitteena, kyseessä on looginen virhe.
+
+Sekaannukset ovat hieman eri asia loogisiin virheisiin nähden. Sekaannukset eivät vaikuta itse tuloksena saatavaan vastaustauluun. Samalla tavalla kuin semanttiset virheet, ovat sekaannukset ilmeisiä huomata: vastauksena saatava taulu on oikein, mutta itse kysely voitaisiin muodostaa jollakin yksinkertaisemmalla tavalla.
+
+Esimerkkejä sekaannuksista ovat esimerkiksi ylimääräinen SELECT-kysely, tai alikyselyssä sijaitseva ORDER BY-lauseke\cite{taipalus2018errors}.
 
 Yleisin virhe kaikissa SQL kyselyissä ovat syntaktiset virheet\cite{Taipalus:2019:EFS:3287324.3287359, Ahadi:2016:SSM:2839509.2844640}. Luonnollisesti syntaktisten virheiden määrä oli suurempi kurssin alussa, ja vähenivät kurssin edetessä. Ahadi ym. \cite{Ahadi:2016:SSM:2839509.2844640} huomauttivat syntaktisten olevan yleisin virhe, jossa opiskelija päättää luovuttaa jos hän ei saa virhettä ratkaistua. Yleisimmät pysyvien virheiden luokat ovat puolestaan loogiset virheet ja sekaannukset\cite{Taipalus:2019:EFS:3287324.3287359}. Loogiset virheet ovat vaikeita ratkaista, ja tämä oli tapaus myös Taipaluksen ym. \cite{Taipalus:2019:EFS:3287324.3287359} mainitsemalla SQL kurssilla. Loogisten virheiden vaikeuden on ehdotettu juontuvat ihmisen työmuistin luonteeseen, ja tapaan jolla ihminen kääntää ajatuksiaan SQL:ään\cite{SMELCER1995353}. 
 
-Tehtävät joiden ratkaisut vaativat jokaista kuutta SQL-kielen lauseketta (SQL clause) tuottivat vaikeuksia\cite{Taipalus:2019:EFS:3287324.3287359}. Tavallisesti tehtävissä käytettiin kolmesta neljää eri lauseketta. Jotkin käsitteet ja konseptit toivat mukaansa itsellensä tyypillisiä virheitä mukaan tilastoihin. Esimerkiksi monitauluisissa kyselyissä esiintyi JOIN-kyselyille tyypillisiä syntaktisia- ja semanttisia virheitä. Yksittäinen yleisin ja pysyvin virhetyyppi nousi kokoamisfunktioiden (aggregation function) käytöstä, aina kun tehtävässä niitä tarvittiin. 
+Tehtävät joiden ratkaisut vaativat jokaista kuutta SQL-kielen lauseketta tuottivat vaikeuksia\cite{Taipalus:2019:EFS:3287324.3287359}. Tavallisesti tehtävissä käytettiin kolmesta neljää eri lauseketta. Jotkin käsitteet ja konseptit toivat mukaansa itsellensä tyypillisiä virheitä mukaan tilastoihin. Esimerkiksi monitauluisissa kyselyissä esiintyi JOIN-kyselyille tyypillisiä syntaktisia- ja semanttisia virheitä. Yksittäinen yleisin ja pysyvin virhetyyppi nousi kokoamisfunktioiden (aggregation function) käytöstä, aina kun tehtävässä niitä tarvittiin. 
 
 
-\section{Kurssi-menestyksen ennustaminen ohjelmointikursseilla}
+\section{Koneoppiminen}
 
-Ohjelmointikurssit joiden tarkoitus on olla opiskelijoiden ensimmäinen kosketus ohjelmointiin ovat vaikeita huomattavalle osuudelle opiskelijoista. Tämä johtaa kursseilta pois jäämiseen ja hylättyihin arvosanoihin sekä heikkoihin arvosanoihin \cite{bergin2015using}. Aloittelijoiden ohjelmointikurssien läpipääsymäärä tutkimusaiheena on kasvattanut kasvattanut merkittävästi suosiotaan merkittävästi vuodesta 2009 alkaen\cite{hellas2018predicting}. Kiinnostuksen kasvusta huolimatta maailmanlaajuinen arvioitu läpipääsyjen määrä ohjelmoinnin aloituskursseilla oli noin 68\% vuonna 2014\cite{watson2014failure}. 
+\begin{itemize}
+    \item kokoelma havaintoja $X$
+    \item kullekin ennusteelle $p$ havaintaan vaste $Y$
+    \item oletetaan kullakin havainnolla $X = (X_1, X_2, \dots, X_p)$ olevan jokin suhde vasteeseen $Y$
+    \item $Y = f(X) + \epsilon$
+    \begin{itemize}
+        \item funktio $f$ on jokin tuntematon funktio havainnolle $X_1, \dots, X_p$
+        \item $\epsilon$ on havainnosta $X$ itsenäinen virhe-termi. Usein syntyy tiedosta jota ei voida sisältää funktioon $f$, tai sisältää variaatiota jota ei osata arvioida. On yläraja vasteen $Y$ ennustamiselle
+        \item funktio $f$ edustaa systemaattista tietoa jota havainto $X$ tarjoaa vasteesta $Y$
+    \end{itemize}
+    \item koneoppiminen on kokoelma lähestymistapoja funktion $f$ arvioimiseksi
+    \item halutaan selvittää funktio $f$ vasteen $Y$ ennustamiseksi havainnon $X$ perusteella
+    \begin{itemize}
+        \item havaintoja $X$ on saatavilla paljon, ja vasteet $Y$ eivät ole helposti saavutettavissa
+    \end{itemize}
+    \item halutaan ymmärtää miten havainto $X_1, \dots, X_p$ vaikuttaa vasteeseen $Y$
+    \item havaintoja kutsutaan opetusdataksi
+    \begin{itemize}
+        \item opetusdatalla opetetaan metodillemme että kuinka funktiota $f$ arvioidaan
+    \end{itemize}
+    \item ohjattu oppiminen: kullekin havainnolle $x_i$, jossa $i = 1, \dots, n$, on oma vasteensa $y_i$.
+    \begin{itemize}
+        \item eli halutaan opettaa koneoppimismalli yhdistämään ennusteet tiettyihin vasteisiin siten, että tuleville havainnoille osataan antaa oikea vaste
+    \end{itemize}
+\end{itemize}
 
-Vaikka halua opiskelijoiden auttamiseen onkin, on apua tarvitsevien löytäminen työlästä ja aikaa vievää. Ehdotettuja ratkaisuja ovat muun muassa ennakkoon tehtävät kyselyt\cite{watson2014no}. % Voi vaatia tarkemman sitaatin
-Kyselyt ovat kuitenkin hyödyttömiä opiskelijamäärien ollessa yli sata jokaista kurssiohjaajaa kohden: lomakkeiden läpikäyminen vie liikaa aikaa, ja näin apua tarvitsevat löydetään liian myöhään. Tukea tarvitaan mahdollisimman varhaisessa vaiheessa jotta arvosanoihin voidaan vaikuttaa merkittävällä tavalla\cite{bergin2015using}. 
+\section{Kurssimenestyksen ennustaminen}
 
-Ongelmaa on lähdetty ratkaisemaan automatisoimalla tunnistamisprosessia. Tunnistamisen autimatisointia on lähdetty ratkaisemaan pyrkimällä ennustamaan opiskelijoiden suoriutumista. Ohjelmointikurssien ennustamisen kohteena ovat usein kurssin loppuarvosana, tenttiarvosana sekä tehtävien kurssiarvosana. Yleisimpiä ennustamismenetelmiä ovat tilastolliset menetelmät\cite{hellas2018predicting}. Muita ohjelmointikurssien yhteydessä käytettäviä menetelmiä ovat muun muassa datalouhimis- ja koneoppimismenetelmät. Ohjelmointikursseilla data on usein kerätty ohjelmointiympäristön (IDE, Integrated Development Environment) keräämästä tiedosta. Tähän voi sisältyä ohjelmakoodin kääntämisen aikana kerätyt kirjaukset (ts. lokitukset), tai tilannekuvat (snapshot) koko ohjelmakoodista\cite{watson2013predicting, jadud2006methods, lagus2018transfer}.
+Oli kurssin oppiaiheena mikä tahansa, on kurssin järjestäjien pyrittävä arvioimaan opiskelijoiden suoriutumisesta myös kurssin aikana. Tämä on haastavaa opiskelijoiden tullessa eri taustoilta ja eri opintolinjoilta.
 
-Tilastollisten menetelmien yhteydessä piirteiden mallintamiseen on muutamassa tapauksessa käytetty tilakoneita. Näistä viitatuimpia ovat Error Quotient\cite{jadud2006methods}, Watson Score\cite{watson2013predicting} sekä Normalized Programming State Model (NPSM)\cite{carter2015normalized}. 
+Yksi ehdotettu ratkaisu on ennakkokyselyjen tekeminen kurssin alussa\cite{watson2014no}. Tämä potentiaalisesti tarjoaa yleisnäkymän kurssin osallistujista.
 
-Error Quotient ja Watson Score rakentavat mallinsa oman ohjelmointikielen kääntäjän kääntämis-lokeista, ja näin pyrkivät ymmärtämään aloittelevien ohjelmoijien ohjelmointikääntämiskäyttäytymistä. Nämä mallit tarkastelevat opiskelijoiden virheellisiä sovelluksien kääntämisyrityksiä, ja vetävät johtopäätöksiä perättäisten kääntämiskertojen välillä. Error quotient on näistä kahdesta yksinkertaisempi. Se lähinnä tarkastelee perättäisten virheiden tyyppiä. Perättäisten virheiden lisäksi Watson Score ottaa käyttöönsä useampia parametreja. Watson Scoren:n käyttämä pääpiirre on virheiden korjaamiseen kuluva aika. Tätä aikaa verrataan samalla kurssilla oleviin opiskelijoihin, ja pisteytetään tämän mukaan. Jos aikaa kului enemmän kuin vertaisilla, lasketaan kyseisen opiskelijan pisteytystä.
+Kyselyt ovat kuitenkin hyödyttömiä opiskelijamäärien ollessa yli sata jokaista kurssiohjaajaa kohden: lomakkeiden läpikäyminen vie liikaa aikaa, ja näin apua tarvitsevat löydetään liian myöhään. Tukea tarvitaan mahdollisimman varhaisessa vaiheessa jotta arvosanoihin voidaan vaikuttaa merkittävällä tavalla\cite{bergin2015using}.
 
-NPSM lienee ottanut innoitusta Watson Score:sta. Kuten Watson Score, myös NPSM tarkkailee kulunutta aikaa. NPSM käyttää kuitenkin tarkempaa mallia ja käyttää ajankohtaisempaa dataa. Mallissa otetaan huomioon, oliko ohjelmakoodissa semanttisia- tai syntaktisia virheitä. Näin NPSM muodostaa holistisemman kuvan kunkin opiskelijan ohjelmakoodin tilasta. NPSM hyödynsi kääntämislokien lisäksi striimattuja otoksia opiskelijoiden koodista, joita opiskelijoiden ohjelmointiympäristät lähettivät, antaen tarkempaa tietoa esimerkiksi ohjelmakoodin syntaktisesta tilasta. 
+\subsection{Kurssimenestysken ennustaminen ohjelmointikursseilla}
+
+Ohjelmointikurssit joiden tarkoitus on olla opiskelijoiden ensimmäinen kosketus ohjelmointiin ovat vaikeita huomattavalle osuudelle opiskelijoista. Tämä johtaa kursseilta pois jäämiseen ja hylättyihin arvosanoihin sekä heikkoihin arvosanoihin \cite{bergin2015using}. 
+
+Aloittelijoiden ohjelmointikurssien läpipääsymäärä tutkimusaiheena on kasvattanut kasvattanut merkittävästi suosiotaan merkittävästi vuodesta 2009 alkaen\cite{hellas2018predicting}. Kiinnostuksen kasvusta huolimatta maailmanlaajuinen arvioitu läpipääsyjen määrä ohjelmoinnin aloituskursseilla oli noin 68\% vuonna 2014\cite{watson2014failure}. 
+
+Ohjelmointikurssien ennustamisen kohteena ovat usein kurssin loppuarvosana, tenttiarvosana sekä tehtävien kurssiarvosana. 
+
+Yleisimpiä ennustamismenetelmiä ovat tilastolliset menetelmät\cite{hellas2018predicting}. Muita ohjelmointikurssien yhteydessä käytettäviä menetelmiä ovat muun muassa datalouhimis- ja koneoppimismenetelmät. 
+
+Ohjelmointikursseilla data on usein kerätty ohjelmointiympäristön (IDE, Integrated Development Environment) keräämästä tiedosta. Tähän voi sisältyä ohjelmakoodin kääntämisen aikana kerätyt kirjaukset (ts. lokitukset), tai tilannekuvat (snapshot) koko ohjelmakoodista\cite{watson2013predicting, jadud2006methods, lagus2018transfer}.
+
+Tilastollisten menetelmien yhteydessä ennusteiden mallintamiseen on muutamassa tapauksessa käytetty tilakoneita. 
+
+Tilakone on järjestelmä jota kuvataan tiloina ja sen tilojen muutoksina, jonka tila riippuu tilakoneen nykyisestä tilasta ja sen saamasta syötteestä. 
+
+Viitatuimpia tilakoneita jotka pyrkivät mallintamaan ohjelmoivan opiskelijan tehtävien tilaa ovat, Error Quotient\cite{jadud2006methods}, Watson Score\cite{watson2013predicting} sekä Normalized Programming State Model (NPSM)\cite{carter2015normalized}. 
+
+Error Quotient ja Watson Score rakentavat mallinsa oman ohjelmointikielen kääntäjän kääntämis-lokeista, ja näin pyrkivät ymmärtämään aloittelevien ohjelmoijien ohjelmointikääntämiskäyttäytymistä. Nämä mallit tarkastelevat opiskelijoiden virheellisiä sovelluksien kääntämisyrityksiä, ja vetävät johtopäätöksiä perättäisten kääntämiskertojen välillä. 
+
+Error quotient on näistä kahdesta yksinkertaisempi. Se lähinnä tarkastelee perättäisten virheiden tyyppiä. 
+
+Perättäisten virheiden lisäksi Watson Score ottaa käyttöönsä useampia parametreja. Watson Scoren:n käyttämä pääpiirre on virheiden korjaamiseen kuluva aika. Tätä aikaa verrataan samalla kurssilla oleviin opiskelijoihin, ja pisteytetään tämän mukaan. Jos aikaa kului enemmän kuin vertaisilla, lasketaan kyseisen opiskelijan pisteytystä.
+
+NPSM lienee ottanut innoitusta Watson Score:sta. Kuten Watson Score, myös NPSM tarkkailee kulunutta aikaa. NPSM käyttää kuitenkin tarkempaa mallia ja käyttää ajankohtaisempaa dataa. Mallissa otetaan huomioon, oliko ohjelmakoodissa semanttisia- tai syntaktisia virheitä. Näin NPSM muodostaa holistisemman kuvan kunkin opiskelijan ohjelmakoodin tilasta. 
+
+NPSM hyödynsi kääntämislokien lisäksi striimattuja otoksia opiskelijoiden koodista, joita opiskelijoiden ohjelmointiympäristät lähettivät, antaen tarkempaa tietoa esimerkiksi ohjelmakoodin syntaktisesta tilasta. 
 
 Ennustavina menetelminä heikoin on Error Quotient, ja selkeästi vahvin on NPSM huomioitaessa selittävää varianssia\cite{carter2015normalized}. Error Quotient-mallista puuttuu liikaa tietoa ollakseen enemmän kuin suuntaa antava pisteytys\cite{jadud2006methods}. Vaikka Watson Score on tarkempi Error Quotient:iin nähden, on sen käyttämä data paljon suppeampaa verrattuna NPSM:iin\cite{carter2015normalized}. Carter kuitenkin huomautti mahdollisista eroista kurssiasetelmassa, ohjelmistoympäristöissä ja ohjelmointikielissä\cite{carter2015normalized}. 
 
 Kullakin tilakoneella rakennettiin ennustava malli lineaarisella regressiolla. NPSM:a sovellettiin myös multivariate regressioon. Mielenkiintoinen tutkimisen aihe olisi soveltaa näiden tilakoneiden tuottamia parametreja monimutkaisempiin koneoppimismalleihin.
 
-Opiskelijoiden ohjelmointikurssien menestyksen kontekstiin sovellettuja koneoppimistekniikoita on laaja kirjo. Kun kyseessä on akateemisen menestyksen ennustaminen, ovat suosituimpia tekniikoita lineaarinen regressio, ja luokittelualgoritmit\cite{hellas2018predicting}. Tämä heijastuu myös ohjelmointikurssien menestyksen ennustamiseen: tarkimpien menetelmien joukkoon kuuluvat muun muassa Naive Bayes\cite{bergin2015using}, tukivektorikoneet\cite{bergin2015using} sekä random forest\cite{lagus2018transfer}. Näistä jokainen on luokittelukoneoppmis-tekniikka. Neuroverkot ovat myös merkittävä tutkimuksen kohde ohjelmointikurssien menestyksen ennustamisessa\cite{Castro-Wunsch:2017:ENN:3017680.3017792}. 
+Opiskelijoiden ohjelmointikurssien menestyksen kontekstiin sovellettuja koneoppimistekniikoita on laaja kirjo. Kun kyseessä on akateemisen menestyksen ennustaminen, ovat suosituimpia tekniikoita lineaarinen regressio, ja luokittelualgoritmit\cite{hellas2018predicting}. 
 
-Koneoppimisalgoritmien ongelmana on usein niiden joustamattomuus: ne on koulutettava datasta, joka on samanlaista kuin itse käytössä oleva data. Tämä pätee erityisesti klassisiin koneoppimisalgoritmeihin kuten esimerkiksi tukivektorikoneisiin ja logistiseen regressioon. Jos tätä ehtoa ei noudateta, ovat ennusteiden tarkkuudet huomattavan heikkoja. Jos koneoppimisalgoritmi koulutetaan kurssia varten ja kurssin aikana, todennäköisesti ongelmaa ei ole. Tavoiteltavaa on kuitenkin saada aikaiseksi malli, jolla on kohtuullinen tarkkuus edes saman kurssin eri toistokerroilla. Vaikka ohjelmointikurssilla kurssimateriaali, tavoitteet ja opeteltavat asiat pysyisivät samana vuodesta toiseen, on muuttuvia tekijöitä jokaisella iteraatiokerralla useita. Muun muassa osallistujien lähtötaso, opettajat sekä opetusmenetelmät. Muuttuvat tekijät pudottavat ennusteiden tarkkuutta merkittävästi. Saman kurssin eri toistoihin sovellettuja algoritmeja on tutkittu muun muassa neuroverkoilla\cite{Castro-Wunsch:2017:ENN:3017680.3017792} ja transfer learning\cite{lagus2018transfer}-tekniikalla.
+Tarkimpien koneoppimismenetelmien joukkoon kuuluvat muun muassa Naive Bayes\cite{bergin2015using}, tukivektorikoneet\cite{bergin2015using} sekä random forest\cite{lagus2018transfer}. Näistä jokainen on luokittelukoneoppmis-tekniikka. Myös neuroverkot esiintyvät ohjelmoinnin oppimisen ennustamisessa\cite{Castro-Wunsch:2017:ENN:3017680.3017792}. 
+
+Koneoppimisalgoritmien ongelmana on usein niiden joustamattomuus: ne on koulutettava datasta, joka on samanlaista kuin itse käytössä oleva data. Tämä pätee erityisesti klassisiin koneoppimisalgoritmeihin kuten esimerkiksi tukivektorikoneisiin ja logistiseen regressioon. Jos tätä ehtoa ei noudateta, ovat ennusteiden tarkkuudet huomattavan heikkoja. 
+
+Jos koneoppimisalgoritmi koulutetaan kurssia varten ja kurssin aikana, todennäköisesti ongelmaa ei ole. Tavoiteltavaa on kuitenkin saada aikaiseksi malli, jolla on kohtuullinen tarkkuus edes saman kurssin eri toistokerroilla. 
+
+Vaikka ohjelmointikurssilla kurssimateriaali, tavoitteet ja opeteltavat asiat pysyisivät samana vuodesta toiseen, on muuttuvia tekijöitä jokaisella iteraatiokerralla useita: muun muassa osallistujien lähtötaso, opettajat sekä opetusmenetelmät. Muuttuvat tekijät pudottavat ennusteiden tarkkuutta merkittävästi. 
+
+Saman kurssin eri toistoihin sovellettuja algoritmeja on tutkittu muun muassa neuroverkoilla\cite{Castro-Wunsch:2017:ENN:3017680.3017792} ja transfer learning\cite{lagus2018transfer}-tekniikalla.
 
 
-\section{SQL-kurssien menestyksen ennustaminen}
+\subsection{Kurssimenestyksen ennustaminen SQL-kursseilla}
 
 Kurssimenestyksen ennustamisesta SQL-kurssien kontekstissa oli tausta-artikkelien keräämisen hetkellä varsin vähän. Ainoa artikkeli jossa suoraan puhuttiin koneoppimisen soveltamisesta oppilaiden menestyksen ennustamiseen SQL-kurssilla on Ahadin ym. kirjoittama "Students' Syntactic Mistakes in Writing Seven Differente Types of SQL Queries and its Application to Predicting Students' Success"\cite{Ahadi:2016:SSM:2839509.2844640}. Tutkimuksen lähestymistapana on luokitella opiskelijat onnistuneisiin ja epäonnistuneisiin heidän kääntämisyritysten perusteella PART-luokittelijalla.
 
 PART luokittelija on sääntöpohjainen luokitteija joka perustuu C4.5 algoritmiin\cite{Ahadi:2016:SSM:2839509.2844640}. PART valittiin luokittelijaksi koska se hallitsee puuttuvat arvot, ja se tarjoaa selkeän esityksen generoiduista säännöistä. Itse kysymys johon luokittelijalla haettiin vastausta, oli selvittää mikä määrä kamppailua on hyviä ennuste sille että onnistuuko oppilas tuottamaan oikean kyselyn. Luokittelija koulutettiin ennustamaan että onnistuuko oppilas tuottamaan GROUP BY-kyselyn oikein.
 
-Luokittelija sai syötteekseen 480 oppilaan yritykset yhteen tehtävään. Puolet oppilaista onnistui vastaamaan kysymykseen ja puolet eivät. Syötteeksi PART-luokittelijalle annettiin oppilaitten suorittamat kyselyt, sekä virheelliset että oikein menneet. Piirteitä valittiin (feature selection) korrelaatio-pohjaisilla menetelmillä ylisovittamisen välttämiseksi, piirteiden päällekkäisyyksien vähentämiseksi ja ennustustarkkuuden parantamiseksi. Koulutettu luokittelija validoitiin kymmenkertaisella cross-validation-menetelmällä. GROUP BY-kyselyn ennustamisessa saavutettiin 77\% tarkkuus.
+Luokittelija sai syötteekseen 480 oppilaan yritykset yhteen tehtävään. Puolet syötteeksi valituista oppilaista onnistui vastaamaan kysymykseen ja puolet eivät. Aineistona PART-luokittelijalle annettiin oppilaitten suorittamat kyselyt, sekä virheelliset että oikein menneet. Ennusteita valittiin (feature selection) korrelaatio-pohjaisilla menetelmillä ylisovittamisen välttämiseksi, ennusteiden päällekkäisyyksien vähentämiseksi ja ennustustarkkuuden parantamiseksi. Koulutettu luokittelija validoitiin kymmenkertaisella cross-validation-menetelmällä. GROUP BY-kyselyn ennustamisessa saavutettiin 77\% tarkkuus.
 
 Kuten edellissä kappaleessa todettiinkin, Ahadi ym. \cite{Ahadi:2016:SSM:2839509.2844640} muistuttavat eri koneopimisalgoritmien olevan voimakkaasti kontekstiriippuvaisia. Samalla tavoitteella koulutetut koneoppimismallit saavuttivat tarkkuuden 60\%:n ja 79\%:n väliltä.
 
@@ -229,126 +384,38 @@ Mitä dataa, mistä on saatu ja suunnitelmia käytöstä.
     \item miksi valittu?
 \end{itemize}
 
-\subsection{Linear regression}
-
-Lineaarinen regressio on yksinkertainen valvotun oppimisen (supervised learning) sovellus\cite{james2013ISLR}. Se on ollut käytössä pitkään ja se on edelleen laajasti käytetty tilastollinen menetelmä. Sen katsotaan olevan hyvä lähtökohta muiden koneoppimismenetelmien ymmärtämiseen. Iästään huolimatta lineaarinen regressio pystyy vastaamaan varsin joustavasti ilmiön ominaisuuksien välisiin kysymyksiin. 
-
-Yksinkertainen lineaarinen regressio olettaa vasteen Y ja syötteen X välillä olevan lineaarinen suhde. Tämä suhde voidaan ilmaista seuraavasti. 
-
-\begin{equation} \label{eq:1}
-    Y = \beta_0 + \beta_1 X + \epsilon
-\end{equation}
-
-Yhtälössä $\epsilon$ kuvaa virhettä, jota ei yhtälöstä saada poistettua. Se syntyy arvoista, joita ei ole otettu tai pystytä ottamaan yhtälössä huomioon. Sitä voidaan ajatella satunnaisena kohinana jota datasta löytyy. Yhtälössä $\beta_0$ edustavaa leikkauspistettä, ja $\beta_1$ puolestaan on yhtälön kerroin. Ne ovat prosessin aloittamista tuntemattomia arvoja. Kun data on saatavilla, voidaan yhtälöstä laskea arvot $\hat{\beta_0}$ ja $\hat{\beta_1}$. Nämä arvoilla voidaan antaa ennuste vasteesta $\hat{y}$ annetule syötteelle $x$.
-
-Yksinkertaisella lineaarisella regressiolla voidaan yrittää ennustaa vastetta yksittäisen ennustavan syötteen perusteella. Usein ennustavia parametreja on useita, ja näin yksinkertaista lineaarista regressiota laajennetaan moni-lineaariseksi regressioksi (multiple linear regression) seuraavasti.
-
-\begin{equation} \label{eq:2}
-    Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p + \epsilon
-\end{equation}
-
-Tässä $p$ kuvaa valittujen parametrien määrää, numeroidut syötteet $X_1\dots p$ kuvaavat kutakin valittua parametriä, joilla jokaisella on oma kertoimensa $\beta_1\dots p$.
-
-Lineaarisella regressiolla saadaan nopeasti aikaiseksi suuntaa antavaa tietoa datan ominaisuuksista. Onko esimerkiksi syötteen ja vasteen välinen suhde lineaarinen, tai kuinka vahva syötteen ja vasteen välinen suhde. Vastaukset ovat kuitenkin vain suuntaa antavia. Tarkempina heikkouksina lineaariselle regressiolle mainitaan että sille ei ole luontevaa tapaa käsitellä kvalitatiivisia, eli laadullisia syötteitä\cite{james2013ISLR}. 
-
-Akateemisen suoritumisen ennustamisessa lineaariset mallit, joihin lineaarinen regressio kuuluu, ovat käytetyimpiä. Lineaaristen mallien osuus käytetyistä ennustamisen menetelmistä oli vuonna 2018 31\%\cite{hellas2018predicting}. Lineaarista regressiota käyttivät muun muassa Carter ym. \cite{carter2015normalized} sekä Watson ym. \cite{watson2013predicting}.
-
-Valitsin lineaarisen regression yhdeksi menetelmistä sen yksinkertaisuuden ja laajan käytön vuoksi. Yksinkertaisena mallina se tarjonnee jonkinlaisen vertailukohdan muita koneoppimismalleja soveltaessa.
-
-
-\subsection{Support Vector Machine}
-
-\begin{itemize}
-    \item askel eteenpäin
-    \item saanut hyvää palautetta
-    \item kirjasta\cite{james2013ISLR}
-\end{itemize}
-
-Tukivektorikone on luokittelumenetelmä (classification), joka pyrkii jakamaan havaintoavaruuden kahteen osaan. Se laajentaa tukivektoriluokittelijaa mahdollistamalla epälineaarisen luokittelun kahden luokan välillä\cite{james2013ISLR}. Tukivektorikone saa syötteekseen $n \times p$ kokoisen matriisin $\textbf{X}$, jossa on $p$-ulottuvuutta, ja $n$-syötettä. Havaintojen luokat $y_1, \dots, y_n \in \{-1, 1\}$ ovat binäärisiä, joissa $-1$ ja $1$ ovat mahdollisia ennustettavia luokkia. Tukivektoriluokittelijan tavoin tukivektorikone pyrkii etsimään kahden luokan välisen rajan eli hypertason (hyperplane), ja saamaan mahdollisimman leveän marginaalin $M$ eri luokkiin kuuluvien havaintojen välille. Kullakin havainnolla $x_i$ on löysäysparametri (slack variable) $\epsilon_i$, joka kertoo havainnon sijainnin marginaaliin ja hypertasoon nähden seuraavasti. 
-
-\begin{gather}
-    \epsilon_i = 0\text{, niin havainto $x_i$ on oikealla puolella marginaalia}\\
-    \epsilon_i > 0\text{, niin havainto $x_i$ on väärällä puolella marginaalia}\\
-    \epsilon_i > 1\text{, niin havainto $x_i$ on väärällä puolella hypertasoa}
-\end{gather}
-
-Vektorit (eli havainnot) jotka ovat marginaalin sisällä tai ovat hypertason väärällä puolella, ovat nimeltään tukivektoreita. Sallittujen löysäysparametrien summaa määrää viritysparametri $C$, joka käytännössä valitaan ristivalidoinnilla (cross-validation). Löysäysparametrien summa $\sum^n_{i=1} \epsilon_i$ ei ylitä viritysparametria $C$. Viritysparametri säätelee tukivektoriluokittelijan ja tukivektorikoneen vinouma-varianssi tasapainoa (bias-variance trade-off). Siinä missä tukivektoriluokittelijaa käytetään kun havaintoavaruus on lineaarisesti jaettavissa, on tukivektorikone laajennettavissa muunkin muotoisilla funktioilla. Yleisesti tukivektorikone on ilmaistavissa seuraavasti.
-
-\begin{equation}
-    f(x) = \beta_0 + \sum_{i \in \textbf{S}} \alpha_i K(x, x_i)
-\end{equation}
-
-Jossa $\beta_0$ ilmaisee leikkauspistettä, $\textbf{S}$ sisältää havaintojen indeksit jotka ovat tukivektoreita, $\alpha_i$ on havainnon $x_i$ kerroin. Funktio $K$ on tukivektorikoneen ydinfunktio (kernel function). Tukivektorikoneen ydinfunktioksi voi asetella muun muassa polynomisen funktion, radiaalisen funktion tai tukivektoriluokittelijan lineaarisen funktion.
-
-\begin{align}
-    K(x_i, x_{i'}) &= \sum^p_{j=1} x_{i, j} x_{i', j} \text{ Lineaarinen ydinfunktio}\\
-    K(x_i, x_{i'}) &= (1 + \sum^p_{j=1} x_{i, j} x_{i', j} )^d \text{ Polynominen funktio}\\
-    K(x_i, x_{i'}) &= \exp{-\gamma \sum^p_{j=1}( x_{i, j} - x_{i', j} )^2} \text{ Radiaalinen funktio}
-\end{align}
-
-Parametri $p$ kertoo havaintoavaruuden ulottuvuuksien määrän. Polynomisessa funktiossa parametri $d$ on polynomisen funktion valittu aste. Radiaalisen funktion $\gamma$ on positiivinen vakio.
-
-Ydin-funktioiden voimin tukivektorikoneet ovat laskennallisesti yksinkertaisia, ja pystyvät käsittelemään moniulotteista dataa. Lisäksi tukivektorikoneen kouluttaminen on varsin muistitehokasta koska ainoastaan tukivektorit, eli havainnot jotka ovat marginaalin sisäpuolella tai hypertason väärällä puolella osallistuvat tukivektorikoneen oppimiseen. Kuten lineaariregressiossa, tukivektorikone ei tarjoa todennäköisyyksiä luokkien ennustamisen tueksi. Datasta riippuen ydin-funktion valitseminen voi olla haastavaa, varsinkin datassa jossa on rajusti kohinaa. Suuren kohinan määrän läsnäollessa tukivektorikone saattaa ylisovittua kohinaa myötäillen, rampauttaen tukivektorikoneen suoriutumista.
-
-Opetuksen kontekstissa Kentli ym. \cite{kentli2011svm} pyrkivät ennustamaan tekniikan alan kurssin opiskelijoiden suoriutumista tukivektorikoneen avulla. Lagus ym. \cite{lagus2018transfer} tekivät vastaavia ennusteita ohjelmointikurssilla. Artikkeli\cite{lagus2018transfer} tutki transfer learning-koneoppimismallien suoritumista, jossa tukivektorikone oli verrokkina. Tukivektorikoneet toimivat kunnioitettavalla tarkkuudella opiskelijat, jotka pääsivät kurssista läpi. Ennustetarkkuuksien keskiarvot vaihtelivat kurssien edetessä aina 82\% ja 87\% prosentin väliltä.
-
-Tukivektorikone on lineaariregression jälkeen luonteva jatke. Se on hyvin toteutettavissa ja siitä on olemassa olevia toteutuksia. Tukivektorikone on hyvä yleistämään dataa ja pystyy antamaan hyviä ennusteita yksinkertaisuuteensa nähden.
-
-
-\subsection{Random Forest}
-
-Random forest-menetelmä on kokoelma päättelypuita, ja on laajennus pussittamisesta (bagging)\cite{james2013ISLR}. Pussittaminen perustuu bootstarpping-menetelmälle. Ajatuksena on tehdä useita satunnisia otoksia datasta. Tuotettu otos on alkuperäisen datan kokoinen. Kun datasta tehdään satunnaisia otoksia, voi muun muassa jokin syöte esiintyä useamman kerran bootstrapping-menetelllä tuotetussa datassa, ja osa taas voi jäädä otoksen ulkopuolelle. Datan ulkopuolisia syötteitä, eli "pussin ulkuopuolisia"  (out-of-bag) arvoja hyödynnetään tuotetun mallin virheen arvioimiseen. Pussittamisessa tämä satunnainen otos tehdään $B$-kertaa, ja jokaiselle data-otokselle tehdään oma päättelypuu. Regressio-ongelmassa päättelypuut antavat oman arvionsa, ja näistä arvioista lasketaan keskiarvo ennusteeksi.
-
-\begin{equation}
-    \hat{f}_{bag}(x) = \frac{1}{B} \sum^B_{b=1} \hat{f}^{*b}(x)
-\end{equation}
-
-Jos kyseessä on luokitteluongelma, saadaan luokan ennuste puiden enemmistöäänellä.\cite{james2013ISLR} 
-
-Pussien määrä $B$:n kasvattaminen ei lisää ennusteiden ylisovittamista\cite{james2013ISLR}. Usein pussien määrän $B$ valinta tapahtuu siten, että sitä kasvatetaan kunnes luokitteluvirhe tasaantuu. 
-
-Verrattuna yksittäiseen päättelypuuhun pussittaminen ennustusmenetelmänä on paljon tarkempi. Pussittamisen ongelmana on sama kuin yksittäisellä päätteylypuulla, eli syötteen korreloivat ennusteet ja vahvemmat ennusteet. Jos yksittäisellä ennusteella on vahva painoarvo ennusteessa, näyttävät pussittamisen päättelypuut samanlaisilta. Vastaavanlainen ongelma ilmenee korreloivissa ennusteissa luoden toistuvia rakenteita päättelypuissa.
-
-Random forest ratkaisee ongelmaa vaikuttamalla logiikkaan, että millä valitaan kunkin puun haaran merkitsevä syötteen ennuste. Sen sijaan että syötteen jokaista ennustetta harkitaan kunkin haaran jakavaksi tekijäksi, valitaan jakava piirre vain satunnaisen $m$-kappaleen joukosta. Parametrin $m$ määrittelee usein $m \approx \sqrt{p}$, eli syötteiden ennusteiden määrän neliöjuuri. Näin random forest dekorreloi syötteiden ennusteita, ja saadaan suurempaa variaatiota luotujen päättelypuiden välille\cite{james2013ISLR}.
-
-Ytimessään random forest on kokoelma päättelypuita. Sen ennusteet ovat huomattavasti merkittävästi varrattuna yksittäiseen päättelypuuhun\cite{james2013ISLR}. Koska päättelypuita on kokoelmassa useita ja satunnaisuus on olennainen osa mallin rakentamista, välttää random forest hyvin ylisovittamista\cite{james2013ISLR}. Usean päättelypuun käytön vuoksi random forest kuitenkin menettää yhden päättelypuun suurimmista eduista, joka on selkeä tulkittavuus\cite{james2013ISLR}. Päättelypuussa tuloksen tulkitseminen on yksinkertaista, sillä jokaista tulosta edustaa yksittäinen puun "lehti". Jokaisella lehdellä on selkeä reitti ja solmut, joita kautta kyseiseen lehteen on päädytty. Tämän sijasta random forest käyttää jokaisen puunsa antamaa ennustetta, joten ei tulos ole enään yhtä helposti luettavissa.
-
-Opetukessa random forest on ollut mukana ennustamassa muun muassa hyvin ja heikosti suoriutuvia ohjelmointi-opiskelijoita. Yleisesti sitä on tarkasteltu muiden koneoppimismenetelmien rinnalla\cite{Ahadi:2015:EML:2787622.2787717}. Lisäksi se on ollut vertailussa tutkimuksessa transfer learning-menetelmän soveltuvuudesta samaan kontekstiin\cite{lagus2018transfer}. Molemmissa artikkeleissa random forest toimii poikkeuksellisella tarkkuudella.
-
-Valitsin random forestin mukaan vertailuun koska se on mainittu erikseen ohjelmointiopetuksen kontekstissa. Haluan päästä näkemään saavutanko random forest-menetelmällä sen aiemman havaitun tarkkuuden.
-
-
 \subsection{Bayes luokittelija}
 
-Bayes luokittelija perustuu nimensä mukaisesti bayesin kaavaan\cite{james2013ISLR}. Olettaen että Bayesin luokittelijan ehdot on määritelty oikein, olisi sillä luokittelijoista matalin virhetaso.
+Bayes luokittelija perustuu nimensä mukaisesti bayesin kaavaan\cite{james2013ISLR}. Olettaen että Bayesin luokittelijan ehdot on määritelty oikein, olisi sillä luokittelijoista matalin virheaste\cite{james2013ISLR}.
 
 \begin{equation} \label{eq:bayes}
     Pr(Y = k | X = x) = \frac{\pi_k f_k(x)}{\sum^K_{l=1} \pi_l f_l(x)}
 \end{equation}
 
-Kaava antaa todennäköisyyden sille että havainto $x$ kuuluu luokkan $k$. Merkintään $Pr(Y = k | X = x)$ jatkossa viittaan merkinnällä $p_k(X)$. % Tän voi poistaa jos ei käytetä enempää
-Bayes luokittelija pyrkii etsimään luokan $k$ joka maksimoi posteriorin $p_k(X)$. Bayes luokittelijan ennakkotietoa luokkien todennäköisyyksistä kuvaa priori $\pi_k$. Jos tarkkaa ennakkotietoa todellisesta luokkien todennäköisyydestä ei ole, voidaan se helposti arvioida satunnaisotoksen esiintyvistä luokista: ottamalla kunkin luokan lukumäärän osuus kaikista havainnoista. 
+Viitataan posterioriin $Pr(Y = k | X = x)$ jatkossa merkinnällä $p_k(X)$.
 
-Bayesin kaavan tiheysfunktio $f_k(x)$ on hankalampaa ratkaista. Se on laskennallisesti raskasta, ja sen arvot ovat todellisuudessa saavuttamattomia ilman kaikkea dataa. Tiheysfunktiota ei käytännössä ikinä lasketa, tai edes pystytä laskemaan suoraan. Tästä syystä Bayes luokittelijaa pyritään tavalla tai toisella approksimoimaan\cite{james2013ISLR}.
+Jotta arvio luokkaan kuulumisesta voidaan tehdä, Bayes luokittelija pyrkii etsimään luokan $k$ joka maksimoi posteriorin $p_k(X)$. 
+
+\begin{equation}
+    p^*(X) = \arg \max_k p_k(X)
+\end{equation}
+
+Bayes luokittelija antaa todennäköisyyden siitä, että havainto $x$ kuuluu luokkaan $k$.
+
+Bayes luokittelijan ennakkotietoa luokkien todennäköisyyksistä kuvaa priori $\pi_k$. Jos tarkkaa ennakkotietoa todellisesta luokkien todennäköisyydestä ei ole, voidaan se helposti arvioida satunnaisotoksen esiintyvistä luokista: ottamalla kunkin luokan lukumäärän osuus kaikista havainnoista. 
+
+Bayesin kaavan tiheysfunktio $f_k(x)$ on käytännössä ehdollinen todennäköisyys siitä että havinto on jokin $x$ ehdolla että luokka $Y = k$. Siihen viitataan myös merkinnällä $Pr(X = x | Y = k)$. Se on huomattavasti hankalampaa ratkaista suoraan verrattuna yhtälön muihin osiin. Se on laskennallisesti raskasta ja sen todelliset parametrit ovat todellisuudessa saavuttamattomia ilman kaikkea aineistoa. Todellisuudessa siis tiheysfunktiota ei voi ikinä laskea tarkasti, joten todellista arvoa ei käytännössä edes lasketa. Tästä syystä Bayes luokittelijaa pyritään tavalla tai toisella approksimoimaan\cite{james2013ISLR}.
 
 
 \subsection{Naive Bayes}
 
-Naive Bayes nimensä mukaisesti perustuu Bayesin teoreemaan. Se on yksinkertaistettu versio Bayes-optimoidusta luokittelijasta. Parametreina Bayes-optimoitu luokittelija saa havaintovektoreita ja ilmaisee todennäköisyyksinä että mihin luokkaan havainto kuuluu\cite{rish2001empirical}.
+Naive Bayes nimensä mukaisesti perustuu Bayesin kaavaan. Se on yksinkertaistettu versio Bayes-optimoidusta luokittelijasta\cite{rish2001empirical}.
+
+Koska kyse on ehdollisesta todennäköisyydestä, on havaintojen ennusteiden määrän kasvaessa tiheysfunktion $Pr(X = x | Y = k)$ ratkaiseminen suoraan laskennallisesti raskasta. Tämän vuoksi naive Bayes tekee rajun yksinkertaistuksen: se oletta että kaikki havaintojen ennusteet ovat toisistaan riippumattomia. Tämä yksinkertaistaa kyseisen ehdollisen todennäköisyyden muotoon $P(\textbf{X}|C) = \Pi^n_{i=1} P(X_i | C)$, jolloin saadaan naive Bayesin funktio diskriminantissa muodossa:
 
 \begin{equation}
-    f^*_i(\textbf{x}) = P(\textbf{X}=\textbf{x} | C=i) P(C=i)
+    f_k(X) = Pr(X = x | Y = k) = \Pi^n_{n=1} Pr(X = x_i | Y = k)
 \end{equation}
-
-Bayes-optimoidun luokittelijan diskirminantissa funktiossa $\textbf{X}$ ilmaisee $j$-ulotteista havaintoa. $C$ on puolestaan luokka, johon pyritään havaintoa luokitella. Tavoitteena on siis ratkaista posterioritodennäköisyys Bayesin yhtälössä. Koska tavoitteena on kuitenkin luokitella havainto johonkin luokkaan $C$, on funktio ilmaistavissa seuraavasti\cite{rish2001empirical}:
-
-\begin{equation}
-    h^*(\textbf{x}) = \arg \max_i P(\textbf{X} = \textbf{x}|C=i) P(C = i)
-\end{equation}
-
-Tässä pyritään etsimään luokka $C = i$, joka maksimoi posterioritodennäköisyyden.
-
-Koska kyse on ehdollisesta todennäköisyydestä, on havaintoken ulottuvuuksien määrän kasvaessa todennäköisyyden $P(\textbf{X} = \textbf{x}|C=i)$ suoraan laskennallisesti raskasta. Tämän vuoksi otetaan usein käyttöön estimaatteja tai yksinkertaistuksia, joista yksi esimerkki on naive Bayes-luokittelija. Naive Bayes tekee rajun yksinkertaistuksen olettaen että kaikki havaintojen piirteet ovat toisistaan riippumattomia. Tämä yksinkertaistaa kyseisen ehdollisen todennäköisyyden muotoon $P(\textbf{X}|C) = \Pi^n_{i=1} P(X_i | C)$, jolloin saadaan naive Bayesin funktio diskriminantissa muodossa:
 
 \begin{equation}
     f^{NB}_i(\textbf{x}) = \Pi^n_{j=1} P(X_j=x_j | C=i) P(C=i)
@@ -356,7 +423,9 @@ Koska kyse on ehdollisesta todennäköisyydestä, on havaintoken ulottuvuuksien 
 
 Tässä $j$ on havainnon indeksi, $i$ on luokan indeksi ja $n$ on havaintojen määrä. 
 
-Rajusta yksinkertaistamisestaan huolimatta naive Bayes kilpailee suorituskyvyllään hienostuneempien koneoppimismenetelmien kanssa\cite{rish2001empirical}. Parhaiten se toimii havaintojen kanssa joiden piirteet ovat toisistaan riippumattomia, ja kun piirteet ovat toisistaan funktionaalisesti riippuvaisia. Naive Bayesin rajoituksen ovat nominaaliset koneoppimispiirteet, eli piirteet joilla on rajallinen määrä mahdollisia arvoja. Binääristen piirteiden kohdalla naive Bayes voi oppia vain lineaarisia suhteita, ja kun piirteiden mahdollisten arvojen määrä ylittää kaksi, on havaintoavaruden oltava polynomisesti jakautunut\cite{rish2001empirical}.
+Rajusta yksinkertaistamisestaan huolimatta naive Bayes kilpailee suorituskyvyllään hienostuneempien koneoppimismenetelmien kanssa\cite{rish2001empirical}. Parhaiten se toimii havaintojen kanssa joiden ennusteet ovat toisistaan riippumattomia, ja kun ennusteet ovat toisistaan funktionaalisesti riippuvaisia. 
+
+Naive Bayesin rajoituksen ovat nominaaliset koneoppimisennusteet, eli ennusteet joilla on rajallinen määrä mahdollisia arvoja. Binääristen ennusteiden kohdalla naive Bayes voi oppia vain lineaarisia suhteita, ja kun ennusteiden mahdollisten arvojen määrä ylittää kaksi, on havaintoavaruden oltava polynomisesti jakautunut\cite{rish2001empirical}.
 
 Opetuksessa naive Bayesia on käytetty esimerkiksi koulutuksellisen datan louhintaan\cite{bhardwaj2012data}, ja opiskelijoiden soveltuvuuden arviointiin kirjallisuuden opinnoissa\cite{hellas2018predicting}.
 
@@ -365,9 +434,9 @@ Naive Bayes on valittu menetelmänä mukaan sen saaman menestyksen ja yksinkerta
 
 \subsection{Linear Discriminant Analysis}
 
-Linear Discriminant Analysis (LDA) on approksimaatio Bayes luokittelijasta joka pyrkii yksinkertaistamaan havaintoavaruuden lineaariseksi. LDA saavuttaa tämän olettamalla tiheysfunktion olevan normaalisti jakautunut, ja estimoimalla havaintojen keskiarvoa $\mu_k$varianssia $\sigma^2$ sekä prioria $\pi_k$.
+Linear Discriminant Analysis (LDA) on approksimaatio Bayes luokittelijasta joka pyrkii yksinkertaistamaan havaintojen ennusteavaruuden lineaariseksi. LDA saavuttaa tämän olettamalla tiheysfunktion olevan normaalisti jakautunut, ja estimoimalla havaintojen keskiarvoa $\mu_k, $varianssia $\sigma^2$ sekä prioria $\pi_k$.
 
-Kun havainnoista käytetään yhtä piirrettä $p$, käytetään tiheysfunktiona siis normaalijakauman tiheysfunktiota.
+Kun havaintojen ennusteista käytetään yhtä ennustetta $p$, käytetään tiheysfunktiona normaalijakauman tiheysfunktiota.
 
 \begin{equation}
     f_k(x) = \frac{1}{\sqrt{2 \pi \sigma_k}} \exp{(-\frac{1}{2 \sigma^2_k (x - \mu_k)^2})}
@@ -395,7 +464,7 @@ Tosiaan koska todelliset arvot keskiarvolle $\mu_k$, yhteiselle varianssille $\s
 
 Ja näillä arvoilla saadaan todellisen diskriminantin funktion estimaatti $\hat{\delta_k}(x)$. Havainto $x$ luokitellaan luokkaan $k$ jolla $\hat{\delta_k}(x)$ on suurin.
 
-Tapauksessa jossa kullakin havainnolla $X$ on $p$ piirrettä, eli $X = (X_1, X_2, \dots, X_p)$ oletetaan että havainnot riippuvat moniarvo normaalijakaumasta $X \sim N(\mu_k, \pmb{\Sigma})$. Tässä $\mu_k$ on luokan $k$ yhteinen odotusarvo $E(X)$, ja $\pmb{\Sigma}$ on havainnon $X$ $p \times p$ kokoinen kovarianssimatriisi $Cov(X)$. Kovarianssimatriisi on kaikille havainnoille yhteinen arvo. Moniarvo normaalijakauman tiheysfunktio saa seuraavan muodon.
+Tapauksessa jossa kullakin havainnolla $X$ on $p$ ennustetta, eli $X = (X_1, X_2, \dots, X_p)$ oletetaan että havainnot riippuvat moniarvo normaalijakaumasta $X \sim N(\mu_k, \pmb{\Sigma})$. Tässä $\mu_k$ on luokan $k$ yhteinen odotusarvo $E(X)$, ja $\pmb{\Sigma}$ on havainnon $X$ $p \times p$ kokoinen kovarianssimatriisi $Cov(X)$. Kovarianssimatriisi on kaikille havainnoille yhteinen arvo. Moniarvo normaalijakauman tiheysfunktio saa seuraavan muodon.
 
 \begin{equation} \label{eq:multivariate}
     f(k) = \frac{1}{(2\pi)^{p/2} |\pmb{\Sigma}|^{1/2}} \exp{-\frac{1}{2} (x - \mu)^T \pmb{\Sigma}^{-1} (x - \mu)}
@@ -416,6 +485,99 @@ Opetuksessa on LDA:ta käytetty opiskelijoiden suoriutumisen ennustamiseen tentt
 Valitsin LDA:n vertailtavaksi algoritmiksi koska se on Bayes-luokittelijan approksimaatio. Se tarjoaa mahdollisuuden vertailla kahta approksimoitua Bayes luokittelijaa, naive Bayes- ja LDA-luokittelijaa.
 
 
+\subsection{Linear regression}
+
+Lineaarinen regressio on yksinkertainen ohjatun oppimisen (\ref{term:supervised}) sovellus\cite{james2013ISLR}. Se on ollut käytössä pitkään ja se on edelleen laajasti käytetty tilastollinen menetelmä. Sen katsotaan olevan hyvä lähtökohta muiden koneoppimismenetelmien ymmärtämiseen. Iästään huolimatta lineaarinen regressio pystyy vastaamaan varsin joustavasti ilmiön yksittäisten ominaisuuksien välisiin kysymyksiin. 
+
+Yksinkertainen lineaarinen regressio olettaa luokan Y ja havainnon X välillä olevan lineaarinen suhde. Tämä suhde voidaan ilmaista seuraavasti. 
+
+\begin{equation} \label{eq:1}
+    Y = \beta_0 + \beta_1 X + \epsilon
+\end{equation}
+
+Yhtälössä $\epsilon$ kuvaa virhettä, jota ei yhtälöstä saada poistettua. Se syntyy arvoista, joita ei ole otettu tai pystytä ottamaan yhtälössä huomioon. Sitä voidaan ajatella satunnaisena kohinana jota aineistosta löytyy. Yhtälössä $\beta_0$ edustavaa leikkauspistettä, ja $\beta_1$ puolestaan on yhtälön kerroin. Ne ovat arvoja jotka yritetään opettaa funktiolle. Kun aineisto on saatavilla, voidaan yhtälöstä laskea arviot $\hat{\beta_0}$ ja $\hat{\beta_1}$. Näillä arvoilla voidaan antaa ennuste luokasta $\hat{y}$ annetule havainnolle $x$. Lineaarisessa regressiossa luokka $y$ on nominaalisen luokan sijasta ennuste mahdollisesta arvosta, eli se ei välttämättä ole kokonaisluku.
+
+Yksinkertaisella lineaarisella regressiolla voidaan yrittää ennustaa luokkaa yksittäisen ennusteen perusteella. Usein ennusteita on useita, ja näin yksinkertaista lineaarista regressiota laajennetaan moni-lineaariseksi regressioksi (multiple linear regression) seuraavasti.
+
+\begin{equation} \label{eq:2}
+    Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p + \epsilon
+\end{equation}
+
+Tässä $p$ kuvaa valittujen ennusteiden määrää, numeroidut syötteet $X_1\dots p$ kuvaavat kutakin valittua ennustetta, joilla jokaisella on oma kertoimensa $\beta_1\dots p$.
+
+Lineaarisella regressiolla saadaan nopeasti aikaiseksi suuntaa antavaa tietoa aineiston ominaisuuksista. Onko esimerkiksi havainnon ja luokan välinen suhde lineaarinen, tai kuinka vahva havainnon ja luokan välinen suhde on. Vastaukset ovat kuitenkin vain suuntaa antavia. Tarkempina heikkouksina lineaariselle regressiolle mainitaan että sille ei ole luontevaa tapaa käsitellä havaintojen kvalitatiivisia, eli laadullisia ennusteita\cite{james2013ISLR}. 
+
+Akateemisen suoritumisen ennustamisessa lineaariset mallit, joihin lineaarinen regressio kuuluu, ovat käytetyimpiä. Lineaaristen mallien osuus käytetyistä ennustamisen menetelmistä oli vuonna 2018 31\%\cite{hellas2018predicting}. Lineaarista regressiota käyttivät muun muassa Carter ym. \cite{carter2015normalized} sekä Watson ym. \cite{watson2013predicting}.
+
+Valitsin lineaarisen regression yhdeksi menetelmistä sen yksinkertaisuuden ja laajan käytön vuoksi. Yksinkertaisena mallina se tarjonnee jonkinlaisen vertailukohdan muita koneoppimismalleja soveltaessa.
+
+
+\subsection{Support Vector Machine}
+
+Tukivektorikone on ohjatun oppimisen menetelmä joka pyrkii jakamaan havaintoavaruuden kahteen osaan. Se laajentaa tukivektoriluokittelijaa mahdollistamalla epälineaarisen luokittelun kahden luokan välillä\cite{james2013ISLR}.
+
+Tukivektorikone saa syötteekseen $n \times p$ kokoisen matriisin $\textbf{X}$, jossa on $p$-ennustetta, ja $n$-syötettä. Havaintojen luokat $y_1, \dots, y_n \in \{-1, 1\}$ ovat binäärisiä, joissa $-1$ ja $1$ ovat mahdollisia ennustettavia luokkia. 
+
+Tukivektoriluokittelijan tavoin tukivektorikone pyrkii etsimään kahden luokan välisen rajan eli hypertason (hyperplane), ja saamaan mahdollisimman leveän marginaalin $M$ eri luokkiin kuuluvien havaintojen välille. Kullakin havainnolla $x_i$ on löysäysparametri (slack variable) $\epsilon_i$, joka kertoo havainnon sijainnin marginaaliin ja hypertasoon nähden seuraavasti. 
+
+\begin{gather}
+    \epsilon_i = 0\text{, niin havainto $x_i$ on oikealla puolella marginaalia}\\
+    \epsilon_i > 0\text{, niin havainto $x_i$ on väärällä puolella marginaalia}\\
+    \epsilon_i > 1\text{, niin havainto $x_i$ on väärällä puolella hypertasoa}
+\end{gather}
+
+Vektorit (eli havainnot) jotka ovat marginaalin sisällä tai ovat hypertason väärällä puolella, ovat nimeltään tukivektoreita. Sallittujen löysäysparametrien summaa määrää viritysparametri $C$, joka käytännössä valitaan ristivalidoinnilla (cross-validation). Löysäysparametrien summa $\sum^n_{i=1} \epsilon_i$ ei ylitä viritysparametria $C$. Viritysparametri säätelee tukivektoriluokittelijan ja tukivektorikoneen vinouma-varianssi tasapainoa (bias-variance trade-off). Siinä missä tukivektoriluokittelijaa käytetään kun havaintoavaruus on lineaarisesti jaettavissa, on tukivektorikone laajennettavissa muunkin muotoisilla funktioilla. Yleisesti tukivektorikone on ilmaistavissa seuraavasti.
+
+\begin{equation}
+    f(x) = \beta_0 + \sum_{i \in \textbf{S}} \alpha_i K(x, x_i)
+\end{equation}
+
+Jossa $\beta_0$ ilmaisee leikkauspistettä, $\textbf{S}$ sisältää havaintojen indeksit jotka ovat tukivektoreita, $\alpha_i$ on havainnon $x_i$ kerroin. Funktio $K$ on tukivektorikoneen ydinfunktio (kernel function). Tukivektorikoneen ydinfunktioksi voi asetella muun muassa polynomisen funktion, radiaalisen funktion tai tukivektoriluokittelijan lineaarisen funktion.
+
+\begin{align}
+    K(x_i, x_{i'}) &= \sum^p_{j=1} x_{i, j} x_{i', j} \text{ Lineaarinen ydinfunktio}\\
+    K(x_i, x_{i'}) &= (1 + \sum^p_{j=1} x_{i, j} x_{i', j} )^d \text{ Polynominen funktio}\\
+    K(x_i, x_{i'}) &= \exp{-\gamma \sum^p_{j=1}( x_{i, j} - x_{i', j} )^2} \text{ Radiaalinen funktio}
+\end{align}
+
+Parametri $p$ kertoo havaintoavaruuden ennusteiden määrän. Polynomisessa funktiossa parametri $d$ on polynomisen funktion valittu aste. Radiaalisen funktion $\gamma$ on positiivinen vakio.
+
+Ydin-funktioiden voimin tukivektorikoneet ovat laskennallisesti yksinkertaisia, ja pystyvät käsittelemään moniulotteista (tai moniennusteista) dataa. Lisäksi tukivektorikoneen kouluttaminen on varsin muistitehokasta koska ainoastaan tukivektorit, eli havainnot jotka ovat marginaalin sisäpuolella tai hypertason väärällä puolella osallistuvat tukivektorikoneen oppimiseen. 
+
+Kuten lineaariregressiossa, tukivektorikone ei tarjoa todennäköisyyksiä luokkien ennustamisen tueksi. Datasta riippuen ydin-funktion valitseminen voi olla haastavaa, varsinkin datassa jossa on rajusti kohinaa. Suuren kohinan määrän läsnäollessa tukivektorikone saattaa ylisovittua kohinaa myötäillen, rampauttaen tukivektorikoneen suoriutumista.
+
+Opetuksen kontekstissa Kentli ym. \cite{kentli2011svm} pyrkivät ennustamaan tekniikan alan kurssin opiskelijoiden suoriutumista tukivektorikoneen avulla. Lagus ym. \cite{lagus2018transfer} tekivät vastaavia ennusteita ohjelmointikurssilla. Artikkeli\cite{lagus2018transfer} tutki transfer learning-koneoppimismallien suoritumista, jossa tukivektorikone oli verrokkina. Tukivektorikoneet luokittelivat kunnioitettavalla tarkkuudella opiskelijat, jotka pääsivät kurssista läpi. Ennustetarkkuuksien keskiarvot vaihtelivat kurssien edetessä aina 82\% ja 87\% prosentin väliltä.
+
+Tukivektorikone on lineaariregression jälkeen luonteva jatke. Se on hyvin toteutettavissa ja siitä on olemassa olevia toteutuksia. Tukivektorikone on hyvä yleistämään aineistoa ja pystyy antamaan hyviä ennusteita yksinkertaisuuteensa nähden.
+
+
+\subsection{Random Forest}
+
+Random forest-menetelmä on kokoelma päättelypuita, ja on laajennus pussittamisesta (bagging)\cite{james2013ISLR} joka puolestaan perustuu bootstarpping-menetelmälle. 
+
+Pussittamisen ajatuksena on tehdä useita satunnisia otoksia aineistosta. Tuotettu otos on alkuperäisen aineiston kokoinen. Kun aineistosta tehdään satunnaisia otoksia, voi syöte esiintyä useamman kerran pussitetussa aineistossa, ja osa taas voi jäädä otoksen ulkopuolelle. Aineiston ulkopuolisia syötteitä, eli "pussin ulkuopuolisia"  (out-of-bag) havaintoja hyödynnetään tuotetun mallin virheen arvioimiseen. Pussittamisessa tämä satunnainen otos tehdään $B$-kertaa, ja jokaiselle aineisto-otokselle tehdään oma päättelypuu. Regressio-ongelmassa päättelypuut antavat oman arvionsa, ja näistä arvioista lasketaan keskiarvo ennusteeksi.
+
+\begin{equation}
+    \hat{f}_{bag}(x) = \frac{1}{B} \sum^B_{b=1} \hat{f}^{*b}(x)
+\end{equation}
+
+Jos kyseessä on luokitteluongelma, saadaan luokan ennuste puiden enemmistöäänellä.\cite{james2013ISLR} 
+
+Pussien määrä $B$:n kasvattaminen ei lisää ennusteiden ylisovittamista\cite{james2013ISLR}. Usein pussien määrän $B$ valinta tapahtuu siten, että sitä kasvatetaan kunnes luokitteluvirhe tasaantuu. 
+
+Verrattuna yksittäiseen päättelypuuhun pussittaminen ennustusmenetelmänä on paljon tarkempi. Pussittamisen ongelmana on sama kuin yksittäisellä päätteylypuulla, eli syötteen korreloivat- ja vahvemmat ennusteet. Jos yksittäisellä ennusteella on vahva painoarvo luokittelussa, näyttävät pussittamisen päättelypuut keskenään samanlaisilta. Vastaavanlainen ongelma ilmenee korreloivissa ennusteissa luoden toistuvia rakenteita päättelypuissa.
+
+Random forest ratkaisee ongelmaa vaikuttamalla logiikkaan, että millä valitaan kunkin puun haaran merkitsevä syötteen ennuste. Sen sijaan että syötteen jokaista ennustetta harkitaan kunkin haaran jakavaksi tekijäksi, valitaan jakava ennuste vain satunnaisen $m$-kappaleen joukosta. Lukumäärän $m$ määrittelee usein $m \approx \sqrt{p}$, eli syötteiden ennusteiden määrän määrän neliöjuuri. Näin random forest dekorreloi syötteiden ennusteita, ja saadaan suurempaa variaatiota luotujen päättelypuiden välille\cite{james2013ISLR}.
+
+Ytimessään random forest on kokoelma päättelypuita. Sen ennusteet ovat huomattavasti merkittävästi varrattuna yksittäiseen päättelypuuhun\cite{james2013ISLR}. Koska päättelypuita on kokoelmassa useita ja satunnaisuus on olennainen osa mallin rakentamista, välttää random forest hyvin ylisovittamista\cite{james2013ISLR}. 
+
+Usean päättelypuun käytön vuoksi random forest kuitenkin menettää yhden päättelypuun suurimmista eduista, joka on selkeä tulkittavuus\cite{james2013ISLR}. Päättelypuussa tuloksen tulkitseminen on yksinkertaista, sillä jokaista tulosta edustaa yksittäinen puun "lehti". Jokaisella lehdellä on selkeä reitti ja solmut, joita kautta kyseiseen lehteen on päädytty. Tämän sijasta random forest käyttää jokaisen puunsa antamaa ennustetta, joten ei tulos ole enään yhtä helposti luettavissa.
+
+Opetukessa random forest on ollut mukana ennustamassa muun muassa hyvin ja heikosti suoriutuvia ohjelmointi-opiskelijoita. Yleisesti sitä on tarkasteltu muiden koneoppimismenetelmien rinnalla\cite{Ahadi:2015:EML:2787622.2787717}. Lisäksi se on ollut vertailussa tutkimuksessa transfer learning-menetelmän soveltuvuudesta samaan kontekstiin\cite{lagus2018transfer}. Molemmissa artikkeleissa random forest toimii poikkeuksellisella tarkkuudella.
+
+Valitsin random forestin mukaan vertailuun koska se on mainittu erikseen ohjelmointiopetuksen kontekstissa. Haluan päästä näkemään saavutanko random forest-menetelmällä sen aiemman havaitun tarkkuuden.
+
+
 \chapter{SQL-kurssin oppimenestyksen ennustamisen toteutus}
 
 \section{Ohjelmakoodi}
@@ -427,7 +589,7 @@ Valitsin LDA:n vertailtavaksi algoritmiksi koska se on Bayes-luokittelijan appro
 \section{Tulokset}
 
 
-\chapter{Loppusanat\label{chapter:Loppusanat}}
+\chapter{Yhteenveto\label{chapter:Yhteenveto}}
 
 It is good to conclude with some insightful discussion. 
 
