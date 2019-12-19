@@ -1,4 +1,3 @@
-%% This file is modified by Veli Mäkinen from HY_fysiikka_LuKtemplate.tex authored by Roope Halonen ja Tomi Vainio.
 %% Some text is also inherited from engl_malli.tex by Kutvonen, Erkiö, Mäkelä, Verkamo, Kurhila, and Nykänen.
 
 
@@ -150,7 +149,7 @@ The thesis should have an introduction chapter. Other chapters can be named acco
         \hline
         tietokantalauseke                           & database clause       & Tietokantakyselyn tyyppi, esimerkiksi SELECT, tai JOIN \\
         \hline
-        ohjattu oppiminen \label{term:supervised}     & supervised learning   & Koneoppimisen laji jossa saadut havainnot yritetään luokitella omaan luokkaansa \\
+        ohjattu oppiminen \label{term:supervised}   & supervised learning   & Koneoppimisen laji jossa saadut havainnot yritetään luokitella omaan luokkaansa \\
         \hline
         aineisto                                    & data                  & Kokoelma havaintoja. \\
         \hline
@@ -160,7 +159,9 @@ The thesis should have an introduction chapter. Other chapters can be named acco
         \hline
         luokka, vaste                               & class, response       & Ominaisuus joka pyritään ennustamaan kullekin havainnolle $X$. Viitataan merkinnällä $Y$. \\
         \hline
-        (SQL-)lauseke                               & (SQL) clause          & Osa SQL-kyselyä. Esimerkiksi JOIN, ORDER BY tai DISTINCT. \\ [1ex] 
+        (SQL-)lauseke                               & (SQL) clause          & Osa SQL-kyselyä. Esimerkiksi JOIN, ORDER BY tai DISTINCT. \\
+        \hline
+        Ohjattu oppiminen                           & Supervised learning   & Koneoppimisen osa-alue, jossa kullakin aineiston havainnolla on jokin vaste-pari \\ [1ex] 
         \hline
     \end{tabular}
 \end{center}
@@ -170,11 +171,17 @@ The thesis should have an introduction chapter. Other chapters can be named acco
 
 \section{Tietokannat ja hallinnointijärjestelmät}
 
-Tietokanta on kokoelma yhtenäistä tietoa joka on tallennettu siten että se on monen käyttäjän saatavissa erilaisiin tarkoituksiin\cite{pathak2007dbms}. Tietokannat koostuvat kentistä (field), tietueista (record), tiedostoista (file) sekä avainkentistä (key field).
+Tietokanta on kokoelma yhtenäistä tietoa joka on tallennettu siten että se on monen käyttäjän saatavissa erilaisiin tarkoituksiin\cite{pathak2007dbms}.
 
-Kenttä on tietokannan pienin mahdollinen tietoa sisältävä kokonaisuus. Se voi sisältää esimerkiksi merkkijonoja tai numeroita. 
+Tietokannan luomiseen liittyy jonkin yhteisön tarpeeseen tallentaa ja hakea tietoa\cite{tikape2019}. Esimerkisi ohjelmointikurssilla on syytä tallentaa tietoa opiskelijoiden tehtävien etenemisestä.
 
-Tietue on kokoelma toisiinsa liittyviä kenttiä, jotka yhdessä muodostavat yhden tietokokonaisuuden. Esimerkiksi tietue verkkosivun käyttäjästä voi sisältää käyttäjänimen, sähköpostin ja nimen.
+Tärkein osuus tietokantojen suunnittelussa on oleellisten käsitteiden tunnistaminen. Näin tunnistetaan tiedon säilömistä tarvittavat osa-alueet\cite{tikape2019}. 
+
+Tietokannoissa näitä käsitteistä ilmaistaan kentillä (field), tietueilla (record), tiedostoilla (file) sekä avainkentillä (key field)\cite{pathak2007dbms}.
+
+Kenttä on tietokannan pienin mahdollinen tietoa sisältävä kokonaisuus. Se voi sisältää esimerkiksi merkkijonoja tai numeroita. Esimerkiksi verkkosivun käyttäjiä sisältävässä tietokannassa yksittäinen kenttä voisi sisältää käyttäjän nimen.
+
+Tietue on kokoelma toisiinsa liittyviä kenttiä, jotka yhdessä muodostavat yhden tietokokonaisuuden. Esimerkiksi tietue verkkosivun käyttäjästä voi sisältää käyttäjänimen, sähköpostin ja nimen sisältävät kentät.
 
 Tiedosto on kokoelma kaikista saman muotoisista tietueista. Esimerkiksi tiedosto käyttäjistä sisältää kaikki käyttäjiä kuvaavat tietueet.
 
@@ -182,12 +189,18 @@ Tietokanta puolestaan sisältää kaikki toisiinsa liittyvät tiedostot. Esimerk
 
 Avainkenttä on kunkin tietueen uniikki tunniste, jolla se on eroteltavissa muista tietueista. Se on avainasemassa tietokannan manipuloimiseen ja tiedon noutamiseen tietokannasta.
 
-Usein tietokantojen rinnalla käytetään tietokantojen hallinnointijärjestelmiä (database management system). Hallinnointijärjestelmät auttavat luomaan ja hallinnoimaan tietokantoja yhtenäisellä tavalla. Yksi esimerkki tietokantahallinnointijärjestelmästä on SQL.
+Tietokantojen ylläpitoon käytetään tietokantahallintajärjestelmiä (database management system). Tietokantahallintajärjestelmien ominaisuuksiin kuuluu muun muassa tiedon eheyden valvominen ja käyttöoikeuksien valvominen\cite{tikape2019}. 
+
+Esimerkkejä tietokantahallintajärjestelmistä ovat muun muassa PostgreSQL ja MySQL, jotka käyttävät omaa murrettaan SQL-kielestä.
+
+Tämä opinnäytetyö keskittyy relaatiotietokantoihin. Relaatiotietokannoissa tieto esitetään relaatioina eli toisin sanoen taulukkoina\cite{tikape2019}. Yleisemmin näitä kutsutaan tietokantatauluiksi, ja edustavat tietokannan termistössä tiedostoa.
+
+Relaatiotietokannassa rivit edustavat tietokannan tietueita. Kullakin rivillä on attribuutteja, joita edustaa taulukon sarakkeet. Taulukko eli yleisemmin tietokantataulu edustaa tietokannan tiedostoa.
 
 
 \section{Structured Query Language}
 
-Structured Query Language eli lyhyemmin SQL on relaatiotietokantojen\cite{Codd:1970:RMD:362384.362685} hallinnointijärjestelmä\cite{pathak2007dbms}. Sen tarkoituksena on luoda ja määritellä tietokantojen rakenne, mahdollistaa tiedon noutaminen tietokannasta ja pyrkiä takaamaan tietokannan turvallisuus\cite{wilton2005beginning}.
+Structured Query Language eli lyhyemmin SQL on relaatiotietokantojen\cite{Codd:1970:RMD:362384.362685} hallinnoimiseen tehty ohjelmointikieli\cite{tikape2019}. Sen avulla tietokantahallintajärjestelmissä voiluoda ja määritellä tietokantojen rakennetta, noutaa tietoa tietokannasta ja pyrkiä takaamaan tietokannan turvallisuus\cite{wilton2005beginning}.
 
 Tietokantataulujen (eli tiedostojen) luominen, tiedon syöttämisen säännöt ja rivien (eli tietueiden) noutaminen tehdään SQL-ohjelmointikielellä. SQL-kieli on luonteeltaan deklaritiivinen ohjelmointikieli\cite{sadiq2004sqlator}, eli kirjoitetuilla kyselyillä pyritään kuvailemaan haluttua lopputulosta. Seuraavana on esimerkki yksinkertaisesta tietokantakyselystä.
 
@@ -269,32 +282,81 @@ Tehtävät joiden ratkaisut vaativat jokaista kuutta SQL-kielen lauseketta tuott
 
 \section{Koneoppiminen}
 
-\begin{itemize}
-    \item kokoelma havaintoja $X$
-    \item kullekin ennusteelle $p$ havaintaan vaste $Y$
-    \item oletetaan kullakin havainnolla $X = (X_1, X_2, \dots, X_p)$ olevan jokin suhde vasteeseen $Y$
-    \item $Y = f(X) + \epsilon$
-    \begin{itemize}
-        \item funktio $f$ on jokin tuntematon funktio havainnolle $X_1, \dots, X_p$
-        \item $\epsilon$ on havainnosta $X$ itsenäinen virhe-termi. Usein syntyy tiedosta jota ei voida sisältää funktioon $f$, tai sisältää variaatiota jota ei osata arvioida. On yläraja vasteen $Y$ ennustamiselle
-        \item funktio $f$ edustaa systemaattista tietoa jota havainto $X$ tarjoaa vasteesta $Y$
-    \end{itemize}
-    \item koneoppiminen on kokoelma lähestymistapoja funktion $f$ arvioimiseksi
-    \item halutaan selvittää funktio $f$ vasteen $Y$ ennustamiseksi havainnon $X$ perusteella
-    \begin{itemize}
-        \item havaintoja $X$ on saatavilla paljon, ja vasteet $Y$ eivät ole helposti saavutettavissa
-    \end{itemize}
-    \item halutaan ymmärtää miten havainto $X_1, \dots, X_p$ vaikuttaa vasteeseen $Y$
-    \item havaintoja kutsutaan opetusdataksi
-    \begin{itemize}
-        \item opetusdatalla opetetaan metodillemme että kuinka funktiota $f$ arvioidaan
-    \end{itemize}
-    \item ohjattu oppiminen: kullekin havainnolle $x_i$, jossa $i = 1, \dots, n$, on oma vasteensa $y_i$.
-    \begin{itemize}
-        \item eli halutaan opettaa koneoppimismalli yhdistämään ennusteet tiettyihin vasteisiin siten, että tuleville havainnoille osataan antaa oikea vaste
-    \end{itemize}
-\end{itemize}
+Koneoppiminen pyörii koostuu kolmen käsitteen ympärillä, joita ovat havainnot $X$, vasteet $Y$ ja funktio $f$.
 
+Havainnot ovat käytännössä dataa, josta halutaan päätellä jotakin. Havaintoja $X$ kutsutaan myös opetusdataksi. Tässä kontekstissa havainnot voivat olla esimerkiksi opiskelijoidan yrityksiä johonkin tehtävään. 
+
+Kullakin havainnolla $X = (X_1, X_2, \dots, X_p)$ on $p$ ennustetta. Tehtäväyrityksissä näitä piirteitä voisivat olla esimerkiksi tehtävän aiheen nimi, tai yrityksen ajankohta.
+
+Vaste $Y$ edustaa arvoa jota pyritään koneoppimisella ennustaa. Tässä kontekstissa yritetään ennustaa onko seuraava tehtäväyritys onnistunut tai mikä on opiskelijan saama kurssin arvosana. 
+
+Koneoppimista soveltaessa oletetaan että kullakin havainnon ennusteella on jonkinlainen suhde vasteeseen $Y$. Tätä suhdetta ilmaistaan seuraavalla yhtälöllä.
+
+\begin{equation}
+    Y = f(X) + \epsilon
+\end{equation}
+
+Yhtälössä $\epsilon$ ilmaisee virhettä tai kohinaa vasteen arvioimisessa, jota ei onnistuta sisältämään funktioon $f$. Funktio $f$ puolestaan edustaa systemaattista tietoa jota havainto $X$ tarjoaa vasteesta $Y$. Koneoppimisprosessin alussa funktio $f$ on tuntematon, ja prosessin tavoitteena on se selvittää.
+
+Käytännössä suurin osa koneoppimisesta on menetelmiä arvioida funktiota $f(X)$. Sen arvioiminen on mielenkiintoista muun muassa vasteiden määrän ollessa pieni havaintojen määrään nähden, tai ennusteiden ja vasteen suhteen luonteen selvittämiseksi.
+
+Esimerkki tilanteesta jossa ollaan kiinnostuttu vasteen arvioimisesta, voisi olla tilanne jossa halutaan ohjelmointikurssin aikana löytää heikosti menestyvät opiskelijat.
+
+Vastaavasti kun ollaan enemmän kiinnostuneita ennusteiden ja vasteiden suhteesta, tarkasteltaisiin tilannetta jossa ohjelmointikurssi on jo päättynyt. Nyt vasteiden arvioimisen on toissijaista, ja tarkastellaan ennusteita $p$ jotka vaikuttavat vasteeseen $Y$. Esimerkiksi mitkä tekijät vaikuttavat opiskelijoiden arvosanoihin.
+
+Koneoppimista voidaan jaotella usein ohjattuun ja ohjaamattomaan oppimiseen. Joissakin koneoppimismenetelmissä on molempia piirteitä.
+
+Ohjatussa oppimisessa kullakin havainnolla $x_i$ oletetaan olevan jokin vaste $y_i$. Koneoppimismallin opetuksen aikana ainakin osalla opetusdatalla on jo oma vasteensa. Ohjatun oppimisen lopputavoitteena on pystyä antamaan tuleville, vielä tuntemattomille havainnoille asian mukainen vaste. Tämä opinnäytetyö tulee keskittymään tähän koneoppimisen koulukuntaan.
+
+Ohjaamattomassa oppimisessa opetusdatassa ei ole vasteita, eikä vasteisiin kiinnitetä huomiota algoritmin opetuksen aikana. Yksi esimerkki ohjaamattomasta oppimisesta on klusteroiminen, jossa annetaan koneoppimis algoritmin ryhmitellä data annettujen havaintojen perusteella.
+
+\subsection{Koneoppimismallien hyvyyden arvioiminen}
+
+Koneoppimismallin menestystä mitataan mallin ennusteiden tarkkuudella. Kuinka hyvin ennustetut vasteet vastaa aitoa vastetta? Riippuen vasteen tyypistä, tähän vastataan hieman eri tavalla.
+
+Jos ennustettava vaste on kvantitatiivinen eli jokin numeroarvo, käytetään usein Mean Squared Error-funktiota\cite{james2013ISLR}.
+
+\begin{equation}
+    MSE = \frac{1}{n} \Sigma^n_{i=1} (y_i - \hat{f}(x_i))^2
+\end{equation}
+
+Toisin sanoen MSE laskee kuinka paljon ennustetut kvantitatiiviset vasteet eroavat aidosta vasteesta. 
+
+Mitä suurempi MSE on, sitä epätarkempi koulutettu mallin todennäköisesti on.
+
+Jos vaste on puolestaa kvalitatiivinen eli vaste on esimerkiksi jokin luokka, summataan ennustetun vasteen ja aidon vasteen erotuksen sijasta yksinkertaisesti että oliko ennustettu luokka oikea\cite{james2013ISLR}.
+
+\begin{equation}
+    CV_{n} = \frac{1}{n} \Sigma^n_{i=1} Err_i
+\end{equation}
+
+\begin{equation}
+    Err_i = I(\hat{f}(x)_i \neq y_i)
+\end{equation}
+
+Tässä jälleen validaatiovirheen ollessa suuri, sitä todennäköisemmin koulutettu malli on suoritukseltaan heikko.
+
+Mallien tarkkuutta voidaan tarkastella mallin koulutuksen ja testaamisen aikana. Koulutuksen aikana tehty validointi tehdään samalla datalla, jolla malli on koulutettu. Testaamisen aikana tehty validointi puolestaan tehdään koulutetulle mallille datalla, jota malli ei ole vielä nähnyt.
+
+Harjoituksen aikana tehty validaatio on enintään suuntaa antava, ja parhaimmillaan voi antaa hyvin tarkkoja ennusteita vasteeksi: antaen siis varsin matalia arvoja. 
+
+Harjoitusdatan validaatio on suuntaa antava metriikka koska malli voi oppia myötäilemään harjoitusdataa liian tarkasti, jonka seurauksena on ylisovittaminen.
+
+Ylisovittamisessa (overfitting) malli myötäilee harjoitusdataa niin uskollisesti, että se ei osaa ennustaa tarkasti harjoitusdatan ulkupuolelta tulevia syötteitä.
+
+Ylisovittamista silmällä pitäen mallia validoidaan datalla jota malli ei ole aikaisemmin nähnyt: testidatalla. Testidataan tehdyn validoinnit ovat harjoitusdataan nähden usein heikompia. Jos malli suoriutuu hyvin testidatalla valdoimisesta, pidetään sitä hyvänä merkkinä.
+
+Testidatalla voidaan helposti validoida, jos on saatavilla suuria määriä harjoitusdatan ulkopuolella olevaa dataa. Useimmissa tapauksissa tämä ei ole kuitenkaan mahdollista. Suurta testidataa voidaan yrittää korvata ottamalla koulutusdatasta validointikokoelma (validation-set). 
+
+Validointikokoelma (tai validointidata) on käytännössä koulutusdatasta otettu satunnainen otos, jota ei laisinkaan anneta mallin käyttöön koulutuksen aikana. Tätä kokoelmaa käytetään mallin kouluttamisen lopussa mallin tarkkuuden arvioimiseen. 
+
+Ristiinvalidointi (cross-validation) vie tätä ajatusta pidemmälle. Harjoitusdata jaetaan $k$ osaan, esimerkiksi $k=5$ osaan. Nyt koulutetaan koneoppimismalli samalla algoritmilla $k$ kertaa siten että kullakin kerralla jätetään yksi osa pois harjoitusdatasta, ja ulos jätettyä osaa käytetään validaatiodatana. 
+
+Ristiinvalidnoinnilla voidaan selvittää kuinka hyvin koneoppimisalgoritmi selviää itsenäisestä datasta. Lisäksi on mielenkiintoista selvittää vaihe, missä validnointivirhe on matalimmillaan\cite{james2013ISLR}. 
+
+Ristiinvalidointi on usein vakio tapa tarkastella koneoppimisalgoritmien suoriutumista\cite{james2013ISLR}.
+
+ 
 \section{Kurssimenestyksen ennustaminen}
 
 Oli kurssin oppiaiheena mikä tahansa, on kurssin järjestäjien pyrittävä arvioimaan opiskelijoiden suoriutumisesta myös kurssin aikana. Tämä on haastavaa opiskelijoiden tullessa eri taustoilta ja eri opintolinjoilta.
@@ -368,7 +430,15 @@ Kuten edellissä kappaleessa todettiinkin, Ahadi ym. \cite{Ahadi:2016:SSM:283950
 
 \section{Data}
 
-Mitä dataa, mistä on saatu ja suunnitelmia käytöstä.
+Tämän opinnäytetyön aineisto on kerätty Helsingin yliopiston tietokantojen perusteet-kurssilta\cite{tikape2019}. Kurssi on tarkoitettu olemaan tietojenkäsittelytieteen kandidaatin tutkielman opiskelijoiden ensimmäinen kosketus muun muassa tietokantoihin ja SQL:ään\cite{tikape2019}.
+
+Aineisto on kerätty opiskelijoilta jotka kävivät tietokantakurssia vuoden 2019 kevät- ja kesälukukautena. 
+
+Aineistossa on mukana opiskelijoiden saamat arvosanat ja tietokantakurssin aikana tehtyjen tehtävien yritykset.
+
+Aineisto koostuu 293 opiskelijan tuottamasta sisällöstä. (asiaa  arvosanoista: keskiarvoa, hajonta yms. Graafi jakaumasta?)
+
+Tallennettuja tehtäväyrityksiä on aineistossa 876 893. (tilastoja datasta. onnistumis prosenttia, yrityksiä/tehtävä,  yrityksiä/käyttäjä, yritysten määrä tehtävätyypeittäin)
 
 
 \section{Valitut mentelmät}
