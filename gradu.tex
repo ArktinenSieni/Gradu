@@ -22,6 +22,7 @@
 \usepackage{hyperref}
 \usepackage{array}
 \usepackage{listings} % For code listing
+\usepackage{url}
 
 \onehalfspacing %line spacing
 %\singlespacing
@@ -330,7 +331,7 @@ Jos vaste on puolestaa kvalitatiivinen eli vaste on esimerkiksi jokin luokka, su
     CV_{n} = \frac{1}{n} \Sigma^n_{i=1} Err_i
 \end{equation}
 
-\begin{equation}
+\begin{equation} \label{eq:clf_error}
     Err_i = I(\hat{f}(x)_i \neq y_i)
 \end{equation}
 
@@ -341,6 +342,76 @@ Mallien tarkkuutta voidaan tarkastella mallin koulutuksen ja testaamisen aikana.
 Harjoituksen aikana tehty validaatio on enintään suuntaa antava, ja parhaimmillaan voi antaa hyvin tarkkoja ennusteita vasteeksi: antaen siis varsin matalia arvoja. 
 
 Harjoitusdatan validaatio on suuntaa antava metriikka koska malli voi oppia myötäilemään harjoitusdataa liian tarkasti, jonka seurauksena on ylisovittaminen.
+
+Tarkkuus ei sellaisenaan ole riittävä kriteeri mallin hyvyyden tarkastelemiseen. Tämä johtuu siitä että tarkkuus pitää kaikkia virhe-arvioita saman arvoisina.
+
+Tämä voi koitua ongelmaksi esimerkiksi tilanteessa, jossa käytössä on enemmistöä arvaava luokittelija jolle on annettu todella epätasainen aineisto, jossa esimerkiksi 90\% aineistosta luokitellaan toiseen luokkaan.
+
+Binääristä luokkaa ennustaessa ennusteet kuuluvat yhteen neljästä luokasta: true-positive, true-negative, false-positive, false-negative.  Luokan nimen alkuosa viittaa siihen, osuiko ennustettu luokka oikeaan. Nimen jälkimmäinen osa viittaa koneoppimismallin ennustamaan luokkaan. Esimerkiksi true-positive kuvaa ennustetta, joka on oikein luokiteltu positiiviseksi. Vastaavasti false-positive on positiiviseksi ennustettu luokittelu, joka on väärin.
+
+Ennustuksen aiheesta riippuen väärin ennustetuilla luokilla voivat olla vaarallisia. Esimerkiksi jos ennustetaan että onko potilas sairastunut vaaralliseen tautiin, on false-negative vaarallinen väärin-luokittelu. Jos puolestaan taudin hoito on haitallinen potilaalle, voi false-positive olla vaarallisempi väärin-luokittelu.
+
+Tämän tutkielman kontekstissa väärin-luokittelut eivät varsinaisesti ole vaarallisia. Opetuksen kannalta haitallisempi olisi olla löytämättä opiskelijoita, joilla on vaikeuksia tehtävien tekemisessä. Eli false-positive on tässä tapauksessa haitallisempi.
+
+Matthew's correlation coefficient\cite{MATTHEWS1975442} kiinnittää huomiota juuri väärin luokiteltujen ennusteiden tyyppiin. Tämä pistearvo lasketaan virheiden luokkien perusteella seuraavaasti.
+
+\begin{equation}
+    N = TN + TP + FN + FP
+\end{equation}
+
+Tässä $TN$ on true-negative tapausten lukumäärä, $TP$ on true-positive, $FN$ false-negative ja $FP$ on false-positive.
+
+$N$ on kaikkien tapausten summa.
+
+\begin{equation} \label{eq:mcc-s}
+    S = \frac{TP + FN}{N}
+\end{equation}
+
+$S$ on oikein luokiteltujen positiivisten tapausten ja väärin luokiteltujen negatiivisten luokittelujen osuus kaikista ennusteista.
+
+\begin{equation} \label{eq:mcc-p}
+    P = \frac{TP + FP}{N}
+\end{equation}
+
+$P$ on oikein luokiteltujen positiivisten tapausten ja väärin luokiteltujen positiivisten luokittelujen osuus kaikista ennusteista.
+
+Ja lopulta koko kaava on seuraava:
+
+\begin{equation} \label{eq:mcc}
+    MCC = \frac{\frac{TP}{N} - S \times P}{\sqrt{P \times S (1 - S) (1 - P)}}
+\end{equation}
+
+MCC:n antama pisteytys on +1:n ja -1 välillä. MCC arvo +1 tarkoittaa täydellistä ennustusta, ja vastaavasti -1 tarkoittaa täydellisen vastakkaista ennustusta.
+
+% F1 setit
+
+$F_1$ pisteytys ($F_1$ score) on toinen tapa arvioida binääriluokittelijan suoriutumista\cite{sasaki2007truth}. $F_1$ hyödyntää myös true-positive, false-positive ja muita vastaavia arvoja. $F_1$ pisteytys lasketaan täsmällisyyden (precision) ja takaisinkutsun (recall) perusteella. 
+
+Jos binääriluokittelussa arvot jotka ovat positiivisia, pidetään "olennaisina" arvoina, täsmällisyys edustaa osuutta siitä että kuinka moni koneoppimismallin valitsemista arvoista on olennaisia. Toisin sanoen täsmällisyys on true-positive arvojen osuus kaikista positiivisiksi luokitelluista arvoista.
+
+\begin{equation} \label{eq:precision}
+    Precistion = \frac{TP}{TP + FP}
+\end{equation}
+
+
+Takaisinkutsu edustaa osuutta luokitelluista arvoista sitä että montako oleellista arvoa valittiin. Eli se on true-positive arvojen osuus kaikista positiivisista arvoista.
+
+\begin{equation} \label{eq:recall}
+    Recall = \frac{TP}{TP + FN}
+\end{equation}
+
+
+Perinteinen $F_1$ pisteytys eli painottamaton $F_1$ pisteytys on täsmällisyyden ja takaisinkutsun harmoninen keskiarvo\cite{sasaki2007truth}. Koska kyse on osuuksista, $F_1$ pisteytyksen korkein mahdollinen arvo on 1.
+
+\begin{equation} \label{eq:f1}
+    F_1 = \frac{2}{recall^{-1} + precision^{-1}} = 2 \cdot \frac{precision \cdot recall}{precision + recall}
+\end{equation}
+
+
+MCC:tä ja $F_1$ pisteytykstä verrattaessa $F_1$ pisteytystä pidetään vähemmän totuudenmukaisena binäärisiä luokittelijoita arvioitaessa\cite{chicco2020advantages}.
+
+
+\subsection{Ylisovittaminen}
 
 Ylisovittamisessa (overfitting) malli myötäilee harjoitusdataa niin uskollisesti, että se ei osaa ennustaa tarkasti harjoitusdatan ulkupuolelta tulevia syötteitä.
 
@@ -369,7 +440,7 @@ Kyselyt ovat kuitenkin hyödyttömiä opiskelijamäärien ollessa yli sata jokai
 
 Ohjelmointikurssit joiden tarkoitus on olla opiskelijoiden ensimmäinen kosketus ohjelmointiin ovat vaikeita huomattavalle osuudelle opiskelijoista. Tämä johtaa kursseilta pois jäämiseen ja hylättyihin arvosanoihin sekä heikkoihin arvosanoihin \cite{bergin2015using}. 
 
-Aloittelijoiden ohjelmointikurssien läpipääsymäärä tutkimusaiheena on kasvattanut kasvattanut merkittävästi suosiotaan merkittävästi vuodesta 2009 alkaen\cite{hellas2018predicting}. Kiinnostuksen kasvusta huolimatta maailmanlaajuinen arvioitu läpipääsyjen määrä ohjelmoinnin aloituskursseilla oli noin 68\% vuonna 2014\cite{watson2014failure}. 
+Aloittelijoiden ohjelmointikurssien läpipääsymäärä tutkimusaiheena on kasvattanut kasvattanut suosiotaan vuodesta 2009 alkaen\cite{hellas2018predicting}. Kiinnostuksen kasvusta huolimatta maailmanlaajuinen arvioitu läpipääsyjen määrä ohjelmoinnin aloituskursseilla oli noin 68\% vuonna 2014\cite{watson2014failure}. 
 
 Ohjelmointikurssien ennustamisen kohteena ovat usein kurssin loppuarvosana, tenttiarvosana sekä tehtävien kurssiarvosana. 
 
@@ -423,23 +494,36 @@ Kuten edellissä kappaleessa todettiinkin, Ahadi ym. \cite{Ahadi:2016:SSM:283950
 
 \chapter{Koneoppimisen soveltaminen kurssi-dataan}
 
-\begin{itemize}
-    \item meneekö seuraava tehtävä oikein
-    \item tuleva tenttiarvosana SQL tehtävissä
-\end{itemize}
+Tavoitteena on ennustaa kahta asiaa. 
+
+Kun algoritmille annetaan syötteenä tehtäväyritys, tuleeko opiskelija saamaan tehtävän oikein. Mallin olisi tarkoitus nähdä opiskelijan edelliset yritykset tavalla tai toisella.
+
+Tehtäväyritysten perusteella yritän ennustaa opiskelijan arvosanaa. Haluan pystyä näkemään mitkä piirteet vaikuttavat ennustettuun arvosanaan.
+
+Molemmissa tapauksissa kokeilen valitsemiani koneoppimismalleja ennusteen tuottamiseksi. Näin pääsen vertailemaan kunkin mallin suoritumista näissä tapauksissa.
+
 
 \section{Data}
 
 Tämän opinnäytetyön aineisto on kerätty Helsingin yliopiston tietokantojen perusteet-kurssilta\cite{tikape2019}. Kurssi on tarkoitettu olemaan tietojenkäsittelytieteen kandidaatin tutkielman opiskelijoiden ensimmäinen kosketus muun muassa tietokantoihin ja SQL:ään\cite{tikape2019}.
 
-Aineisto on kerätty opiskelijoilta jotka kävivät tietokantakurssia vuoden 2019 kevät- ja kesälukukautena. 
+Aineisto on kerätty opiskelijoilta jotka kävivät tietokantakurssia vuoden 2019 kevät- ja kesälukukautena. Aineistossa on myös hajanaisia yrityksiä jotka sijoittuvat syyslukukaudelle.
 
 Aineistossa on mukana opiskelijoiden saamat arvosanat ja tietokantakurssin aikana tehtyjen tehtävien yritykset.
 
-Aineisto koostuu 293 opiskelijan tuottamasta sisällöstä. (asiaa  arvosanoista: keskiarvoa, hajonta yms. Graafi jakaumasta?)
+Kurssin tehtävät perustuvat kurssimateriaaliin, joka puolestaan on jaettu eri aiheisiin. Aiheet voivat koostua esimerkiksi tietokantojen käsitteistä, tai SQL-kielen ominaisuuksista.
 
-Tallennettuja tehtäväyrityksiä on aineistossa 876 893. (tilastoja datasta. onnistumis prosenttia, yrityksiä/tehtävä,  yrityksiä/käyttäjä, yritysten määrä tehtävätyypeittäin)
+Kurssiin kuului osuus, jossa opiskelijat tekivät harjoitustehtäviä muiden opiskelijoiden tehtäväksi.
 
+Kun opiskelija lähti tekemään johonkin kurssin aiheeseen liittyviä tehtäviä, hänelle valittiin satunnaisesti aiheeseen liittyviä tehtäviä. Osa näistä arvotuista tehtävistä voi olla muiden opiskelijoiden tekemiä.
+
+Jos opiskelija kohtasi tehtävän jota hän ei pystynyt ratkaisemaan, oli hänellä mahdollisuus arpoa uusi tehtävä samasta aiheesta. Tämä esti tapauksen jossa opiskelija jää jumiin esimerkiksi virheellisen tehtävän kanssa.
+
+Eniten tehtäviä yritettiin vuoden 2019 periodilla 3, yhteensä 103 149 yrityksen edestä. Tämä on periodi jolla tietojenkäsittelytieteen kandidaatintutkielman luentokurssi järjestetään. Muilla ajankohdilla todennäköisesti on kyse kurssin verkkoversiosta tai avoimen yliopiston versiosta joissa ei ole erillistä aikataulua. Tehtäväyrityksistä 31.59\% on luokiteltu olevan oikein.
+
+Opiskelijat yrittivät tehtäviä 1399 uniikilla opiskelija-id:llä. Tehtäviä yritettiin yhteensä 197 193 kertaa. Kukin opiskelija yritti tehtäviä keskimäärin 140,9 kertaa. Kukin opiskelija yritti yksittäistä tehtävää keskimäärin 2,8 kertaa.
+
+Arvosana-aineistoon on merkitty 129 uniikille opiskelijalle arvosana. Hylättyjä arvosanoja ei ole merkitty tähän aineistoon. Annettujen arvosanojen keskiarvo asteikolla yhdestä viiteen, on 4,2.
 
 \section{Valitut mentelmät}
 
@@ -650,18 +734,203 @@ Valitsin random forestin mukaan vertailuun koska se on mainittu erikseen ohjelmo
 
 \chapter{SQL-kurssin oppimenestyksen ennustamisen toteutus}
 
-\section{Ohjelmakoodi}
+\section{Datan esikäsittely}
+
+Koska osa tehtävistä on opiskelijoiden tekemiä, on tarkasteltavia tehtäviä suodatettava siten että ne ovat varmasti mahdollista tehdä oikein tehtävän antamilla ohjeilla. Datasta suodatettiin tehtävät, joissa on vähintään viisi onnistunutta yritystä, joka pienensi yritysten määrää noin kymmenellä tuhannella rivillä, 186 939 riviin.
+
+Päivämäärä saraketta ei saada hyödynnettyä sellaisenaan. Se on purettava merkkijonosta, tai päivämäärä-merkinnästä konkreettiseksi numeroarvoksi. Tässä tapauksessa päivämäärästä saadaan kaksi oleellista: kurssin viikko jolloin yritys on tehty, ja opiskelijan yrityksen indeksi tehtävään.
+
+Kurssin viikolla tarkoitetaan ensimmäistä viikon numeroa, laskettuna yksittäisen kurssi-iteraation alkamisesta lähtien. Viikun numero on valittu viikottaisten yritysmäärien perusteella. Ensimmäinen viikko on valittu Helsingin yliopiston periodi-kalenterista\cite{kalenteri18-19, kalenteri19-20}.
+
+Opiskelijan yrityksen indeksillä viitataan siihen että monesko kyseinen yritys on opiskelijan yrityksistä samaan tehtävään.
+
+Sarake "exercise\_created\_by\_user" sisältää opiskelijan id:n, jos opiskelija on luonut annetun tehtävän. Jos asia ei ole näin, id:n tilalla ei ole arvoa. Tämä sarake on muutettu totuusarvoksi, jossa "False" ilmaisee että tehtävän on tehnyt opettaja, ja päinvastaisella arvolla joku opiskelijoista.
+
+Koska yhtenä tavoitteena on tarkastella aiheiden merkitystä tehtävien onnistumiseen, on otettava aiemmat tehtävät jollain tavalla huomioon. Jokaiseen yritykseen on lisätty edellisten onnistuneiden tehtävien summa jaoteltuna aiheittain. Esimerkiksi aiheella yksi on oma sarakkeensa "topic\_1\_count", ja aiheella kaksi vastaavasti "topic\_2\_count". Näitä sarakkeita on riveillä yhteensä 
+kaksitoista.
+
+Sarakkeeseen "time\_spent" asetettiin kuhunkin tehtävään arvo, joka on tähän tehtäväyritykseen mennessä kulunut aika laskettuna ensimmäisestä yrityksestä samaan tehtävään.
+
+Lopullinen esikäsitelty aineisto sisältää siis 23 saraketta.
+
+Mallien validoimiseksi aineisto jaettiin siten että koulutusaineisto sisältää 70\% riveistä, ja validointi aineisto sisältää 30\% riveistä. Koulutusaineiston tehtäväyrityksistä 29.61\% on luokiteltu onnistuneiksi. Validointiaineistosta puolestaan 30.21\% yrityksistä on luokiteltu onnistuneiksi.
 
 
-\section{Prosessi, haasteet, yms.}
+\section{Toteutus}
+
+Toteutettuihin malleihin lukeutuu siis tukivektori-luokittelijat, naive Bayes-luokittelijat, random forest-luokittelija sekä LDA-luokittelija.
+
+Kaikkien luokittelijoiden kouluttamisessa käytettiin viisinkertaista ristiinvalidointia.
+
+\subsection{Verrokkiluokittelija}
+
+Verrokkiluokittelijaksi valitsin yksinkertaisen mallin, joka arvaa aina aineiston yleisintä luokkaa annetusta syötteestä riippumatta. Tällainen löytyi scikit-learn\cite{scikit-learn}-kirjastosta.
+
+
+\subsection{Tukivektorikoneet}
+
+Koska aineisto on moniuloitteinen, sisältäen 23 eri piirrettä, on tukivektorikoneiden kouluttaminen yhdellä säikeellä hidas prosessi. Tämän vuoksi valitsin mallien kouluttamiseen ThunderSVM\cite{wenthundersvm18} kirjaston. Kirjasto on Singaporen yliopiston Xtra Computing-tutkimusryhmän kehittämä tuote.
+
+ThunderSVM tarjoaa mahdollisuuden kouluttaa tukivektorikoneita GPU:lla usealla säikeellä. Ongelmana kohtasin että mallin kouluttaminen saattoi kestää ikuisesti. Kirjaston keskusteluissa ilmeni että kyse voi olla että malli ei ikinä yhdy (converge), jos mallille annettuja hyperparemtereja ei ole optimoitu.
+
+Hyperparametrit oli mahdollista löytää ristiinvalidoimalla eri arvoilla käyttäen pientä osaa aineistosta. Ristiinvalidointi ajettiin scikit-learn-kirjastolla\cite{scikit-learn}. 
+
+Hyperparametrien löydyttyä ThunderSVM-kirjaston mallit saivat koulutuksen päätökseen. Yhden mallin kouluttaminen kesti kahdesta neljään minuuttia, riippuen Google Colab:n\cite{google-colab} tarjoamista resursseista.
+
+Tukivektorikoneet koulutettiin lineaarisella, polynomisella, radiaalisella sekä sigmoidisella ydinfunktioilla.
+
+Lineaarinen ydinfunktio sai löysäysparametrin $C$ arvon $9.5$. 
+
+Radiaalisen ydinfunktiolla malli koulutettiin löysäysparametrilla $C = 6$, ja gamma-arvolla $\gamma = 0.026$.
+
+Polynominen funktio koulutettiin yksi-asteisena funktiona, joka on lähes samanlainen kuin lineaarinen funktio. Löysäysparametriksi ristiinvalidoitiin $C = 7.08$, ja gamma-arvoksi $\gamma = 0.087$.
+
+Sigmoidisella ydinfunktio koulutettiin 3-asteisena. Löysäysparametriksi valittiin $C = 8.32$, ja gamma-arvo $0.0023$.
+
+
+\subsection{Naive Bayes}
+
+Scikit-learn\cite{scikit-learn} tarjoaa useita toteutuksia naive Bayes luokittelijasta. Tarjolla olevista luokittelijoista kokeilin komplementti-, Bernoullin-, gaussian- sekä multinomial naive Bayes luokittelijoita. 
+
+Mallien kouluttamisessa meni enintään sekunti.
+
+Kukin toteutus tekee oman oletuksensa bayesin kaavan tiheysfunktion muodosta, jota aineisto seuraa. Esimerkiksi gaussian naive bayes oletta aineiston tiheysfunktion seuraavan gaussian-tiheysfunktiota.
+
+Naive bayes luokittelijat eivät ota vastaan montaa hyperparametria.
+
+Komplementti naive bayes sai alpha-arvokseen $\alpha = 0.035$.
+
+Gaussian naive bayes koulutettiin $var\_smoothing$-parametrin arvolla $2.56$.
+
+Multinomial naive bayes malli koulutettiin arvolla $\alpha = 0.132$.
+
+Bernoulli naive bayes koulutettiin parametrilla $\alpha = 0.132$.
+
+
+\subsection{Linear Discriminant Analysis}
+
+Linear discrimant analysis-luokittelija löytyi scikit-learn-kirjastosta\cite{scikit-learn}. Mallin kouluttamisessa kesti vajaa kolme sekuntia.
+
+Linear discriminant analysis-luokittelija koulutettiin "least-squares"-ratkaisijalla. $shrinkage$-parametri jätettiin automaattisesksi, jolloin se seuraa scikit-learn-kirjaston dokumentaation mukaan "Ledoit Wolfin lemmaa".
+
+\subsection{Random Forest}
+
+Random forest luokittelija valittiin scikit-learn\cite{scikit-learn} kirjastosta. 
+
+Kunkin random-forestin puun "puhtauden" kriteerinä käytettiin Gini-epäpuhtaus-funktiota. Puiden määräksi valittiin 779. Out-of-bag arvot eivät parantaneet luokittelijan suoritusta ristiinvalidointia tehtäessä, joten niitä ei hyödynnetty mallin kouluttamisessa.
 
 
 \section{Tulokset}
 
+Mallien validoimiseen käytettiin 30\% aineistosta, jota yksikään malleista ei ole nähnyt koulutuksen aikana. Kaikki mallit antoivat omat ennisteensa validaatio-aineistolle, ja ennusteiden perusteella tehdyt pisteytykset on merkitty taulukkoon \ref{table:results}.
+
+Taulukossa \ref{table:results} "Majority classifier" on käytössä oleva verrokkiluokittelija, joka arvaa aina yleisintä luokkaa. 
+
+
+\subsection{Pisteytysten nolla-arvot}
+
+Verrokkiluokittelija (majority classifier) ja gaussian naive bayes-luokittelijaa arvioitaessa Scikit-kirjastolla\cite{scikit-learn}, saivat ne arvokseen tasan nolla MCC:llä ja F1-pisteytyksellä laskiessa. Tämä on virhearvo seurausta epätasaisista ennusteiden arvoista jotka johtavat tavalla tai toisella siihen, että arvo nolla vaikuttaa lopputulokseen. Arvo nolla voi esimerkiksi päätyä jakolaskun nimittäjäksi, tai osaksi kertolaskua.
+
+Aineiston ollessa suuri ja luokittelija ennustaa luokkaa heikosti, voi pisteytys-algoritmeihin päätyä todella pieniä negatiivisia arvoja. Näissä tapauksissa scikit-kirjaston\cite{scikit-learn} käyttämä numpy-kirjasto\cite{oliphant2006guide} voi pyöristää näitä hyvin pieniä parametreja nollaan.
+
+Vaihtoehtoisesti nollia löytyy ennusteiden luokkien ollessa epätasaisia. Esimerkiksi verrokkiluokittelijan ennusteet ovat kaikki joko luokkaa negative tai positive.
+
+MCC:n \eqref{eq:mcc} kohdalla nolla nimittäjäksi saavutetaan tapauksessa, jossa luokittelija arvaa kaikkia positiivisekis tai negatiiviseksi. Jos kaikki on luokiteltu positiiviseksi, saa kaavan P-arvo \eqref{eq:mcc-p} arvokseen yksi, ja tuo nimittäjään MCC-kaavaan \eqref{eq:mcc} arvon nolla. Vastaavasti jos kaikki on luokiteltu negatiiviseksi, sama p-arvo on nolla ja tuo molempiin osoittajaan ja nimittäjään arvon nolla.
+
+F1-pisteytyksessä \eqref{eq:f1} epätasaisissa ennusteissa joko tarkkuus tai takaisinkutsu voi saada arvokseen nolla, antaen pisteytyksen arvoksi tasan nolla.
+
+Koska aineiston yleisin luokka on että tehtävä ei onnistunut, arvaa verrokkiluokittelija aina negatiivista arvoa. Näin F1-pisteytystä laskiessa molemmat tarkkuus \eqref{eq:precision} ja takaisinkutsu \eqref{eq:recall} ovat arvoltaan nollia. MCC:n kohdalla kaavan P-arvo \eqref{eq:mcc-p} on nolla.
+
+Gaussian naive bayes olettaa aineiston luokkien seuraavan gaussian-jakaumaa. Tämä oletus vaikuttanee tämän luokittelijan antamiin arvioihin siten että sen ennusteet eivät poikkea suuresti tai ollenkaan verrokkiluokittelijan antamista ennusteista.
+
+
+\subsection{Mallien tarkkuus}
+
+Taulukko \ref{table:results} havainnollistaa miksi tarkkuus antaa enintään suuntaa antavan arvion koneoppimismallien suoriutumisesta. Verrokkiluokittelija arvaamalla aina että tehtäväyritys on väärin, saa tarkkuudekseen lähes 70\% ennusteista oikein.
+
+Parhaan tarkkuuden antoi random forest-luokittelija 95.78\%:lla. Tämä tulos vastaa koneoppimisvertailussa\cite{Ahadi:2015:EML:2787622.2787717} opiskelu-kontekstissa ja transfer learning-vertailussa\cite{lagus2018transfer} esiintyneitä tuloksia, joissa random forest antoi hyviä tuloksia verrokkeihinsa nähden.
+
+Bernoulli naive bayes-luokittelija ja lineaarinen tukiverkotikoneluokittelija antoivat lähes samoja tarkkuuksia. Ne olivat jäljessä random forest-luokittelijasta muutamalla kymmenellä promille-yksiköllä.
+
+Pienimmän tarkkuuden verrokkiluokittelijan lisäksi antoi gaussian naive bayes-luokittelija: se antoi täysin saman arvon kuin verrokkiluokittelija eli tarkkuuden 69.79\%. Koska tarkkuuden arvo, MCC ja F1-pisteytys olivat gaussian naive bayes luokittelijalla samat kuin verrokkiluokittelijalla, antaa tämä viitteitä siitä että se loukitteli validaatioaineiston samalla tavalla kuin verrokkiluokittelija. Gaussian naive bayes-luokittelijan suoriutumisesta voinee ainakin olettaa etteivät käytetyn aineiston luokat seuraa gaussian-jakaumaa.
+
+Kaksi seuraavaa pienintä tarkkuutta antoivat multinomial- sekä complement naive bayes-luokittelijat. Molemmat antoivat tarkkuudekseen hieman yli 70\%.
+
+Linear discriminant analysis sai tarkkuudekseen 73.14\%. LDA:n heikko tarkkuus on osittain selitettävissä sillä, että se tekee oman oletuksensa aineiston tiheysfunktiosta. Samaan tapaan kuin naive bayes-luokittelijat.
+
+Suuri vaihtelu naive bayes-sukuisten luokittelijoiden kanssa johtuu kunkin luokittelijan tekemistä oletuksista liittyen aineistoon. Kukin naive bayes-luokittelija olettaa aineiston luokkien seuraavan nimensä mukaista tiheysfunktiota. Odotettavaa siis on, että yksi naive bayes variaatioista antaa huomattavasti suuremman tarkkuuden kuin muut. Tässä tapauksessa bernoulli naive bayes-luokittelija sai parhaan tarkkuuden, 95.75\%, ja siitä seuraavaksi tarkin naive bayes luokittelija oli multinomial naive bayes-luokittelija tarkkuudella 70.19\%. Suurin osa naive bayes luokittelijoista olivat siis enintään kahdella prosentilla tarkempia kuin verrokkiluokittelija.
+
+Tukivektorikoneluokittelijoiden välillä on myös odotettavissa vaihtelua. Kunkin tukivektorikoneluokittelijan tarkkuus riippuu siitä onko olemassa jakavaa hypertasoa, joka jakaa aineistoa ydinfunktion muodon mukaan. Jos aineisto ei ole jaoteltavissa ydinfunktion ehdottamalla tavalla, sen tarkkuus kärsii. Verrattuna naive bayes-luokittelijoihin, vaihtelu tukivektorikoneluokittelijoiden tarkkuuksien välillä on vähemmän eroja. Lineaarinen tukivektoriluokittelija antoi tukivektorikoneista parhaan tuloksen tarkkuudella 95.2\%. Seuraavaksi tarkimman antoi polynominen tukivektoriluokittelija tarkkuudella 91.02\%. Pienimmän tarkkuuden antoi sigmoidisella ydinfunktiolla varustettu tukivektorikone, tarkkuudella 76.85\%.
+
+\begin{table}
+    \centering
+    \begin{tabular}{||c | c c c||} 
+        \hline
+        Classifier & Accuracy & MCC & F1 score \\ [0.5ex] 
+        \hline\hline
+        Majority classifier & 69.79\% & 0.0 & 0.0 \\ 
+        \hline
+        LDA & 73.14\% & 0.2626 & 0.3099 \\
+        \hline
+        Random forest & 95.78\% & 0.9023 & 0.9321 \\
+        \hline
+        \hline
+        Naive Bayes & & & \\
+        \hline
+        Bernoulli NB & 95.76\% & 0.9058 & 0.9338 \\
+        Complement NB & 70.18\% & 0.3655 & 0.5793 \\
+        Gaussian NB & 69.79\% & 0.0 & 0.0 \\
+        Multinomial NB & 70.19\% & 0.3651 & 0.5790 \\
+        \hline
+        \hline
+        Support vector classifier & & & \\
+        \hline
+        Linear SVC & 95.20\% & 0.8957 & 0.9262 \\
+        Radial SVC & 87.91\% & 0.7253 & 0.8113 \\
+        Polynomial SVC & 91.02\% & 0.8149 & 0.8688 \\
+        Sigmoid SVC & 76.85\% & 0.4131 & 0.5536 \\
+        \hline
+    \end{tabular}
+    \caption{Mallien tulokset}
+    \label{table:results}
+\end{table}
+
+
+\subsection{Mallien Matthewin korrelaatiokerroin}
+
+Koneoppimismalleja arvioitaessa tarkkuus (accuracy) jättää huomiotta sen, että minkä tyyppisiä virheitä koulutettu malli tekee ennusteita tehdessään. Tätä piirrettä pyrkivät paikkaamaan Matthewin korrelaatio kerroin (Matthew's correlation coeffcient, jatkossa MCC), sekä F1-pisteytys (F1 pisteytys). Molemmat pyrkivät vastaamaan samankalatiseen ongelmaan. MCC:tä usein suositaan F1-pistytyksen sijasta\cite{chicco2020advantages} binäärisen luokittelijan arvioimisessa. Verratessa MCC:tä F1-pisteytykseen, MCC ei ota huomioon että kumpi luokista on "positiivinen" tai "negatiivinen". Vaikka näiden luokkien tyyppiä vaihtaisi, ei MCC-arvo muutu toisin kuin F1-pisteytyksen kohdalla.
+
+Kuten jo aiemmin havaittiin, verrokkiluokittelija ja gaussian naive bayes-luokittelija antoivat MCC-arvokseen tasan nolla. Järjestäessä malleja MCC:n mukaan verrattuna tarkkuuden mukaan järjestämiseen, ei suuria muutoksia tapahdu. Enintään järjestyksessä vierekkäiset mallit vaihtoivat paikkaa. Suurin poikkeus tähän oli LDA, joka on MCC:n mukaan järjestäessä yhdeksäs, siinä missä se oli tarkkuuden mukaan järjestäessä seitsemäs. MCC:n mukaan järjestäessä bernoulli naive bayes-luokittelija on hieman random forest-luokittelijaa tarkempi. Bernoulli naive bayes-luokittelija sai MCC-arvokseen 0.9058, ja random forest-luokittelija 0.9023. Ne ovat tarkkuuden mukaan järjestäessä toisin päin. Vastaava kävi multinomial naive bayes- ja complement naive bayes-luokittelijoiden kohdalla. Tarkkuudessa complement naive bayes oli tarkempi, ja MCC:n mukaan järjestäessä multinomial naive bayes oli tarkempi. Ero on näiden välillä on kuitenkin vähäinen.
+
+MCC nostaa esille mallit, jotka eivät pelkästään arvanneet yleisintä luokkaa. Esimerkiksi tarkastellessa multinomial naive bayes-luokittelijaa ja verrokkiluokittelijaa huomataan, että niiden tarkkuudet ovat lähellä toisiansa. Kuitenkin MCC-arvoa tarkastellessa käy ilmi että toisin kuin verrokkuluokittelija, multinomial naive bayes-luokittelija oppi jotain aineistosta eikä pelkästään arvaa annetun syötteen luokkaa.
+
+Vastaavasti kun verrataan random forest-luokittelijaa tarkkuudella 95.78\% ja bernoulli naive bayes-luokittelijaa 95.76\%, voidaan MCC-arvoa tarkastellessa olettaa että bernoulli naive bayes-luokittelia osaa ilmaista jotain sääntöä hieman paremmin kuin random forest-luokittelija. Ehkä random forest-luokittelija teki jonkin yleistyksen, joka nostaa sen omaa tarkkuutta samalla altistaen sen jollekin toiselle virheluokittelulle, jota bernoulli naive bayes-luokittelija ei tee.
+
+Naive bayes luokittelijoiden MCC-arvoissa toistuu sama teema kuin tarkkuudessa: yksi malleista on huomattavasti tarkempi kuin muut. Kuten jo aiemmin mainitsin, complement naive bayes-luokittelija on MCC-arvoltaan multinomial naive bayes-luokittelijaan nähden. Tilanne on päinvastainen tarkkuutta tarkastellessa.
+
+Tukivektorikone-luokittelijoiden MCC-arvoissa järjestys säilyi samana kuin tarkkuuden perusteella järjestäessä: lineaarinen tukivektorikone-luokittelija kaikkein tarkimpana arvolla 0.8957, ja sigmoid tukivektorikone-luokittelija heikoimpana MCC-arvolla 0.4131.
+
+
+\chapter{Rajoitukset}
+
+\begin{itemize}
+    \item Koulutetut mallit eivät toimi tarkasti kurssi-iteraatioiden välillä
+    \item arvosana-regressiosta? Ei välttämättä tarvitse mainita, kun jätettiin tarkoituksella pois. Voi tietysti selittää miksi jätettiin pois
+    \begin{itemize}
+        \item liikaa näkymätöntä dataa yms.
+    \end{itemize}
+\end{itemize}
 
 \chapter{Yhteenveto\label{chapter:Yhteenveto}}
 
 It is good to conclude with some insightful discussion. 
+
+\begin{itemize}
+    \item kertaus, mitä tehty
+    \item tuloksista
+    \item highlightaa kontribuutio ja impakti, miksi maailma on parempi tämän perusteella
+    \item future work?
+\end{itemize}
 
 % STEP 5:
 % Uncomment the following lines and set your .bib file and desired bibliography style
@@ -673,7 +942,8 @@ It is good to conclude with some insightful discussion.
 \phantomsection
 
 \addcontentsline{toc}{chapter}{\bibname} % This lines adds the bibliography to the ToC
-\bibliographystyle{abbrv} % numbering alphabetic order
+%\bibliographystyle{abbrv} % numbering alphabetic order
+\bibliographystyle{plainurl}
 \bibliography{bibliography}
 
 \begin{appendices}
